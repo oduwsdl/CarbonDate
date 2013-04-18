@@ -51,4 +51,12 @@ def index(url):
 	return r
    
 bottle.debug(True) 
-run(host='128.82.7.232', port=80)
+
+fileConfig = open("config", "r")
+config = fileConfig.read()
+fileConfig.close()
+json = simplejson.loads(config)
+ServerIP = json["ServerIP"]
+ServerPort = json["ServerPort"]
+
+run(host=ServerIP, port=int(ServerPort))

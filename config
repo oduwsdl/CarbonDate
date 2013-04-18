@@ -1,4 +1,6 @@
 {
 	"BitlyKeys": ["YOUR BITLY API KEY"],
 	"TopsyKey": "YOUR TOPSY API KEY"
+	"ServerIP" : "YOUR SERVER IP HERE"
+	"ServerPort": CORRESPONDING_PORT
 }
