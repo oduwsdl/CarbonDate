@@ -1,0 +1,182 @@
+{
+    "URI": "http://www.dmoz.org/",
+    "Estimated Creation Date": "1999-01-25T09:44:48",
+    "Last Modified": "",
+    "Bitly.com": "2010-09-30T12:31:26",
+    "Topsy.com": "2012-09-26T06:33:20",
+    "Backlinks": "",
+    "Google.com": "2001-01-31T00:00:00",
+    "Archives": {
+        "Earliest": "1999-01-25T09:44:48",
+        "By_Archive": {
+            "other": "2001-09-24T22:10:34",
+            "www.webarchive.org.uk": "2008-08-07T10:43:31",
+            "api.wayback.archive.org": "1999-01-25T09:44:48",
+            "webcitation.org": "2010-01-17T13:29:34",
+            "webarchive.nationalarchives.gov.uk": "2008-05-20T00:00:00"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://ir.iit.edu/cikm2004",
+    "Estimated Creation Date": "2002-09-30T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2002-09-30T00:00:00",
+    "Archives": {
+        "Earliest": "2004-02-12T22:37:25",
+        "By_Archive": {
+            "api.wayback.archive.org": "2004-02-12T22:37:25"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.worldchanging.com",
+    "Estimated Creation Date": "2003-12-06T09:20:18",
+    "Last Modified": "2012-06-06T21:46:58",
+    "Bitly.com": "2009-07-08T14:56:52",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2005-05-04T00:00:00",
+    "Archives": {
+        "Earliest": "2003-12-06T09:20:18",
+        "By_Archive": {
+            "www.webarchive.org.uk": "2008-06-23T23:40:46",
+            "api.wayback.archive.org": "2003-12-06T09:20:18",
+            "webarchive.nationalarchives.gov.uk": "2008-09-04T00:00:00"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.yahoo.com",
+    "Estimated Creation Date": "1996-10-17T23:59:08",
+    "Last Modified": "",
+    "Bitly.com": "2008-06-08T12:00:00",
+    "Topsy.com": "2013-03-01T18:21:27",
+    "Backlinks": "",
+    "Google.com": "",
+    "Archives": {
+        "Earliest": "1996-10-17T23:59:08",
+        "By_Archive": {
+            "wayback.archive-it.org": "2006-05-17T19:21:29",
+            "api.wayback.archive.org": "1996-10-17T23:59:08",
+            "webarchive.nationalarchives.gov.uk": "2004-01-05T00:00:00",
+            "enterprise.archiefweb.eu": "2012-07-09T00:00:00",
+            "other": "2001-09-24T22:14:54",
+            "www.webarchive.org.uk": "2008-08-26T10:51:32",
+            "webcitation.org": "2005-12-09T17:27:14"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.businessweek.com",
+    "Estimated Creation Date": "2009-08-19T11:04:59",
+    "Last Modified": "",
+    "Bitly.com": "2009-08-19T11:04:59",
+    "Topsy.com": "2012-12-03T16:50:16",
+    "Backlinks": "",
+    "Google.com": "",
+    "Archives": {
+        "Earliest": "",
+        "By_Archive": {}
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.stanford.edu",
+    "Estimated Creation Date": "1996-12-29T18:10:20",
+    "Last Modified": "",
+    "Bitly.com": "2009-06-17T02:25:13",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2001-01-31T00:00:00",
+    "Archives": {
+        "Earliest": "1996-12-29T18:10:20",
+        "By_Archive": {
+            "wayback.archive-it.org": "2006-03-10T16:19:30",
+            "api.wayback.archive.org": "1996-12-29T18:10:20",
+            "webarchive.nationalarchives.gov.uk": "2008-09-07T00:00:00",
+            "other": "2001-10-23T21:04:26",
+            "www.webarchive.org.uk": "2008-06-25T15:42:39",
+            "webcitation.org": "2006-04-19T22:22:44"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.commonlaw.com",
+    "Estimated Creation Date": "1997-03-20T01:39:01",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2001-01-31T00:00:00",
+    "Archives": {
+        "Earliest": "1997-03-20T01:39:01",
+        "By_Archive": {
+            "api.wayback.archive.org": "1997-03-20T01:39:01"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.delaware.gov",
+    "Estimated Creation Date": "2001-03-19T16:08:23",
+    "Last Modified": "",
+    "Bitly.com": "2010-01-04T13:17:21",
+    "Topsy.com": "2009-05-14T04:45:58",
+    "Backlinks": "",
+    "Google.com": "2008-05-22T00:00:00",
+    "Archives": {
+        "Earliest": "2001-03-19T16:08:23",
+        "By_Archive": {
+            "wayback.archive-it.org": "2008-12-08T18:44:29",
+            "other": "2004-10-23T02:45:51",
+            "api.wayback.archive.org": "2001-03-19T16:08:23",
+            "webcitation.org": "2008-10-08T11:02:34",
+            "webarchive.nationalarchives.gov.uk": "2011-10-06T00:00:00"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.state.nj.us",
+    "Estimated Creation Date": "1997-04-21T17:12:30",
+    "Last Modified": "",
+    "Bitly.com": "2010-05-24T10:33:40",
+    "Topsy.com": "2009-04-14T08:34:49",
+    "Backlinks": "",
+    "Google.com": "",
+    "Archives": {
+        "Earliest": "1997-04-21T17:12:30",
+        "By_Archive": {
+            "other": "2004-10-09T16:15:01",
+            "api.wayback.archive.org": "1997-04-21T17:12:30"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+

@@ -1,0 +1,638 @@
+{
+    "URI": "http://www.therssweblog.com/?guid=20110929082007",
+    "Estimated Creation Date": "2011-09-29T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2011-11-16T04:38:30",
+    "Topsy.com": "2011-11-16T04:38:40",
+    "Backlinks": "",
+    "Google.com": "2011-09-29T00:00:00",
+    "Archives": {
+        "Earliest": "2011-10-05T06:57:13",
+        "By_Archive": {
+            "api.wayback.archive.org": "2011-10-05T06:57:13"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.therssweblog.com/?guid=20110414070959",
+    "Estimated Creation Date": "2011-04-14T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2011-05-09T12:08:55",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2011-04-14T00:00:00",
+    "Archives": {
+        "Earliest": "2011-05-07T11:01:21",
+        "By_Archive": {
+            "api.wayback.archive.org": "2011-05-07T11:01:21"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.therssweblog.com/?guid=20101021093403",
+    "Estimated Creation Date": "2010-10-21T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2010-10-21T12:43:02",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2010-10-21T00:00:00",
+    "Archives": {
+        "Earliest": "2010-11-23T08:51:40",
+        "By_Archive": {
+            "api.wayback.archive.org": "2010-11-23T08:51:40"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.therssweblog.com/?guid=20101020085521",
+    "Estimated Creation Date": "2010-10-20T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2010-10-20T12:09:03",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2010-10-20T00:00:00",
+    "Archives": {
+        "Earliest": "2010-11-23T08:47:57",
+        "By_Archive": {
+            "api.wayback.archive.org": "2010-11-23T08:47:57"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.therssweblog.com/?guid=20101018164811",
+    "Estimated Creation Date": "2010-10-18T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2010-10-18T20:04:00",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2010-10-18T00:00:00",
+    "Archives": {
+        "Earliest": "2011-03-19T09:04:51",
+        "By_Archive": {
+            "api.wayback.archive.org": "2011-03-19T09:04:51"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://zenhabits.net/mmm/",
+    "Estimated Creation Date": "2008-05-14T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2013-01-14T15:27:10",
+    "Topsy.com": "2013-01-14T16:09:15",
+    "Backlinks": "",
+    "Google.com": "2008-05-14T00:00:00",
+    "Archives": {
+        "Earliest": "2013-01-14T21:53:42",
+        "By_Archive": {
+            "api.wayback.archive.org": "2013-01-14T21:53:42"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://zenhabits.net/do/",
+    "Estimated Creation Date": "2008-10-23T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-12-18T18:24:06",
+    "Topsy.com": "2012-12-19T06:56:19",
+    "Backlinks": "2013-01-21T02:42:15",
+    "Google.com": "2008-10-23T00:00:00",
+    "Archives": {
+        "Earliest": "2012-12-31T15:47:30",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-12-31T15:47:30"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://zenhabits.net/almost-anything/",
+    "Estimated Creation Date": "2008-09-01T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-11-21T17:50:28",
+    "Topsy.com": "2012-11-21T17:50:28",
+    "Backlinks": "2013-01-13T00:07:25",
+    "Google.com": "2008-09-01T00:00:00",
+    "Archives": {
+        "Earliest": "2013-01-13T00:07:03",
+        "By_Archive": {
+            "api.wayback.archive.org": "2013-01-13T00:07:03"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://zenhabits.net/genuine/",
+    "Estimated Creation Date": "2012-10-16T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-10-16T13:51:03",
+    "Topsy.com": "2012-10-16T18:14:22",
+    "Backlinks": "",
+    "Google.com": "2012-10-16T00:00:00",
+    "Archives": {
+        "Earliest": "2012-10-18T11:55:54",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-10-18T11:55:54"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://zenhabits.net/zen-work/",
+    "Estimated Creation Date": "2008-10-17T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-09-13T17:24:35",
+    "Topsy.com": "2012-09-13T17:19:00",
+    "Backlinks": "",
+    "Google.com": "2008-10-17T00:00:00",
+    "Archives": {
+        "Earliest": "2012-10-06T14:49:03",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-10-06T14:49:03"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://zenhabits.net/intentional/",
+    "Estimated Creation Date": "2007-12-06T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-08-14T14:46:52",
+    "Topsy.com": "2012-08-14T19:02:16",
+    "Backlinks": "",
+    "Google.com": "2007-12-06T00:00:00",
+    "Archives": {
+        "Earliest": "2012-08-16T04:14:46",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-08-16T04:14:46",
+            "webarchive.nationalarchives.gov.uk": "2012-09-04T00:00:00"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://scienceblogs.com/zooillogix/2010/09/27/julia-hawaii-your-friends-good/",
+    "Estimated Creation Date": "2010-09-27T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "2012-11-07T07:26:51",
+    "Google.com": "2010-09-27T00:00:00",
+    "Archives": {
+        "Earliest": "2012-07-20T00:35:24",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-07-20T00:35:24"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://scienceblogs.com/zooillogix/2010/07/01/turtles-are-not-pure-evil/",
+    "Estimated Creation Date": "2010-07-01T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2010-07-01T00:00:00",
+    "Archives": {
+        "Earliest": "2012-07-20T06:40:59",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-07-20T06:40:59"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://scienceblogs.com/zooillogix/2010/06/30/we-here-at-zooillogix-balked/",
+    "Estimated Creation Date": "2010-06-30T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "2012-11-07T07:26:51",
+    "Google.com": "2010-06-30T00:00:00",
+    "Archives": {
+        "Earliest": "2012-07-20T06:51:03",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-07-20T06:51:03"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://scienceblogs.com/zooillogix/2010/06/28/so-you-think-youre-smart/",
+    "Estimated Creation Date": "2010-06-28T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "2012-11-07T07:26:51",
+    "Google.com": "2010-06-28T00:00:00",
+    "Archives": {
+        "Earliest": "2012-07-20T06:22:19",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-07-20T06:22:19"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://scienceblogs.com/zooillogix/2010/06/22/hot-molting-action/",
+    "Estimated Creation Date": "2012-06-21T02:32:05",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "2012-06-21T02:32:05",
+    "Backlinks": "2012-08-16T07:58:03",
+    "Google.com": "",
+    "Archives": {
+        "Earliest": "2012-10-23T23:08:59",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-10-23T23:08:59"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://scienceblogs.com/zooillogix/2010/06/21/spectacular-deep-sea-squid-foo/",
+    "Estimated Creation Date": "2010-06-21T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2010-06-21T00:00:00",
+    "Archives": {
+        "Earliest": "2012-11-07T07:32:29",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-11-07T07:32:29"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.yummly.com/blog/2012/10/yummly-announces-revolutionary-advertising-platform-for-food-2/",
+    "Estimated Creation Date": "2011-07-12T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2011-07-12T00:00:00",
+    "Archives": {
+        "Earliest": "",
+        "By_Archive": {}
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.yummly.com/blog/2013/01/featured-food-blog-vegan-richa/",
+    "Estimated Creation Date": "2013-01-03T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2013-01-24T16:49:24",
+    "Topsy.com": "2013-01-24T16:49:55",
+    "Backlinks": "2013-01-31T20:29:16",
+    "Google.com": "2013-01-03T00:00:00",
+    "Archives": {
+        "Earliest": "",
+        "By_Archive": {}
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.yummly.com/blog/2012/09/avocado-fries-with-chipotle-ketchup-2/",
+    "Estimated Creation Date": "2012-09-01T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-09-12T21:22:55",
+    "Topsy.com": "2012-09-12T20:55:32",
+    "Backlinks": "",
+    "Google.com": "2012-09-01T00:00:00",
+    "Archives": {
+        "Earliest": "2012-10-24T12:36:03",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-10-24T12:36:03"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.yummly.com/blog/2012/06/6-dessert-recipes-for-one/",
+    "Estimated Creation Date": "2012-06-13T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-06-28T22:01:09",
+    "Topsy.com": "2012-06-28T22:04:40",
+    "Backlinks": "",
+    "Google.com": "2012-06-13T00:00:00",
+    "Archives": {
+        "Earliest": "2012-07-02T16:01:13",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-07-02T16:01:13"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.yummly.com/blog/2013/01/homemade-frappuccinos-on-a-budget/",
+    "Estimated Creation Date": "2012-02-16T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2013-01-15T19:21:04",
+    "Topsy.com": "2013-01-15T18:47:36",
+    "Backlinks": "",
+    "Google.com": "2012-02-16T00:00:00",
+    "Archives": {
+        "Earliest": "2013-01-21T08:26:34",
+        "By_Archive": {
+            "api.wayback.archive.org": "2013-01-21T08:26:34"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.yummly.com/blog/2012/05/delicate-french-macarons-you-can-make-for-yourself/",
+    "Estimated Creation Date": "2012-03-16T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-05-06T16:58:30",
+    "Topsy.com": "2012-05-06T17:04:19",
+    "Backlinks": "",
+    "Google.com": "2012-03-16T00:00:00",
+    "Archives": {
+        "Earliest": "2012-05-12T22:23:10",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-05-12T22:23:10"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.yummly.com/blog/2011/12/super-pomegranate-recipes-to-brighten-up-winter/",
+    "Estimated Creation Date": "2011-05-20T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2011-12-28T00:12:50",
+    "Topsy.com": "2011-12-27T23:04:31",
+    "Backlinks": "",
+    "Google.com": "2011-05-20T00:00:00",
+    "Archives": {
+        "Earliest": "2012-01-09T09:58:46",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-01-09T09:58:46"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.worldchanging.com/archives/011741.html",
+    "Estimated Creation Date": "2011-03-02T00:00:00",
+    "Last Modified": "2012-06-06T21:47:57",
+    "Bitly.com": "2011-03-03T01:17:14",
+    "Topsy.com": "2011-03-03T06:19:15",
+    "Backlinks": "",
+    "Google.com": "2011-03-02T00:00:00",
+    "Archives": {
+        "Earliest": "2011-03-05T21:24:51",
+        "By_Archive": {
+            "api.wayback.archive.org": "2011-03-05T21:24:51"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.worldchanging.com/archives/011709.html",
+    "Estimated Creation Date": "2010-11-04T00:00:00",
+    "Last Modified": "2012-06-06T21:47:57",
+    "Bitly.com": "2010-11-04T22:50:15",
+    "Topsy.com": "2010-11-05T03:05:38",
+    "Backlinks": "",
+    "Google.com": "2010-11-04T00:00:00",
+    "Archives": {
+        "Earliest": "2010-11-12T02:13:00",
+        "By_Archive": {
+            "api.wayback.archive.org": "2010-11-12T02:13:00"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.worldchanging.com/archives/011703.html",
+    "Estimated Creation Date": "2010-11-02T00:00:00",
+    "Last Modified": "2012-06-06T21:47:57",
+    "Bitly.com": "2010-11-02T15:20:06",
+    "Topsy.com": "2010-11-02T19:09:17",
+    "Backlinks": "",
+    "Google.com": "2010-11-02T00:00:00",
+    "Archives": {
+        "Earliest": "2010-11-06T03:30:55",
+        "By_Archive": {
+            "api.wayback.archive.org": "2010-11-06T03:30:55"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.worldchanging.com/archives/011676.html",
+    "Estimated Creation Date": "2010-10-25T00:00:00",
+    "Last Modified": "2012-06-06T21:47:57",
+    "Bitly.com": "2010-10-25T21:10:13",
+    "Topsy.com": "2010-10-26T00:57:47",
+    "Backlinks": "",
+    "Google.com": "2010-10-25T00:00:00",
+    "Archives": {
+        "Earliest": "2010-10-29T15:26:32",
+        "By_Archive": {
+            "api.wayback.archive.org": "2010-10-29T15:26:32"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.worldchanging.com/archives/011688.html",
+    "Estimated Creation Date": "2010-10-26T00:00:00",
+    "Last Modified": "2012-06-06T21:47:57",
+    "Bitly.com": "2010-10-26T16:09:55",
+    "Topsy.com": "2010-10-26T20:00:46",
+    "Backlinks": "",
+    "Google.com": "2010-10-26T00:00:00",
+    "Archives": {
+        "Earliest": "2010-10-31T01:06:09",
+        "By_Archive": {
+            "api.wayback.archive.org": "2010-10-31T01:06:09"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.artistdirect.com/entertainment-news/article/justin-bieber-announces-live-video-stream-to-run-against-the-grammys/00jw4Yq3oL9rB",
+    "Estimated Creation Date": "2013-02-10T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2013-02-10T00:00:00",
+    "Archives": {
+        "Earliest": "",
+        "By_Archive": {}
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.artistdirect.com/entertainment-news/article/pink-reveals-her-secret-to-a-happy-marriage-listening-in-moderation/0fyzbq83YvebB",
+    "Estimated Creation Date": "2013-02-10T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2013-02-10T00:00:00",
+    "Archives": {
+        "Earliest": "",
+        "By_Archive": {}
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.soaw.org/news/organizing-updates/3724-reflections-from-after-the-coup-a-letter-from-honduras-",
+    "Estimated Creation Date": "2011-07-09T11:14:56",
+    "Last Modified": "2013-03-02T04:22:47",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2011-07-20T00:00:00",
+    "Archives": {
+        "Earliest": "2011-07-09T11:14:56",
+        "By_Archive": {
+            "wayback.archive-it.org": "2011-10-13T21:13:29",
+            "api.wayback.archive.org": "2011-07-09T11:14:56"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.artistdirect.com/entertainment-news/article/william-basinski-s-ambient-9-11-elegy-the-disintegration-loops-gets-deluxe-box-set-reissue/0fkZalqbQvfL1",
+    "Estimated Creation Date": "2012-11-19T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "",
+    "Topsy.com": "",
+    "Backlinks": "",
+    "Google.com": "2012-11-19T00:00:00",
+    "Archives": {
+        "Earliest": "",
+        "By_Archive": {}
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.artistdirect.com/entertainment-news/article/live-review-down-key-club-hollywood/10371561",
+    "Estimated Creation Date": "2013-01-17T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2013-01-17T17:32:05",
+    "Topsy.com": "2013-01-17T17:32:06",
+    "Backlinks": "",
+    "Google.com": "2013-01-17T00:00:00",
+    "Archives": {
+        "Earliest": "",
+        "By_Archive": {}
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.artistdirect.com/entertainment-news/article/live-review-soundgarden-the-fonda-theatre-hollywood/10297733",
+    "Estimated Creation Date": "2012-11-28T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-11-28T18:26:33",
+    "Topsy.com": "2012-11-28T18:17:04",
+    "Backlinks": "",
+    "Google.com": "2012-11-28T00:00:00",
+    "Archives": {
+        "Earliest": "2013-01-16T16:23:12",
+        "By_Archive": {
+            "api.wayback.archive.org": "2013-01-16T16:23:12"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
+{
+    "URI": "http://www.artistdirect.com/entertainment-news/article/live-review-the-naked-and-famous-the-wiltern-los-angeles/9967294",
+    "Estimated Creation Date": "2012-03-22T00:00:00",
+    "Last Modified": "",
+    "Bitly.com": "2012-03-22T17:07:03",
+    "Topsy.com": "2012-03-22T16:50:59",
+    "Backlinks": "",
+    "Google.com": "2012-03-22T00:00:00",
+    "Archives": {
+        "Earliest": "2012-03-24T18:17:51",
+        "By_Archive": {
+            "api.wayback.archive.org": "2012-03-24T18:17:51"
+        }
+    }
+}
+
+ #-----------------------------------------# 
+
