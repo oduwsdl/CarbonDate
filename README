@@ -1,0 +1,24 @@
+-----------Carbon Date---
+
+Requirements:
+- Python 2.6+
+- Bottle: Python web Framework (You can download it from: "http://bottlepy.org/docs/dev/")
+
+
+Prepration steps:
+- Download Code
+- Modify config file as follows:
+  - Register for a Bitly API "http://dev.bitly.com/" and add the API key to the config file in the designated field.
+  - You can register multiple Bitly API keys and use them simultaneously.
+  - Register for a Topsy otter API key "http://manage.topsy.com/app/create" and add the API key to the config file in the designated field.
+  - Get the IP address of your server and the corresponding port and add it to the config file in the designated field.
+
+Run:
+- Launch server.py
+- <YOUR SERVER IP>:<YOUR SERVER PORT>/cd/<THE URL YOU WANT TO GET THE CREATION DATE FOR>
+- ex: http://128.82.7.232:80/cd/http://www.cs.odu.edu
+- Note: If you are using port 80 you can ommit it.
+
+Authors:
+- This work has been implemented by Hany M. SalahEldeen at Old Dominion University with the supervision of Dr. Michael L. Nelson.
+- This work is based on the paper: "Carbon Dating The Web: Estimating the Age of Web Resources" published at TempWeb03 at WWW 2013, Rio de Janeiro, Brazil.
