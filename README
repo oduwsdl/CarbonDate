@@ -1,0 +1,26 @@
+#-----Read Me--------
+* Carbon dating the web: Estimating the age of web resources.
+* This is a package developed by Hany SalahELdeen, from OLD Dominion University, Norfolk, Virginia. 
+* Please feel free to use it in your research but provide the appropriate citation. This work has been published in TempWeb03 at WWW conference in Rio de Janiero, Brazil 2013.
+* Full paper:
+http://arxiv.org/abs/1304.5213
+* This work was supported in part by the Library of Congress and NSF IIS-1009392.
+
+#-----Configuration file--------
+* First you need to register in each of bitly and topsy to get the corresponding API keys and paste them in the config file.
+* Bitly API Registeration: https://bitly.com/a/your_api_key
+* Topsy Otter API registeration: http://manage.topsy.com/app/create
+* Sample config file:
+{
+	"BitlyKeys": ["YOUR BITLY API KEY"],
+	"TopsyKey": "YOUR TOPSY API KEY"
+	"ServerIP" : "YOUR SERVER IP HERE"
+	"ServerPort": CORRESPONDING_PORT
+}
+
+#-----System Requirements--------
+* Python 2.6+
+* Python libraries installed:
+  * simplejson
+  * bottle
+  * ordereddict
