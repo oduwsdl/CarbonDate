@@ -2,7 +2,7 @@ import bottle
 from bottle import route, run, template, response
 import json
 from ordereddict import OrderedDict
-
+import simplejson
 from getTopsy import getTopsyCreationDate
 from getBitly import getBitlyCreationDate
 from getArchives import getArchivesCreationDate
@@ -55,8 +55,8 @@ bottle.debug(True)
 fileConfig = open("config", "r")
 config = fileConfig.read()
 fileConfig.close()
-json = simplejson.loads(config)
-ServerIP = json["ServerIP"]
-ServerPort = json["ServerPort"]
+jsonFile = simplejson.loads(config)
+ServerIP = jsonFile["ServerIP"]
+ServerPort = jsonFile["ServerPort"]
 
 run(host=ServerIP, port=int(ServerPort))
