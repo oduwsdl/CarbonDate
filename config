@@ -1,6 +1,6 @@
 {
-	"BitlyKeys": ["YOUR BITLY API KEY"],
-	"TopsyKey": "YOUR TOPSY API KEY"
-	"ServerIP" : "YOUR SERVER IP HERE"
-	"ServerPort": CORRESPONDING_PORT
+	"AccessToken": ["YourOAuthAccessTokenHere"],
+	"CasperJSLocation": "/usr/local/bin/casperjs",
+	"ServerIP": "0.0.0.0",
+	"ServerPort": 8080
 }

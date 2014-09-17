@@ -12,13 +12,16 @@ import commands
 from datetime import datetime
 
 def getMementos(uri):
+	
     uri = uri.replace(' ', '')
     orginalExpression = re.compile( r"<http://[A-Za-z0-9.:=/%-_ ]*>; rel=\"original\"," )
     mementoExpression = re.compile( r"<http://[A-Za-z0-9.:=/&,%-_ \?]*>;rel=\"(memento|first memento|last memento|first memento last memento|first last memento)\";datetime=\"(Sat|Sun|Mon|Tue|Wed|Thu|Fri), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (19|20)\d\d \d\d:\d\d:\d\d GMT\"" )
     zeroMementoExpression = re.compile(r"Resource: http://[A-Za-z0-9.:=/&,%-_ ]*")
-    baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/'
 
+    #baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/'
+    baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
     memento_list = []
+    source = ''
 
     try:
 	search_results = urllib.urlopen(baseURI+uri)
@@ -27,6 +30,7 @@ def getMementos(uri):
         timemapList = the_page.split('\n')
 
         count = 0
+        
         for line in timemapList:
             if count <= 1:
                 if line.find('Resource not in archive') > -1:
@@ -43,12 +47,20 @@ def getMementos(uri):
 		if(line.find("</memento")>0):
 			line = line.replace("</memento", "<http://api.wayback.archive.org/memento")
 
+
 		loc = line.find('>;rel="')
-	        tofind = ';datetime="'
+
+	        #tofind = ';datetime="'
+		tofind = '; datetime="'
+
 	        loc2 = line.find(tofind)
 		if(loc!=-1 and loc2!=-1):
                     mementoURL = line[2:loc]
 		    timestamp = line[loc2+len(tofind):line.find('"',loc2+len(tofind)+3)]
+
+		    #populate source
+		    if( len(source)<1 ):
+		    	source = mementoURL[1:len(mementoURL)-1]
 
 		    epoch = int(calendar.timegm(time.strptime(timestamp, '%a, %d %b %Y %H:%M:%S %Z')))
 		    day_string = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
@@ -75,53 +87,65 @@ def getMementos(uri):
                     if (uri.find(webARchive)!=-1):
                         type = 'Internet Archive'
 			name = webARchive
-                        category = 'IA'
+                        #category = 'IA'
+                        category = 'Internet Archive'
                     elif (uri.find(yahoo1)!=-1 or uri.find(yahoo2)!=-1 or uri.find(yahoo3)!=-1):
                         type = 'Yahoo'
 			name = 'yahoo.com'
-                        category = 'SE'
+                        #category = 'SE'
+                        category = 'Yahoo Search Engine'
                     elif (uri.find(diigo)!=-1):
-                        type = 'diigo'
 			name = diigo
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'diigo'
                     elif (uri.find(bing)!=-1):
                         type = 'Bing'
 			name = bing
-                        category = 'SE'
+                        #category = 'SE'
+                        category = 'Bing Search Engine'
                     elif (uri.find(wayback)!=-1):
                         type = 'Archive-It'
 			name = wayback
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'Archive-It'
                     elif (uri.find(webArchiveNationalUK)!=-1):
                         type = 'UK National Archive'
 			name = webArchiveNationalUK
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'UK National Archive'
                     elif (uri.find(webHarvest)!=-1):
                         type = 'Web Harvest'
 			name = webHarvest
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'Web Harvest'
                     elif (uri.find(webArchiveOrgUK)!=-1):
                         type = 'UK Web Archive'
 			name = webArchiveOrgUK
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'UK Web Archive'
                     elif (uri.find(webCitation)!=-1):
                         type = 'Web Citation'
 			name = webCitation
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'Web Citation'
                     elif (uri.find(cdlib)!=-1):
                         type = 'CD Lib'
 			name = cdlib
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'CD Lib'
                     elif (uri.find(archiefweb)!=-1):
                         type = 'ArchiefWeb'
 			name = archiefweb
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'ArchiefWeb'
                     elif (uri.find(mementoWayBack)!=-1):
                         type = 'Wayback Machine'
 			name = mementoWayBack
-                        category = 'Others'
+                        #category = 'Others'
+                        category = 'Wayback Machine'
                     else:
-			name = "other"
+			#name = "other"
+			name = source
                         type = 'Not Known'
                         category = 'Others'
                 
@@ -146,6 +170,7 @@ def getMementos(uri):
     except urllib2.URLError:
         pass
 
+    
     return memento_list
   
 
@@ -154,15 +179,20 @@ def getRealDate(url, memDate):
 	page = commands.getoutput(co)
 	date = ""
 
-	to_find = "X-Archive-Orig-Last-modified: "
+	#to_find = "X-Archive-Orig-Last-modified: "
+	to_find = "X-Archive-Orig-last-modified: "
 	loc = page.find(to_find)
+
+	
+
 	if(loc !=-1):
 		end = page.find("\r", loc)
 		date = page[loc+len(to_find):end]
 		date = date.strip()
 
 	if(date ==""):		
-		to_find = "X-Archive-Orig-Date: "
+		#to_find = "X-Archive-Orig-Date: "
+		to_find = "X-Archive-Orig-date: "
 		loc = page.find(to_find)
 		if(loc !=-1):
 			end = page.find("\r", loc)
@@ -177,14 +207,17 @@ def getRealDate(url, memDate):
 	
 	return date  
 
-def getArchivesCreationDate(url):
+def getArchivesCreationDate(url, outputArray, outputArrayIndex):
 	try:
 		mementos = getMementos(url)
 		if(len(mementos) == 0):
 			result = []
 			result.append(("Earliest", ""))
 			result.append(("By_Archive", dict([])))
+			outputArray[outputArrayIndex] = result
+			print "Done Archives"
 			return dict(result)
+
 		archives = {}
 		for memento in mementos:
 			epoch = int(calendar.timegm(time.strptime(memento["time"], '%Y-%m-%dT%H:%M:%S')))
@@ -223,6 +256,9 @@ def getArchivesCreationDate(url):
 				continue
 			result2.append((archive, str(archives[archive]["time"])))
 		result.append(("By_Archive", dict(result2)))
+		
+		outputArray[outputArrayIndex] = result
+		print "Done Archives"
 		return dict(result)
 
 	except:
@@ -230,4 +266,8 @@ def getArchivesCreationDate(url):
 		result = []
 		result.append(("Earliest", ""))
 		result.append(("By_Archive", dict([])))
+
+		outputArray[outputArrayIndex] = result
+		print "Done Archives"
 		return dict(result)
+
