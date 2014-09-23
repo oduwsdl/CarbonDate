@@ -52,6 +52,7 @@ def getTopsyCreationDate(URL, outputArray, indexOfOutputArray):
 			allpages = allpages + page	
 			offset = offset + 100	
 			
+			#print "offset: ", offset
 
 			#for debug
 			#if(offset>500):

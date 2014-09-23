@@ -43,13 +43,13 @@ def GetBitlyJson(URL):
 
 def getBitlyCreationDate(url, outputArray, indexOfOutputArray):
 	try:
-		
 		# Get aggregated url
 		
 		URL = "https://api-ssl.bitly.com/v3/link/lookup?access_token=ACCESS_TOKEN&url="+url
 		json = GetBitlyJson(URL)
 		
 		if len(json) < 1:
+			print "Done Bitly"
 			return ""
 
 		if(json['status_code']!=200):

@@ -18,14 +18,14 @@ from threading import Thread
 import Queue
 import datetime
 
-import sys, traceback
+import os,sys, traceback
 
 
 
 
 
-def cd(url):
-    print 'Getting Creation dates for: ' + url
+def cd(url, backlinksFlag = False):
+    #print 'Getting Creation dates for: ' + url
 
     threads = []
     outputArray =['','','','','','']
@@ -36,7 +36,10 @@ def cd(url):
     bitlyThread = Thread(target=getBitlyCreationDate, args=(url, outputArray, 1))
     googleThread = Thread(target=getGoogleCreationDate, args=(url, outputArray, 2))
     archivesThread = Thread(target=getArchivesCreationDate, args=(url, outputArray, 3))
-    backlinkThread = Thread(target=getBacklinksFirstAppearanceDates, args=(url, outputArray, 4))
+    
+    if( backlinksFlag ):
+        backlinkThread = Thread(target=getBacklinksFirstAppearanceDates, args=(url, outputArray, 4))
+
     topsyThread = Thread(target=getTopsyCreationDate, args=(url, outputArray, 5))
     
 
@@ -45,7 +48,10 @@ def cd(url):
     threads.append(bitlyThread)
     threads.append(googleThread)	
     threads.append(archivesThread)
-    threads.append(backlinkThread)
+
+    if( backlinksFlag ):
+        threads.append(backlinkThread)
+
     threads.append(topsyThread)	
 
     
@@ -54,7 +60,10 @@ def cd(url):
     bitlyThread.start()
     googleThread.start()
     archivesThread.start()
-    backlinkThread.start()
+
+    if( backlinksFlag ):
+        backlinkThread.start()
+
     topsyThread.start()
 
     
@@ -67,7 +76,12 @@ def cd(url):
     bitly = outputArray[1] 
     google = outputArray[2] 
     archives = outputArray[3] 
-    backlink = outputArray[4]
+    
+    if( backlinksFlag ):
+        backlink = outputArray[4]
+    else:
+        backlink = ''
+
     topsy = outputArray[5]  
     
     #note that archives["Earliest"] = archives[0][1]
@@ -75,9 +89,9 @@ def cd(url):
         lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink, topsy]) #for thread
     except:
        print sys.exc_type, sys.exc_value , sys.exc_traceback
-    
-    
 
+    
+    
     result = []
     
     result.append(("URI", url))
@@ -104,13 +118,19 @@ def cd(url):
 
 
 if len(sys.argv) == 1:
-    print "Usage: ", sys.argv[0] + " url (e.g: " + sys.argv[0] + " http://www.cs.odu.edu)"
+    print "Usage: ", sys.argv[0] + " url backlinksOnOffFlag ( e.g: " + sys.argv[0] + " http://www.cs.odu.edu  [0|1] )"
 elif len(sys.argv) == 2:
     #fix for none-thread safe strptime
     #If time.strptime is used before starting the threads, then no exception is raised (the issue may thus come from strptime.py not being imported in a thread safe manner). -- http://bugs.python.org/issue7980
     time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')
     cd(sys.argv[1])
-  
+elif len(sys.argv) == 3:
+    time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')
+    
+    if(sys.argv[2] == '1'):
+        cd(sys.argv[1], True)
+    else:
+        cd(sys.argv[1])
   
   
   

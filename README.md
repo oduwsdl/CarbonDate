@@ -16,6 +16,7 @@ To run it as a server:
 $ python server.py
 ```
 To CarbonDate `http://example.com`:
+
 Open in a Web browser: `http://localhost:8080/cd?url=http://example.com`
 
 To run it as a local script:
