@@ -1,0 +1,21 @@
+[16/Sep/2014:14:46:10] ENGINE Listening for SIGHUP.
+[16/Sep/2014:14:46:10] ENGINE Listening for SIGTERM.
+[16/Sep/2014:14:46:10] ENGINE Listening for SIGUSR1.
+[16/Sep/2014:14:46:10] ENGINE Bus STARTING
+[16/Sep/2014:14:46:10] ENGINE Started monitor thread 'Autoreloader'.
+[16/Sep/2014:14:46:10] ENGINE Started monitor thread '_TimeoutMonitor'.
+[16/Sep/2014:14:46:10] ENGINE Error in HTTP server: shutting down
+Traceback (most recent call last):
+  File "/home/anwala/testdir/local/lib/python2.7/site-packages/cherrypy/process/servers.py", line 205, in _start_http_thread
+    self.httpserver.start()
+  File "/home/anwala/testdir/local/lib/python2.7/site-packages/cherrypy/wsgiserver/wsgiserver2.py", line 1955, in start
+    raise socket.error(msg)
+error: No socket could be created -- (('0.0.0.0', 80): [Errno 13] Permission denied)
+
+[16/Sep/2014:14:46:10] ENGINE Bus STOPPING
+[16/Sep/2014:14:46:10] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('0.0.0.0', 80)) already shut down
+[16/Sep/2014:14:46:10] ENGINE Stopped thread 'Autoreloader'.
+[16/Sep/2014:14:46:10] ENGINE Stopped thread '_TimeoutMonitor'.
+[16/Sep/2014:14:46:10] ENGINE Bus STOPPED
+[16/Sep/2014:14:46:10] ENGINE Bus EXITING
+[16/Sep/2014:14:46:10] ENGINE Bus EXITED

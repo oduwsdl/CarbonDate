@@ -1,6 +1,7 @@
+from checkForModules import checkForModules
 import json
 from ordereddict import OrderedDict
-import simplejson
+#import simplejson
 
 import re
 
@@ -9,6 +10,7 @@ from getArchives import getArchivesCreationDate
 from getGoogle import getGoogleCreationDate
 from getBacklinks import *
 from getLowest import getLowest
+
 from getLastModified import getLastModifiedDate
 from getTopsyScrapper import getTopsyCreationDate
 from htmlMessages import *
@@ -22,9 +24,8 @@ import os,sys, traceback
 
 
 
-
-
 def cd(url, backlinksFlag = False):
+
     #print 'Getting Creation dates for: ' + url
 
     threads = []

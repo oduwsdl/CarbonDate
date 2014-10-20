@@ -5,16 +5,29 @@ import calendar
 
 import logging
 import os
-import simplejson
+import json
 
 
 
-fileConfig = open("config", "r")
-config = fileConfig.read()
-fileConfig.close()
-json = simplejson.loads(config)
+try:
+	fileConfig = open("config", "r")
+	config = fileConfig.read()
+	fileConfig.close()
+	json = json.loads(config)
 
-CasperJsLocation = json["CasperJSLocation"]
+	CasperJsLocation = json["CasperJSLocation"]
+
+	if( len(CasperJsLocation) < 1):
+		print "CasperJsLocation not set"
+		sys.exit(0)
+except:
+	exc_type, exc_obj, exc_tb = sys.exc_info()
+	fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+	print "check config file location/format"
+	print exc_type , fname , exc_tb.tb_lineno
+	sys.exit(0)
+
+
 
 def extract(A, B, strt, page):
 	extracted = ""
@@ -28,7 +41,6 @@ def extract(A, B, strt, page):
 
 	extracted = page[loc+len(A):loc2]
 	return extracted, True, loc2
-
 
 def getTopsyCreationDate(URL, outputArray, indexOfOutputArray):
 	try:
@@ -100,7 +112,7 @@ def getTopsyCreationDate(URL, outputArray, indexOfOutputArray):
 	except:
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-		print exc_type + ',' + fname + ',' + exc_tb.tb_lineno
+		print exc_type , fname , exc_tb.tb_lineno
 
 	print "Done Topsy"
 	return

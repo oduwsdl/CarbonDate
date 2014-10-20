@@ -1,4 +1,5 @@
 import cherrypy
+from checkForModules import checkForModules
 import json
 from ordereddict import OrderedDict
 import simplejson

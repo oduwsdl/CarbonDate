@@ -63,6 +63,8 @@ def getBacklinksCreationDates(url):
 		print sys.exc_info()
 	return backlinks
 
+
+
 def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
 
 	
@@ -73,8 +75,13 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
 	limitEpoch = int(calendar.timegm(time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')))
 	try:
 		for link in links:
-			datestamp = getFirstAppearance(url, link)
 
+			datestamp = getFirstAppearance(url, link)
+			#print "datestamp: ", datestamp
+
+			#print ""
+			#print "debug return here"
+			#return
 	
 			
 			if(datestamp==""):
@@ -99,4 +106,3 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
 	outputArray[outputArrayIndex] = timeVal
 	print "Done Backlinks"
 	return timeVal
-

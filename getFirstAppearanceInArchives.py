@@ -11,6 +11,7 @@ import commands
 import math
 
 from datetime import datetime
+import requests
 
 def getMementos(uri):
 
@@ -24,7 +25,10 @@ def getMementos(uri):
 
     zeroMementoExpression = re.compile(r"Resource: http://[A-Za-z0-9.:=/&,%-_ ]*")
     #old, new on next: baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/'
-    baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
+
+    #baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
+    #OR
+    baseURI = 'http://mementoweb.org/timemap/link/'
 
    
 
@@ -166,17 +170,23 @@ def getMementos(uri):
     
 def isInPage(url,page):
 
+
+
+	#debug - start
+	#epoch = int(calendar.timegm(time.strptime('Fri, 16 May 1990 16:23:26 GMT', '%a, %d %b %Y %H:%M:%S %Z')))
+	#date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
+	#print "......isInPage(): modified outcome for debug"
+	#return True, date
+	#debug - end
+
 	co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+page+'"'
 	page = commands.getoutput(co)
 
 	
-	
 	url = url.decode().encode('utf-8')
 	loc = page.find(url)
-	
 	date = ""
 
-	
 
 	
 	if(loc==-1):
@@ -198,12 +208,9 @@ def isInPage(url,page):
 		date = date.strip()
 
 	if(date ==""):	
-		
 
 		#"d not D": to_find = "X-Archive-Orig-Date: "
 		to_find = 'X-Archive-Orig-date: '
-
-	
 
 		loc = page.find(to_find)
 		
@@ -214,44 +221,40 @@ def isInPage(url,page):
 
 
 	if date != "" :
+		
 		epoch = int(calendar.timegm(time.strptime(date, '%a, %d %b %Y %H:%M:%S %Z')))
 		date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
+		
 		return True, date
 	else:	
 		return False, ""
 
 def getFirstAppearance(url, inurl):
+
+
 	try:
 		mementos = getMementos(inurl)
+		#print "...getFirstAppearance(): mementoLength", len(mementos)
 
-		
 
 		if(len(mementos) == 0):
+			#print "...returning"
 			return ""
-		
-		start = 0
-		end = len(mementos)
-		previous = -1
-		i = 0
-		foundbefore = False
-		count = 0
 
-		for mem in mementos:
-
-			res, date = isInPage(url,mem["link"])
-
-			if(res==True):
-				break
-
+		'''
 		while(True):
+			
 			res, date = isInPage(url,mementos[i]["link"])
 
 			if(res==True and i==0):
+				#print "...getFirstAppearance(): returning", date
 				return date
 			if(int(math.fabs(previous-i))==0):
+				#print "...getFirstAppearance(): returning"
 				return ""
 
 			if( (res==True and int(math.fabs(previous-i))==1 and foundbefore == False) or (res==False and int(math.fabs(previous-i))==1 and foundbefore == True) ):
+				#print "...getFirstAppearance(): returning",date
 				return date
 
 			previous = i
@@ -265,11 +268,24 @@ def getFirstAppearance(url, inurl):
 				i = (end-start)/2 + start
 				foundbefore = True
 		
-			count = count + 1
+			#count = count + 1
+		'''
+
+		#experimental block to see first appearance - start
+		for mem in mementos:
+			#is url in this page (mem["link"])
+			res, date = isInPage(url,mem["link"])
+			if(res==True):
+				return date
+
+		return ""
+		#experimental block to see first appearance - end
+
 
 	except:
 		#investigate: when run in cherry framework, exception thrown here
 		print sys.exc_info()
 		#print traceback.print_exception(sys.exc_type, sys.exc_value, sys.exc_traceback,limit=2, file=sys.stdout)
+		#print "...getFirstAppearance(): returning"
 		return ""
 

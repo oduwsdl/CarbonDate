@@ -1,0 +1,8 @@
+#-----System Requirements--------
+* Python 2.6+
+* Python libraries installed:
+	*ordereddict
+	*json
+	*simplejson
+	*urllib2
+	*urllib

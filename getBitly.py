@@ -35,10 +35,20 @@ def GetBitlyJson(URL):
 		if(page.find('"error": "NOT_FOUND"')!=-1):
 			break
 
-		json = simplejson.loads(page)
+		try:
 
-		if(json['status_code']==403):
-			continue
+			if( len(page) > 0 ):
+				json = simplejson.loads(page)
+
+				if(json['status_code']==403):
+					continue
+		except:
+			exc_type, exc_obj, exc_tb = sys.exc_info()
+			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+			print exc_type , fname , exc_tb.tb_lineno
+
+
+		
 	return json
 
 def getBitlyCreationDate(url, outputArray, indexOfOutputArray):
@@ -94,7 +104,10 @@ def getBitlyCreationDate(url, outputArray, indexOfOutputArray):
 		return str(creation_date)
 	
 	except:
-		print sys.exc_info()
+		exc_type, exc_obj, exc_tb = sys.exc_info()
+		fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+		print exc_type , fname , exc_tb.tb_lineno
+
 		outputArray[indexOfOutputArray] = ""
 		print "Done Bitly"
 		return ""

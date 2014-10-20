@@ -18,14 +18,19 @@ def getMementos(uri):
     mementoExpression = re.compile( r"<http://[A-Za-z0-9.:=/&,%-_ \?]*>;rel=\"(memento|first memento|last memento|first memento last memento|first last memento)\";datetime=\"(Sat|Sun|Mon|Tue|Wed|Thu|Fri), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (19|20)\d\d \d\d:\d\d:\d\d GMT\"" )
     zeroMementoExpression = re.compile(r"Resource: http://[A-Za-z0-9.:=/&,%-_ ]*")
 
-    #baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/'
-    baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
+    baseURI = 'http://mementoweb.org/timemap/link/'
+    #OR
+    #baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
     memento_list = []
     source = ''
 
+
+
+
     try:
-	search_results = urllib.urlopen(baseURI+uri)
-	the_page = search_results.read()
+    	search_results = urllib.urlopen(baseURI+uri)
+    	the_page = search_results.read()
+
 
         timemapList = the_page.split('\n')
 
@@ -173,7 +178,6 @@ def getMementos(uri):
     
     return memento_list
   
-
 def getRealDate(url, memDate):   
 	co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"'
 	page = commands.getoutput(co)
