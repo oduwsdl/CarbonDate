@@ -119,7 +119,7 @@ def cd(url, backlinksFlag = False):
 
 
 if len(sys.argv) == 1:
-    print "Usage: ", sys.argv[0] + " url backlinksOnOffFlag ( e.g: " + sys.argv[0] + " http://www.cs.odu.edu  [0|1] )"
+    print "Usage: ", sys.argv[0] + " url backlinksOnOffFlag ( e.g: " + sys.argv[0] + " http://www.cs.odu.edu  [--compute-backlinks] )"
 elif len(sys.argv) == 2:
     #fix for none-thread safe strptime
     #If time.strptime is used before starting the threads, then no exception is raised (the issue may thus come from strptime.py not being imported in a thread safe manner). -- http://bugs.python.org/issue7980
@@ -128,7 +128,7 @@ elif len(sys.argv) == 2:
 elif len(sys.argv) == 3:
     time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')
     
-    if(sys.argv[2] == '1'):
+    if(sys.argv[2] == '--compute-backlinks'):
         cd(sys.argv[1], True)
     else:
         cd(sys.argv[1])

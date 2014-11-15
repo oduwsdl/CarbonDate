@@ -22,5 +22,5 @@ Open in a Web browser: `http://localhost:8080/cd?url=http://example.com`
 To run it as a local script:
 
 ```
-$ python local.py URL
+$ python local.py url
 ```

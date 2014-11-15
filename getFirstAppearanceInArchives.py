@@ -31,8 +31,6 @@ def getMementos(uri):
     baseURI = 'http://mementoweb.org/timemap/link/'
 
    
-
-
     memento_list = []
 
     try:
@@ -229,17 +227,49 @@ def isInPage(url,page):
 	else:	
 		return False, ""
 
-def getFirstAppearance(url, inurl):
+def getFirstAppearanceForThread(outputArray, url, inurl):
 
+	if( len(outputArray) > 0 and len(url) > 0 and len(inurl) > 0 ):
+
+		t = outputArray[0]
+		print "...t start: ", t
+		outputArray[0] = ''
+		
+		try:
+			mementos = getMementos(inurl)
+
+			if(len(mementos) == 0):
+				return
+
+			for mem in mementos:
+				#is url in this page (mem["link"])
+				res, date = isInPage(url,mem["link"])
+				if(res==True):
+					outputArray[0] = date
+					print "...t done: ", t, date
+					return date
+
+
+		except:
+			print sys.exc_type, sys.exc_value , sys.exc_traceback
+			return
+
+def getFirstAppearance(url, inurl):
 
 	try:
 		mementos = getMementos(inurl)
 		#print "...getFirstAppearance(): mementoLength", len(mementos)
 
-
 		if(len(mementos) == 0):
 			#print "...returning"
 			return ""
+		
+		#start = 0
+		#end = len(mementos)
+		#previous = -1
+		#i = 0
+		#foundbefore = False
+		#count = 0
 
 		'''
 		while(True):

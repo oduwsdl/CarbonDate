@@ -5,11 +5,13 @@ from getTopsyScrapper import getTopsyCreationDate
 from getBitly import getBitlyCreationDate
 from getArchives import getArchivesCreationDate
 from getGoogle import getGoogleCreationDate
-from getFirstAppearanceInArchives import getFirstAppearance
+from getFirstAppearanceInArchives import getFirstAppearance, getFirstAppearanceForThread
 import commands
 import calendar
 import time
 import urllib
+
+from threading import Thread
 
 def getBacklinks(url):
 	inlinks = []
@@ -63,30 +65,118 @@ def getBacklinksCreationDates(url):
 		print sys.exc_info()
 	return backlinks
 
+def getLowestDateInList(listOfDates):
 
+	datestamp = ''
+	lowest_epoch = 99999999999
+	limitEpoch = int(calendar.timegm(time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')))
+
+	if( len(listOfDates) > 0 ):
+
+		for datestamp in listOfDates:
+
+			if(datestamp==''):
+					continue
+
+			epoch = int(calendar.timegm(time.strptime(datestamp, '%Y-%m-%dT%H:%M:%S')))
+
+			if(epoch<limitEpoch):
+				continue
+
+			if(epoch<lowest_epoch):
+				lowest_epoch = epoch
+
+		return lowest_epoch
+
+#spawns numberOfThreadsToSpawn targetFunction threads passing each argumentsListOfList argument 
+def spawnThreads(numberOfThreadsToSpawn, argumentsListOfList):
+
+	if( numberOfThreadsToSpawn > 0 and numberOfThreadsToSpawn == len(argumentsListOfList) ):
+
+		threads = []
+
+		for i in range(0, numberOfThreadsToSpawn):
+
+			#args: url, inurl, outputArray[0]
+			threads.append(Thread(target=getFirstAppearanceForThread, args=(argumentsListOfList[i], argumentsListOfList[i][1], argumentsListOfList[i][2])))
+
+		for t in threads :
+			t.start()
+
+		# Wait for all threads to complete
+		for t in threads:
+			t.join()
+
+def getBacklinksFirstAppearanceDatesForThread(url):
+
+	links = getBacklinks(url)
+	numberOfThreadsToSpawn = len(links)
+
+	print "links: ", len(links)
+
+
+	argumentsListOfList = []
+
+	#listOfArguments: <resultHere, url, inurl>
+	#argumentsListOfList:
+	#< <resultHere, url, inurl>,
+	#  <resultHere, url, inurl>,
+	#	...
+	# <resultHere, url, inurl>>
+	
+
+	#build arguments list
+	count = 0
+	for link in links:
+		count = count + 1
+		listOfArguments = []
+		listOfArguments.append(str(count))
+		listOfArguments.append(url)
+		listOfArguments.append(link)
+		argumentsListOfList.append(listOfArguments)
+
+
+	spawnThreads(numberOfThreadsToSpawn, argumentsListOfList)
+
+	listOfDates = []
+	print ""
+	for date in argumentsListOfList:
+		listOfDates.append(date[0])
+
+	return listOfDates
+
+def getBacklinksFirstAppearanceDates_old(url, outputArray, outputArrayIndex):
+
+	lowest_epoch = 99999999999
+	try:
+
+		listOfDates = getBacklinksFirstAppearanceDatesForThread(url)
+		lowest_epoch = getLowestDateInList(listOfDates)
+	except:
+		print sys.exc_info()
+
+	if(lowest_epoch == 99999999999):
+		outputArray[outputArrayIndex] = ''
+		print 'Done Backlinks'
+		return ''
+	
+	timeVal = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest_epoch))
+	outputArray[outputArrayIndex] = timeVal
+	print 'Done Backlinks'
+	return timeVal
 
 def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
-
-	
 	links = getBacklinks(url)
-
 	
 	lowest_epoch = 99999999999
 	limitEpoch = int(calendar.timegm(time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')))
 	try:
 		for link in links:
-
 			datestamp = getFirstAppearance(url, link)
-			#print "datestamp: ", datestamp
-
-			#print ""
-			#print "debug return here"
-			#return
-	
 			
+
 			if(datestamp==""):
 				continue
-
 			epoch = int(calendar.timegm(time.strptime(datestamp, '%Y-%m-%dT%H:%M:%S')))
 
 			if(epoch<limitEpoch):
@@ -106,3 +196,5 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
 	outputArray[outputArrayIndex] = timeVal
 	print "Done Backlinks"
 	return timeVal
+
+

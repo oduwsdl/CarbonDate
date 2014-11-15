@@ -4,7 +4,8 @@ import math
 
 numberOfThreadsToSpawn = 2
 globalListOfResultsFromAllThreads = ['']*numberOfThreadsToSpawn
-#the first position of argumentsList is the place to put your outcome 
+
+#the first position of argumentsList is the place to put your outcome
 def functionToThread(argumentsList):
 
 	if( len(argumentsList) > 0 ):
@@ -41,8 +42,8 @@ def getTasksListOfLists(n, k):
 
 	return listOfListOfindices
 
-
-def spawnXThread(targetFunction, argumentsListOfList):
+#spawns numberOfThreadsToSpawn targetFunction threads passing each argumentsListOfList argument 
+def spawnXThread(numberOfThreadsToSpawn, targetFunction, argumentsListOfList):
 
 	if( numberOfThreadsToSpawn > 0 and len(targetFunction) > 0 and numberOfThreadsToSpawn == len(argumentsListOfList) ):
 
@@ -73,7 +74,8 @@ list2.append(1)
 argumentsListOfList.append(list1)
 argumentsListOfList.append(list2)
 
-spawnXThread('functionToThread', argumentsListOfList)
-print globalListOfResultsFromAllThreads
+#spawnXThread('functionToThread', argumentsListOfList)
+#print globalListOfResultsFromAllThreads
 
-#print getTasksListOfLists(6, 6)
+#e.g 10 mementos jobs, 3 worker threads
+print getTasksListOfLists(10, 3)
