@@ -10,6 +10,7 @@ import os
 import sys
 import traceback
 import urllib
+import urlparse
 import time
 import commands
 import calendar

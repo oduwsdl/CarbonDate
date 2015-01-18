@@ -1,2 +1,4 @@
 *.log
 *.pyc
+*.log~
+*.md~

@@ -5,7 +5,7 @@ from ordereddict import OrderedDict
 import simplejson
 
 import re
-
+import urlparse
 from getBitly import getBitlyCreationDate
 from getArchives import getArchivesCreationDate
 from getGoogle import getGoogleCreationDate
@@ -30,6 +30,11 @@ class CarbonDateServer(object):
 
         if(len(url) < 1):
             return "Url length less than 1"
+
+        #scheme missing?
+        parsedUrl = urlparse.urlparse(url)
+        if( len(parsedUrl.scheme)<1 ):
+            url = 'http://'+url
 
         response = cherrypy.response
         response.headers['Content-Type'] = 'application/json'

@@ -2,7 +2,7 @@ from checkForModules import checkForModules
 import json
 from ordereddict import OrderedDict
 #import simplejson
-
+import urlparse
 import re
 
 from getBitly import getBitlyCreationDate
@@ -27,6 +27,11 @@ import os,sys, traceback
 def cd(url, backlinksFlag = False):
 
     #print 'Getting Creation dates for: ' + url
+
+    #scheme missing?
+    parsedUrl = urlparse.urlparse(url)
+    if( len(parsedUrl.scheme)<1 ):
+        url = 'http://'+url
 
     threads = []
     outputArray =['','','','','','']
