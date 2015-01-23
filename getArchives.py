@@ -8,11 +8,12 @@ import urllib
 import simplejson
 import calendar
 import commands
+import urlparse
 
 from datetime import datetime
 
 def getMementos(uri):
-    
+
     uri = uri.replace(' ', '')
     orginalExpression = re.compile( r"<http://[A-Za-z0-9.:=/%-_ ]*>; rel=\"original\"," )
     mementoExpression = re.compile( r"<http://[A-Za-z0-9.:=/&,%-_ \?]*>;rel=\"(memento|first memento|last memento|first memento last memento|first last memento)\";datetime=\"(Sat|Sun|Mon|Tue|Wed|Thu|Fri), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (19|20)\d\d \d\d:\d\d:\d\d GMT\"" )
@@ -22,16 +23,16 @@ def getMementos(uri):
     #OR
     #baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
     memento_list = []
-    source = ''
 
     try:
         search_results = urllib.urlopen(baseURI+uri)
         the_page = search_results.read()
 
         timemapList = the_page.split('\n')
-        
+        mementoNames = []
         for line in timemapList:
 
+            #reconsider this
             if(line.find("</memento")>0):
                 line = line.replace("</memento", "<http://api.wayback.archive.org/memento")
     
@@ -43,117 +44,37 @@ def getMementos(uri):
 
             loc2 = line.find(tofind)
             if(loc!=-1 and loc2!=-1):
-                mementoURL = line[2:loc]
+                mementoURL = line[3:loc]
                 timestamp = line[loc2+len(tofind):line.find('"',loc2+len(tofind)+3)]
-                
-
-                #populate source
-                if( len(source)<1 ):
-                    source = mementoURL[1:len(mementoURL)-1]
 
                 epoch = int(calendar.timegm(time.strptime(timestamp, '%a, %d %b %Y %H:%M:%S %Z')))
                 day_string = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
 
-                uri = mementoURL
-                #print mementoURL
-     
-                cdlib = 'webarchives.cdlib.org'
-                archiefweb = 'enterprise.archiefweb.eu'
-                webARchive= 'api.wayback.archive.org'
-                yahoo1 = 'uk.wrs.yahoo.com'
-                yahoo2 = 'rds.yahoo.com'
-                yahoo3 = 'wrs.yahoo.com'
-                diigo = 'www.diigo.com'
-                bing = 'cc.bingj.com'
-                wayback = 'wayback.archive-it.org'
-                webArchiveNationalUK = 'webarchive.nationalarchives.gov.uk'
-                webHarvest = 'webharvest.gov'
-                webArchiveOrgUK = 'www.webarchive.org.uk'
-                webCitation = 'webcitation.org'
-                mementoWayBack='memento.waybackmachine.org'
-                type = ''
-                category = ''
-                # @type uri str
-                if (uri.find(webARchive)!=-1):
-                    type = 'Internet Archive'
-
-                    name = webARchive
-                    #category = 'IA'
-                    category = 'Internet Archive'
-                elif (uri.find(yahoo1)!=-1 or uri.find(yahoo2)!=-1 or uri.find(yahoo3)!=-1):
-                    type = 'Yahoo'
-                    name = 'yahoo.com'
-                    #category = 'SE'
-                    category = 'Yahoo Search Engine'
-                elif (uri.find(diigo)!=-1):
-                    name = diigo
-                    #category = 'Others'
-                    category = 'diigo'
-                elif (uri.find(bing)!=-1):
-                    type = 'Bing'
-                    name = bing
-                    #category = 'SE'
-                    category = 'Bing Search Engine'
-                elif (uri.find(wayback)!=-1):
-                    type = 'Archive-It'
-                    name = wayback
-                    #category = 'Others'
-                    category = 'Archive-It'
-                elif (uri.find(webArchiveNationalUK)!=-1):
-                    type = 'UK National Archive'
-                    name = webArchiveNationalUK
-                    #category = 'Others'
-                    category = 'UK National Archive'
-                elif (uri.find(webHarvest)!=-1):
-                    type = 'Web Harvest'
-                    name = webHarvest
-                    #category = 'Others'
-                    category = 'Web Harvest'
-                elif (uri.find(webArchiveOrgUK)!=-1):
-                    type = 'UK Web Archive'
-                    name = webArchiveOrgUK
-                    #category = 'Others'
-                    category = 'UK Web Archive'
-                elif (uri.find(webCitation)!=-1):
-                    type = 'Web Citation'
-                    name = webCitation
-                    #category = 'Others'
-                    category = 'Web Citation'
-                elif (uri.find(cdlib)!=-1):
-                    type = 'CD Lib'
-                    name = cdlib
-                    #category = 'Others'
-                    category = 'CD Lib'
-                elif (uri.find(archiefweb)!=-1):
-                    type = 'ArchiefWeb'
-                    name = archiefweb
-                    #category = 'Others'
-                    category = 'ArchiefWeb'
-                elif (uri.find(mementoWayBack)!=-1):
-                    type = 'Wayback Machine'
-                    name = mementoWayBack
-                    #category = 'Others'
-                    category = 'Wayback Machine'
-                else:
-                    #name = "other"
-                    name = source
-                    type = 'Not Known'
-                    category = 'Others'
-
 
                 memento = {}
-                memento["type"] = type
-                memento["category"] = category
+                
                 memento["time"] = day_string
-                memento["name"] = name
-                #memento["name"] = uri
+
+                name = urlparse.urlparse(mementoURL.strip())
+
+                memento["name"] = name.netloc
                 memento["link"] = mementoURL
 
                 memento["link"] = urllib.quote(memento["link"])
                 memento["link"] = memento["link"].replace("http%3A//", "http://")
                 memento["link"] = memento["link"][memento["link"].find("http://"):]
 
-                memento_list.append(memento)
+                #assumption that first memento is youngest - ON - start
+                
+                if( name.netloc not in mementoNames ):
+                    memento_list.append(memento)
+                    mementoNames.append(name.netloc)
+                
+                #assumption that first memento is youngest - ON - end
+
+                #assumption that first memento is NOT youngest - ON - start
+                #memento_list.append(memento)
+                #assumption that first memento is NOT youngest - ON - end
 
 
 
