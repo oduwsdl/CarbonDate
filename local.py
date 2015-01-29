@@ -21,6 +21,7 @@ import Queue
 import datetime
 
 import os,sys, traceback
+from cacheService import getCache, setCache
 
 
 
@@ -28,11 +29,13 @@ def cd(url, backlinksFlag = False):
 
     #print 'Getting Creation dates for: ' + url
 
+
     #scheme missing?
     parsedUrl = urlparse.urlparse(url)
     if( len(parsedUrl.scheme)<1 ):
         url = 'http://'+url
-
+    
+    
     threads = []
     outputArray =['','','','','','']
     now0 = datetime.datetime.now()
@@ -118,6 +121,7 @@ def cd(url, backlinksFlag = False):
     #print now1.seconds
     #print r
     print 'runtime in seconds:  ' +  str(now1.seconds) + '\n' + r + '\n'
+
     return r
     
 

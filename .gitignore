@@ -3,3 +3,7 @@
 *.log~
 *.md~
 *.py~
+autoCarbonDateList.txt
+autoCD.py
+cacheService.py
+surt/
