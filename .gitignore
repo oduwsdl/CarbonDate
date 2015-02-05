@@ -3,7 +3,9 @@
 *.log~
 *.md~
 *.py~
+config~
 autoCarbonDateList.txt
 autoCD.py
+CS851Local.py
 cacheService.py
 surt/

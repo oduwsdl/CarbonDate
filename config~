@@ -1,5 +1,5 @@
 {
-	"AccessToken":["7beabda0bee43bc56afc50bbef4e051e77391d57"],
+	"AccessToken":["YourBitlyAccessTokenHere"],
 	"CasperJSLocation": "/usr/local/bin/casperjs",
 	"ServerIP": "0.0.0.0",
 	"ServerPort": 8080
