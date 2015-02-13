@@ -19,10 +19,10 @@ def getMementos(uri):
     mementoExpression = re.compile( r"<http://[A-Za-z0-9.:=/&,%-_ \?]*>;rel=\"(memento|first memento|last memento|first memento last memento|first last memento)\";datetime=\"(Sat|Sun|Mon|Tue|Wed|Thu|Fri), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (19|20)\d\d \d\d:\d\d:\d\d GMT\"" )
     zeroMementoExpression = re.compile(r"Resource: http://[A-Za-z0-9.:=/&,%-_ ]*")
 
-    baseURI = 'http://timetravel.mementoweb.org/timemap/link/'
+    #baseURI = 'http://timetravel.mementoweb.org/timemap/link/'
     #baseURI = 'http://mementoweb.org/timemap/link/'
     #OR
-    #baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
+    baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
     memento_list = []
 
     try:
