@@ -23,10 +23,6 @@ def getMementos(uri):
     #baseURI = 'http://mementoweb.org/timemap/link/'
     #OR
     baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
-<<<<<<< HEAD
-=======
-    
->>>>>>> 325a2d5fd6e750e03aacbe2cd46249ec62a63613
     memento_list = []
 
     try:
