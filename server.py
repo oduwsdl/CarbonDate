@@ -12,7 +12,8 @@ from getGoogle import getGoogleCreationDate
 from getBacklinks import *
 from getLowest import getLowest
 from getLastModified import getLastModifiedDate
-from getTopsyScrapper import getTopsyCreationDate
+#Topsy service is no longer available
+#from getTopsyScrapper import getTopsyCreationDate
 from htmlMessages import *
 from pprint import pprint
 
@@ -51,7 +52,7 @@ class CarbonDateServer(object):
         googleThread = Thread(target=getGoogleCreationDate, args=(url, outputArray, 2))
         archivesThread = Thread(target=getArchivesCreationDate, args=(url, outputArray, 3))
         backlinkThread = Thread(target=getBacklinksFirstAppearanceDates, args=(url, outputArray, 4))
-        topsyThread = Thread(target=getTopsyCreationDate, args=(url, outputArray, 5))
+        #topsyThread = Thread(target=getTopsyCreationDate, args=(url, outputArray, 5))
         
 
         # Add threads to thread list
@@ -60,7 +61,7 @@ class CarbonDateServer(object):
         threads.append(googleThread)	
         threads.append(archivesThread)
         threads.append(backlinkThread)
-        threads.append(topsyThread)	
+        #threads.append(topsyThread)	
 
         
         # Start new Threads
@@ -69,7 +70,7 @@ class CarbonDateServer(object):
         googleThread.start()
         archivesThread.start()
         backlinkThread.start()
-        topsyThread.start()
+        #topsyThread.start()
 
         
         # Wait for all threads to complete
@@ -82,11 +83,12 @@ class CarbonDateServer(object):
         google = outputArray[2] 
         archives = outputArray[3] 
         backlink = outputArray[4]
-        topsy = outputArray[5]  
+        #topsy = outputArray[5]  
         
         #note that archives["Earliest"] = archives[0][1]
         try:
-            lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink, topsy]) #for thread
+            #lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink, topsy]) #for thread
+            lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink]) #for thread
         except:
            print sys.exc_type, sys.exc_value , sys.exc_traceback
         
@@ -98,7 +100,7 @@ class CarbonDateServer(object):
         result.append(("Estimated Creation Date", lowest))
         result.append(("Last Modified", lastmodified))
         result.append(("Bitly.com", bitly))
-        result.append(("Topsy.com", topsy))
+        result.append(("Topsy.com", "Topsy is out of service"))
         result.append(("Backlinks", backlink))
         result.append(("Google.com", google))
         result.append(("Archives", archives))
