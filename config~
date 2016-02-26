@@ -1,6 +1,0 @@
-{
-	"AccessToken":["YourBitlyAccessTokenHere"],
-	"CasperJSLocation": "/usr/local/bin/casperjs",
-	"ServerIP": "0.0.0.0",
-	"ServerPort": 8080
-}

@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-* Install cherrypy server
+* nstall cherrypy server
 * Insert your bitly oauth access token in config file. Visit https://bitly.com/a/oauth_apps to get your access token
 * Install CasperJS and PhantomJS. Then insert the location of CasperJS into the config file
 * (optional) Change server ip/port number in config
