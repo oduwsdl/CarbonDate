@@ -2,7 +2,6 @@ import sys
 import os
 
 from cdGetLowest import getLowest
-#from getTopsyScrapper import getTopsyCreationDate
 from cdGetBitly import getBitlyCreationDate
 from cdGetArchives import getArchivesCreationDate
 from cdGetGoogle import getGoogleCreationDate
@@ -53,9 +52,7 @@ def getBacklinksCreationDates(url):
 		for link in links:
 			bitly = getBitlyCreationDate(link)
 			archives = getArchivesCreationDate(link)
-			#topsy = getTopsyCreationDate(link, outputArrayDummyNotUsed, 0)
 			google = getGoogleCreationDate(link)
-			#lowest = getLowest([bitly,topsy,google,archives["Earliest"]])
 			lowest = getLowest([bitly,google,archives["Earliest"]])
 			
 			if(lowest==""):
@@ -96,6 +93,6 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
 	
 	timeVal = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest_epoch))
 	outputArray[outputArrayIndex] = timeVal
-	print "Done Backlinks**", timeVal
+	print "Done Backlinks"
 	return timeVal
 

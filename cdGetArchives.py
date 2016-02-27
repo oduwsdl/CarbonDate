@@ -83,7 +83,6 @@ def getMementos(uri):
 
     return memento_list
   
-
 def getRealDate(url, memDate):   
     co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"'
     page = commands.getoutput(co)
@@ -187,15 +186,3 @@ def getArchivesCreationDate(url, outputArray, outputArrayIndex):
         outputArray[outputArrayIndex] = result
         print "Done Archives 2"
         return dict(result)
-
-
-'''
-uri = 'http://www.arsenal.com'
-print getMementos(uri)
-
-#for testing
-
-url = 'http://www.cnn.com'
-outputArray = ['']
-print getArchivesCreationDate(url, outputArray, 0)
-'''
