@@ -1,28 +1,24 @@
 import cherrypy
-from checkForModules import checkForModules
 import json
-from ordereddict import OrderedDict
-import simplejson
-
 import re
 import urlparse
-from getBitly import getBitlyCreationDate
-from getArchives import getArchivesCreationDate
-from getGoogle import getGoogleCreationDate
-from getBacklinks import *
-from getLowest import getLowest
-from getLastModified import getLastModifiedDate
-#Topsy service is no longer available
-#from getTopsyScrapper import getTopsyCreationDate
-from htmlMessages import *
+import sys, traceback
+from ordereddict import OrderedDict
 from pprint import pprint
-
 from threading import Thread
-import Queue
 import datetime
 
-import sys, traceback
+from checkForModules import checkForModules
 
+from cdGetBitly import getBitlyCreationDate
+from cdGetArchives import getArchivesCreationDate
+from cdGetGoogle import getGoogleCreationDate
+from cdGetBacklinks import *
+from cdGetLowest import getLowest
+from cdGetLastModified import getLastModifiedDate
+from cdHtmlMessages import *
+#Topsy service is no longer available
+#from getTopsyScrapper import getTopsyCreationDate
 
 
 class CarbonDateServer(object):
@@ -127,7 +123,7 @@ if __name__ == '__main__':
     fileConfig = open("config", "r")
     config = fileConfig.read()
     fileConfig.close()
-    jsonFile = simplejson.loads(config)
+    jsonFile = json.loads(config)
     ServerIP = jsonFile["ServerIP"]
     ServerPort = jsonFile["ServerPort"]
 

@@ -1,35 +1,24 @@
 from checkForModules import checkForModules
 import json
-from ordereddict import OrderedDict
-#import simplejson
-import urlparse
 import re
-
-from getBitly import getBitlyCreationDate
-from getArchives import getArchivesCreationDate
-from getGoogle import getGoogleCreationDate
-from getBacklinks import *
-from getLowest import getLowest
-
-from getLastModified import getLastModifiedDate
-from getTopsyScrapper import getTopsyCreationDate
-from htmlMessages import *
+import urlparse
+import os,sys, traceback
+from ordereddict import OrderedDict
 from pprint import pprint
-
 from threading import Thread
-import Queue
 import datetime
 
-import os,sys, traceback
-
-
-
+from cdGetBitly import getBitlyCreationDate
+from cdGetArchives import getArchivesCreationDate
+from cdGetGoogle import getGoogleCreationDate
+from cdGetBacklinks import *
+from cdGetLowest import getLowest
+from cdGetLastModified import getLastModifiedDate
+from cdHtmlMessages import *
 
 def cd(url, backlinksFlag = False):
 
     #print 'Getting Creation dates for: ' + url
-
-
     #scheme missing?
     parsedUrl = urlparse.urlparse(url)
     if( len(parsedUrl.scheme)<1 ):
@@ -49,9 +38,6 @@ def cd(url, backlinksFlag = False):
     if( backlinksFlag ):
         backlinkThread = Thread(target=getBacklinksFirstAppearanceDates, args=(url, outputArray, 4))
 
-    topsyThread = Thread(target=getTopsyCreationDate, args=(url, outputArray, 5))
-    
-
     # Add threads to thread list
     threads.append(lastmodifiedThread)
     threads.append(bitlyThread)
@@ -60,9 +46,6 @@ def cd(url, backlinksFlag = False):
 
     if( backlinksFlag ):
         threads.append(backlinkThread)
-
-    threads.append(topsyThread)	
-
     
     # Start new Threads
     lastmodifiedThread.start()
@@ -72,9 +55,6 @@ def cd(url, backlinksFlag = False):
 
     if( backlinksFlag ):
         backlinkThread.start()
-
-    topsyThread.start()
-
     
     # Wait for all threads to complete
     for t in threads:
@@ -90,24 +70,20 @@ def cd(url, backlinksFlag = False):
         backlink = outputArray[4]
     else:
         backlink = ''
-
-    topsy = outputArray[5]  
     
     #note that archives["Earliest"] = archives[0][1]
     try:
-        lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink, topsy]) #for thread
+        lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink]) #for thread
     except:
        print sys.exc_type, sys.exc_value , sys.exc_traceback
 
-    
-    
     result = []
     
     result.append(("URI", url))
     result.append(("Estimated Creation Date", lowest))
     result.append(("Last Modified", lastmodified))
     result.append(("Bitly.com", bitly))
-    result.append(("Topsy.com", topsy))
+    result.append(("Topsy.com", "Topsy is out of service"))
     result.append(("Backlinks", backlink))
     result.append(("Google.com", google))
     result.append(("Archives", archives))
