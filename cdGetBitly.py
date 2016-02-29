@@ -2,7 +2,7 @@ import os
 import sys
 import datetime
 import urllib
-import simplejson
+import json
 import time
 import commands
 import calendar
@@ -21,7 +21,7 @@ ACCESS_TOKENs = ['9aa9e4e418f1203595fa0b6a5d585b4d960c7d80']
 def GetBitlyJson(URL):	
 
 	
-	json = ""
+	jsonData = ""
 
 	for access_token in ACCESS_TOKENs:
 		
@@ -34,11 +34,11 @@ def GetBitlyJson(URL):
 		if(page.find('"error": "NOT_FOUND"')!=-1):
 			break
 
-		json = simplejson.loads(page)
+		jsonData = json.loads(page)
 
-		if(json['status_code']==403):
+		if(jsonData['status_code']==403):
 			continue
-	return json
+	return jsonData
 
 def getBitlyCreationDate(url, outputArray, indexOfOutputArray):
 	try:
@@ -46,36 +46,36 @@ def getBitlyCreationDate(url, outputArray, indexOfOutputArray):
 		# Get aggregated url
 		
 		URL = "https://api-ssl.bitly.com/v3/link/lookup?access_token=ACCESS_TOKEN&url="+url
-		json = GetBitlyJson(URL)
+		jsonData = GetBitlyJson(URL)
 		
-		if len(json) < 1:
+		if len(jsonData) < 1:
 			return ""
 
-		if(json['status_code']!=200):
+		if(jsonData['status_code']!=200):
 			outputArray[indexOfOutputArray] = "Bitly Key has expired"
 			print "Done Bitly"
 			return "Bitly Key has expired"
 
-		if(json =="" or ('error' in json['data']['link_lookup'][0]  and json['data']['link_lookup'][0]['error']=='NOT_FOUND')):
+		if(jsonData =="" or ('error' in jsonData['data']['link_lookup'][0]  and jsonData['data']['link_lookup'][0]['error']=='NOT_FOUND')):
 			outputArray[indexOfOutputArray] = ""
 			print "Done Bitly"
 			return ""
-		url = json['data']['link_lookup'][0]['aggregate_link']
+		url = jsonData['data']['link_lookup'][0]['aggregate_link']
 
 		# Get creation timestamp
 		URL = "https://api-ssl.bitly.com/v3/info?access_token=ACCESS_TOKEN&shortUrl="+url
-		json = GetBitlyJson(URL)
+		jsonData = GetBitlyJson(URL)
 
-		if(json['status_code']!=200):
+		if(jsonData['status_code']!=200):
 			outputArray[indexOfOutputArray] = "Bitly Key has expired"
 			print "Done Bitly"
 			return "Bitly Key has expired"
 	
-		if(json['data'] == None or 'created_at' not in json['data']['info'][0]):
+		if(jsonData['data'] == None or 'created_at' not in jsonData['data']['info'][0]):
 			outputArray[indexOfOutputArray] = ""
 			print "Done Bitly"
 			return ""
-		epoch = json['data']['info'][0]['created_at']
+		epoch = jsonData['data']['info'][0]['created_at']
 
 		limitEpoch = int(calendar.timegm(time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')))
 		if(epoch<limitEpoch):

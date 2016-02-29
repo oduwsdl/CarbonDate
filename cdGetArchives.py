@@ -5,7 +5,6 @@ import os
 import sys
 import datetime
 import urllib
-import simplejson
 import calendar
 import commands
 import urlparse
