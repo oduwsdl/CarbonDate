@@ -29,3 +29,7 @@ To run with backlinks on:
 ```
 $ python local.py URL --compute-backlinks
 ```
+
+## Support
+
+anwala@cs.odu.edu
