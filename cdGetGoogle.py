@@ -53,7 +53,7 @@ def genericGetCreationDate(query):
 
 	allDatesEpoch = []
 	try:
-		page = commands.getoutput('curl --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+query+'"')
+		page = commands.getoutput('curl --silent -L -A "Carbon Date test service to estimate creation date of a website. http://cd.cs.odu.edu/" "'+query+'"')
 
 		signatureString = ' - </span>'
 		locationOfSignature = 0
@@ -81,18 +81,29 @@ def genericGetCreationDate(query):
 		errorMessage = fname + ', ' + str(exc_tb.tb_lineno)  + ', ' + str(sys.exc_info())
 		print '\tERROR:', errorMessage
 
+	#print query
+	#for date in allDatesEpoch:
+	#	print date
+	#print
 	return getLowestDate(allDatesEpoch)
 
 def getGoogleCreationDate(url, outputArray, indexOfOutputArray):
 	
+	#Caution google blocks bots which do not play nice
+	#return ''
+
 	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=inurl:'+url+'&oq=inurl:'+url
 	inurl_creation_date = genericGetCreationDate(query)
+	print 'inurl_creation_date:', inurl_creation_date
 
+	time.sleep(5)
 	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q='+url
 	search_creation_date = genericGetCreationDate(query)
+	print 'search_creation_date:', search_creation_date
 
+	#print 'inurl_creation_date:', inurl_creation_date
+	#print 'search_creation_date:', search_creation_date
 	lowerDate = getLowest([search_creation_date,inurl_creation_date])
 	outputArray[indexOfOutputArray] = lowerDate
 	
 	return lowerDate
-

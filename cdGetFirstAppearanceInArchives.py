@@ -14,6 +14,7 @@ from datetime import datetime
 from cdGetArchives import getMementos
 
 '''
+#ongoing refactoring
 def getMementos(uri):
 
     uri = uri.replace(' ', '')
@@ -173,12 +174,10 @@ def isInPage(url,page):
 	co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+page+'"'
 	page = commands.getoutput(co)
 
-
 	url = url.decode().encode('utf-8')
 	loc = page.find(url)
 	
 	date = ""
-
 	if(loc==-1):
 		return False, date
 
@@ -186,8 +185,6 @@ def isInPage(url,page):
 	to_find = "X-Archive-Orig-last-modified: "
 
 	loc = page.find(to_find)
-
-
 
 	#this 2 blocks eventhough not if else are mutually exclusive since if loc!=-1, date will be
 	#assigned a value thus precluding the subsequent if from running.
@@ -203,7 +200,6 @@ def isInPage(url,page):
 		to_find = 'X-Archive-Orig-date: '
 
 	
-
 		loc = page.find(to_find)
 		
 		if(loc !=-1):
@@ -242,6 +238,7 @@ def getFirstAppearance_inprogress(url, inurl):
 		return ''
 
 def getFirstAppearance(url, inurl):
+	
 	try:
 		mementos = getMementos(inurl)
 
@@ -290,7 +287,7 @@ def getFirstAppearance(url, inurl):
 		#experimental block to see first appearance - start
 		for mem in mementos:
 			#is url in this page (mem["link"])
-			res, date = isInPage(url,mem["link"])
+			res, date = isInPage(url, mem["link"])
 			if(res==True):
 				return date
 

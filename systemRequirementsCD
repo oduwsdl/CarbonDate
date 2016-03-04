@@ -1,8 +1,20 @@
 #-----System Requirements--------
 * Python 2.6+
 * Python libraries installed:
-	*ordereddict
-	*json
-	*simplejson
-	*urllib2
+	*import json
+	*OrderedDict
+	*re
+	*pprint
+	*Thread
+	*datetime
+	*os
+	*sys
+	*traceback
 	*urllib
+	*urlparse
+	*time
+	*commands
+	*calendar
+	*urllib2
+	*math
+	*logging
