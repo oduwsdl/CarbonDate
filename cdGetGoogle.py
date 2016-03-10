@@ -7,7 +7,6 @@ import commands
 from cdGetLowest import getLowest
 from random import randint
 
-cdGetGoogle::randSleep(),
 def randSleep():
 	sleepSeconds = randint(2, 7)
 	print 'cdGetGoogle::randSleep(), sleep:', sleepSeconds
