@@ -5,7 +5,13 @@ import calendar
 import time
 import commands
 from cdGetLowest import getLowest
+from random import randint
 
+cdGetGoogle::randSleep(),
+def randSleep():
+	sleepSeconds = randint(2, 7)
+	print 'cdGetGoogle::randSleep(), sleep:', sleepSeconds
+	time.sleep(sleepSeconds)
 
 def getLowestDate(allDatesEpoch):
 
@@ -93,11 +99,11 @@ def getGoogleCreationDate(url, outputArray, indexOfOutputArray):
 	
 	#Caution google blocks bots which do not play nice
 	#return ''
-	time.sleep(3)
+	randSleep()
 	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=inurl:'+url+'&oq=inurl:'+url
 	inurl_creation_date = genericGetCreationDate(query)
 
-	time.sleep(5)
+	randSleep()
 	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q='+url
 	search_creation_date = genericGetCreationDate(query)
 
