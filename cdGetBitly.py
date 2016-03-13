@@ -6,23 +6,30 @@ import json
 import time
 import commands
 import calendar
-import Queue
-
-
-#fileConfig = open("config", "r")
-#config = fileConfig.read()
-#fileConfig.close()
-#json = simplejson.loads(config)
-
-#ACCESS_TOKENs = json["BitlyKeys"] # Api key has been deprecated
-#ACCESS_TOKENs = json["AccessToken"]
-ACCESS_TOKENs = ['9aa9e4e418f1203595fa0b6a5d585b4d960c7d80']
+import json
 
 def GetBitlyJson(URL):	
 
+	ACCESS_TOKENs = []
+	try:
+		fileConfig = open("config", "r")
+		config = fileConfig.read()
+		fileConfig.close()
+
+		ACCESS_TOKENs = json.loads(config)
+		ACCESS_TOKENs = ACCESS_TOKENs['AccessToken']
+	except:
+		print sys.exc_info()
+		return ''
+
+	if( len(ACCESS_TOKENs) == 0 ):
+		print 'cdGetBitly.py::GetBitlyJson(), ACCESS_TOKENs empty'
+		return ''
+	elif( ACCESS_TOKENs[0] == 'YourBitlyAccessTokenHere' ):
+		print 'cdGetBitly.py::GetBitlyJson(), please set bitly access token in config'
+		return ''
 	
 	jsonData = ""
-
 	for access_token in ACCESS_TOKENs:
 		
 		URL = URL.replace("ACCESS_TOKEN", access_token)
