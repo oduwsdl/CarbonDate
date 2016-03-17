@@ -12,6 +12,10 @@ import math
 
 from datetime import datetime
 from cdGetArchives import getMementos
+from cdGetGoogle import mimicBrowser
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
 
 '''
 #ongoing refactoring
@@ -171,8 +175,10 @@ def getMementos(uri):
 
 def isInPage(url,page):
 
-	co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+page+'"'
-	page = commands.getoutput(co)
+	#co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+page+'"'
+	#page = commands.getoutput(co)
+
+	page = mimicBrowser(page)
 
 	url = url.decode().encode('utf-8')
 	loc = page.find(url)

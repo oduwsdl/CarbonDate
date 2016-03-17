@@ -1,4 +1,5 @@
 *.log
+*.html
 *.pyc
 *.log~
 *.md~

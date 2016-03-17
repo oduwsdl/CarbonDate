@@ -4,8 +4,12 @@ import traceback
 import calendar
 import time
 import commands
+import requests
 from cdGetLowest import getLowest
 from random import randint
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
 
 def randSleep():
 	sleepSeconds = randint(2, 7)
@@ -54,13 +58,45 @@ def getTimestampFromSERP(signatureString, locationOfSignature, page):
 	return timestamp, locationOfSignature
 	#retrieve date from preceding " - </span>" signature - end
 
+def mimicBrowser(query):
+	
+	try:
+		headers = {
+		'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:38.0) Gecko/20100101 Firefox/38.0',
+		'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+		'Accept-Language': 'en-US,en;q=0.5',
+		'Accept-Encoding': 'gzip, deflate',
+		'Connnection': 'keep-alive',
+		'Cache-Control':'max-age=0'	
+		}
+
+		response = requests.get(query, headers=headers)
+		return response.text
+	except:
+
+		exc_type, exc_obj, exc_tb = sys.exc_info()
+		fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+		errorMessage = fname + ', ' + str(exc_tb.tb_lineno)  + ', ' + str(sys.exc_info())
+		print '\tERROR:', errorMessage
+		print '\tquery is: ', query
+		return ''
+
 def genericGetCreationDate(query):
 
+	randSleep()
+
 	allDatesEpoch = []
+	page = ''
 	try:
-		userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30'
+		#userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30'
 		#userAgent = 'Carbon Date test service to estimate creation date of a website. http://cd.cs.odu.edu/'
-		page = commands.getoutput('curl --silent -L -A "'+userAgent+'" "'+query+'"')
+		#page = commands.getoutput('curl --silent -L -A "'+userAgent+'" "'+query+'"')
+
+		page = mimicBrowser(query)
+		
+		debugOutfile = open('output.html', 'w')
+		debugOutfile.write(str(page))
+		debugOutfile.close()
 
 		signatureString = ' - </span>'
 		locationOfSignature = 0
@@ -98,11 +134,9 @@ def getGoogleCreationDate(url, outputArray, indexOfOutputArray):
 	
 	#Caution google blocks bots which do not play nice
 	#return ''
-	randSleep()
 	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=inurl:'+url+'&oq=inurl:'+url
 	inurl_creation_date = genericGetCreationDate(query)
 
-	randSleep()
 	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q='+url
 	search_creation_date = genericGetCreationDate(query)
 

@@ -4,7 +4,7 @@ import os
 from cdGetLowest import getLowest
 from cdGetBitly import getBitlyCreationDate
 from cdGetArchives import getArchivesCreationDate
-from cdGetGoogle import getGoogleCreationDate
+from cdGetGoogle import getGoogleCreationDate, mimicBrowser
 from cdGetFirstAppearanceInArchives import getFirstAppearance
 
 import commands
@@ -12,19 +12,21 @@ import calendar
 import time
 import urllib
 
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 def getBacklinks(url):
 	inlinks = []
 	url = urllib.quote(url, '')
 	try:	
 		query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=link:'+url+'&oq=link:'+url
-		com = 'curl --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+query+'"'
 		
-		page = commands.getoutput(com)
+		#com = 'curl --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+query+'"'
+		#page = commands.getoutput(com)
+		page = mimicBrowser(query)
 
 		loc = 0	
-		
 		#print page
-
 		page=page.replace('<h3 class=r>','<h3 class="r">')
 		while(True):
 			start_str = '<h3 class="r"><a href="'
