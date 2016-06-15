@@ -1,0 +1,31 @@
+#!/bin/sh
+###
+# Installing PhantomJS
+###
+# Adding PPA for PhantomJS
+apt-get update
+apt-get install -y \
+  software-properties-common
+add-apt-repository ppa:tanguy-patte/phantomjs
+apt-get update
+apt-get install -y \
+  phantomjs \
+  git \
+  python
+apt-get clean
+###
+# Installing CasperJS
+###
+# Cloning Repo
+git clone git://github.com/n1k0/casperjs.git
+cd casperjs
+git checkout ${CASPERJS_VERSION}
+cd ..
+# Removing history
+rm -rf casperjs/.git
+mv casperjs /opt/
+ln -sf /opt/casperjs/bin/casperjs /usr/local/bin/casperjs
+cd /opt/casperjs
+rm -rf *.gemspec docs rpm samples
+apt-get remove -y \
+  git

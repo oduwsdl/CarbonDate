@@ -83,7 +83,7 @@ def cd(url, backlinksFlag = False):
     result.append(("Estimated Creation Date", lowest))
     result.append(("Last Modified", lastmodified))
     result.append(("Bitly.com", bitly))
-    result.append(("Topsy.com", "Topsy is out of service"))
+    #result.append(("Topsy.com", "Topsy is out of service"))
     result.append(("Backlinks", backlink))
     result.append(("Google.com", google))
     result.append(("Archives", archives))
