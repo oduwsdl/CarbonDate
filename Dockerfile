@@ -8,6 +8,8 @@ RUN pip install ordereddict
 
 RUN pip install requests
 
+RUN pip install BeautifulSoup4
+
 ADD ./docker /docker
 
 RUN /docker/build && rm -rf docker
