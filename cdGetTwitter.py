@@ -2,6 +2,8 @@ import sys
 from bs4 import BeautifulSoup
 import datetime
 import requests
+from cdGetLowest import getLowest
+from requests.utils import quote
 
 #this is the establishment time of Twttier, which is the ealiest time of a tweet that can be found
 earliest_time=datetime.datetime.strptime("2006-03-01", '%Y-%m-%d')
@@ -65,12 +67,36 @@ def getEarliestDate(uri,from_date,until_date):
 		#continue binary search
 		return getEarliestDate(uri,upperbound,lowerbound)
 #interface function for module
-def getTwitterCreationDate(uri,outputArray, indexOfOutputArray):
-	date=getEarliestDate(uri,earliest_time,datetime.datetime.now())
-	result_str=''
+#verbose: enable debug output
+def getTwitterCreationDate(uri,outputArray, indexOfOutputArray,verbose=False):
+	if uri.startswith('http://'):
+		uri=uri[7:]
+	#convert characters in % format
+	converted_url=quote(uri,safe='')
+	#search original url
+
+	date_str=''
+	date=getEarliestDate(converted_url,earliest_time,datetime.datetime.now())
 	if date is not None:
-		result_str=date.strftime('%Y-%m-%dT%H:%M:%S')
-		outputArray[indexOfOutputArray] = result_str
+			date_str=date.strftime('%Y-%m-%dT%H:%M:%S')
+	#search url without www prefix (result could be defferent)
+	date2_str=''
+	url2=''
+	if uri.startswith('www.'):
+		url2=uri[4:]
+		converted_url=quote(url2,safe='')
+		date2=getEarliestDate(converted_url,earliest_time,datetime.datetime.now())
+		if date2 is not None:
+			date2_str=date2.strftime('%Y-%m-%dT%H:%M:%S')
+	result_str=''
+
+	result_str=getLowest([date_str,date2_str])
+	#debug output
+	if verbose:
+		print uri, date_str
+		print url2, date2_str
+
+	outputArray[indexOfOutputArray] = result_str
 	print "Done Twitter"
 	return result_str
 #################test entry####################
@@ -79,4 +105,4 @@ if __name__ == '__main__':
 		print("Unit testing usage: ", sys.argv[0] + " url  e.g: " + sys.argv[0] + " http://www.cs.odu.edu ")
 	else:
 		testarry=['']
-		print(getTwitterCreationDate(sys.argv[1],testarry,0))
+		print(getTwitterCreationDate(sys.argv[1],testarry,0,verbose=True))
