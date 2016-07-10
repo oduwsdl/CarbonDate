@@ -70,7 +70,7 @@ def getTwitterCreationDate(uri,outputArray, indexOfOutputArray):
 	result_str=''
 	if date is not None:
 		result_str=date.strftime('%Y-%m-%dT%H:%M:%S')
-		outputArray[outputArrayIndex] = result_str
+		outputArray[indexOfOutputArray] = result_str
 	
 	return result_str
 
@@ -78,4 +78,5 @@ if __name__ == '__main__':
 	if len(sys.argv)<2:
 		print("Unit testing usage: ", sys.argv[0] + " url  e.g: " + sys.argv[0] + " http://www.cs.odu.edu ")
 	else:
-		getTwitterCreationDate(sys.argv[1])
+		testarry=['']
+		print(getTwitterCreationDate(sys.argv[1],testarry,0))

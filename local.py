@@ -11,6 +11,7 @@ import datetime
 from cdGetBitly import getBitlyCreationDate
 from cdGetArchives import getArchivesCreationDate
 from cdGetGoogle import getGoogleCreationDate
+from cdGetTwitter import getTwitterCreationDate
 from cdGetBacklinks import *
 from cdGetLowest import getLowest
 from cdGetLastModified import getLastModifiedDate
@@ -26,7 +27,7 @@ def cd(url, backlinksFlag = False):
     
     
     threads = []
-    outputArray =['','','','','','']
+    outputArray =['','','','','','','']
     now0 = datetime.datetime.now()
     
    
@@ -34,6 +35,7 @@ def cd(url, backlinksFlag = False):
     bitlyThread = Thread(target=getBitlyCreationDate, args=(url, outputArray, 1))
     googleThread = Thread(target=getGoogleCreationDate, args=(url, outputArray, 2))
     archivesThread = Thread(target=getArchivesCreationDate, args=(url, outputArray, 3))
+    twitterThread = Thread(target=getTwitterCreationDate, args=(url, outputArray, 5))
     
     if( backlinksFlag ):
         backlinkThread = Thread(target=getBacklinksFirstAppearanceDates, args=(url, outputArray, 4))
@@ -43,6 +45,7 @@ def cd(url, backlinksFlag = False):
     threads.append(bitlyThread)
     threads.append(googleThread)	
     threads.append(archivesThread)
+    threads.append(twitterThread)
 
     if( backlinksFlag ):
         threads.append(backlinkThread)
@@ -52,6 +55,7 @@ def cd(url, backlinksFlag = False):
     bitlyThread.start()
     googleThread.start()
     archivesThread.start()
+    twitterThread.start()
 
     if( backlinksFlag ):
         backlinkThread.start()
@@ -65,6 +69,7 @@ def cd(url, backlinksFlag = False):
     bitly = outputArray[1] 
     google = outputArray[2] 
     archives = outputArray[3] 
+    twitter=outputArray[5]
     
     if( backlinksFlag ):
         backlink = outputArray[4]
@@ -73,7 +78,7 @@ def cd(url, backlinksFlag = False):
     
     #note that archives["Earliest"] = archives[0][1]
     try:
-        lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink]) #for thread
+        lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink, twitter]) #for thread
     except:
        print sys.exc_type, sys.exc_value , sys.exc_traceback
 
@@ -86,6 +91,7 @@ def cd(url, backlinksFlag = False):
     result.append(("Backlinks", backlink))
     result.append(("Google.com", google))
     result.append(("Archives", archives))
+    result.append(("Twitter.com", twitter))
     values = OrderedDict(result)
     r = json.dumps(values, sort_keys=False, indent=2, separators=(',', ': '))
     
