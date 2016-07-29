@@ -93,8 +93,8 @@ def getTwitterCreationDate(uri,outputArray, indexOfOutputArray,verbose=False):
 	result_str=getLowest([date_str,date2_str])
 	#debug output
 	if verbose:
-		print uri, date_str
-		print url2, date2_str
+		print "getTwitter: ",uri, date_str
+		print "getTwitter: ",url2, date2_str
 
 	outputArray[indexOfOutputArray] = result_str
 	print "Done Twitter"
