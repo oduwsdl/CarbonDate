@@ -26,7 +26,7 @@ def getDates(uri,date_from,date_until):
 		)
 	response = requests.get(search_str,headers=headers)
 	html = response.text
-	soup = BeautifulSoup(html)
+	soup = BeautifulSoup(html,'lxml')
 
 	#get all tweets and their text in result (not necessary here, debug use only)
 	#tweets = soup.find_all('li', 'js-stream-item')
