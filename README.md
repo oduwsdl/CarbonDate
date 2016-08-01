@@ -32,4 +32,4 @@ $ python local.py URL --compute-backlinks
 
 ## Support
 
-anwala@cs.odu.edu
+Fallenangel0813@gmail.com
