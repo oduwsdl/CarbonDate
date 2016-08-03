@@ -17,6 +17,8 @@ from cdGetLowest import getLowest
 from cdGetLastModified import getLastModifiedDate
 from cdHtmlMessages import *
 
+import moduleLoader
+
 def cd(url, backlinksFlag = False):
 
     #print 'Getting Creation dates for: ' + url
@@ -106,7 +108,7 @@ def cd(url, backlinksFlag = False):
     return r
     
 
-
+##### script entry ######
 
 if len(sys.argv) == 1:
     print "Usage: ", sys.argv[0] + " url backlinksOnOffFlag ( e.g: " + sys.argv[0] + " http://www.cs.odu.edu  [--compute-backlinks] )"

@@ -4,7 +4,9 @@ import calendar
 import time
 import commands
 
-def getLastModifiedDate(url, outputArray, indexOfOutputArray):
+moduleTag="Last Modified"
+
+def getLastModified(url, outputArray, indexOfOutputArray,verbose=False):
 	creation_date = ""
 	try:
 		header = commands.getoutput('curl --silent -L -I -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"')
@@ -48,7 +50,7 @@ def getLastModifiedDate(url, outputArray, indexOfOutputArray):
 	print "Done Last Modified"
 	return creation_date
 
-def getLastModifiedDate_old(url, outputArray, indexOfOutputArray):
+def getLastModified_old(url, outputArray, indexOfOutputArray):
 	creation_date = ""
 	try:
 		header = commands.getoutput('curl --silent -L -I -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"')

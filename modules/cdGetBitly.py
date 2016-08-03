@@ -7,12 +7,15 @@ import time
 import commands
 import calendar
 import json
+import os.path
+
+moduleTag="Bitly.com"
 
 def GetBitlyJson(URL):	
 
 	ACCESS_TOKENs = []
 	try:
-		fileConfig = open("config", "r")
+		fileConfig = open(os.path.dirname(__file__)+"/../config", "r")
 		config = fileConfig.read()
 		fileConfig.close()
 
@@ -47,7 +50,7 @@ def GetBitlyJson(URL):
 			continue
 	return jsonData
 
-def getBitlyCreationDate(url, outputArray, indexOfOutputArray):
+def getBitly(url, outputArray, indexOfOutputArray,verbose=False):
 	try:
 		
 		# Get aggregated url
