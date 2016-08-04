@@ -30,8 +30,9 @@ class ModuleManager():
 	def loadModule(self,sysconfig,args):
 		utilityLst=sysconfig['SystemUtility']
 		fromlist=[]
-		excludeList=args.e
-		includeList=args.m
+		excludeList=getattr(args,'e',None)
+		includeList=getattr(args,'m',None)
+		op_all=getattr(args,'all',True)
 
 		for m in self.modules:
 			#skip utility script (module will import them automatically)
@@ -39,7 +40,7 @@ class ModuleManager():
 
 				if (excludeList is not None and m not in excludeList) or \
 				    (includeList is not None and m in includeList) or \
-				    args.all or \
+				    op_all or \
 				    ( (excludeList is None) and (includeList is None) ):				
 					fromlist.append(m)
 
