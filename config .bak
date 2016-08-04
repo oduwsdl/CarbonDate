@@ -1,7 +1,0 @@
-{
-	"AccessToken":["250a4a1c33c3cd8ca1a45e49d2d758849620186a"],
-	"CasperJSLocation": "/usr/local/bin/casperjs",
-	"ServerIP": "0.0.0.0",
-	"ServerPort": 8080,
-	"SystemUtility":["cdGetLowest", "cdGetFirstAppearanceInArchives"]
-}

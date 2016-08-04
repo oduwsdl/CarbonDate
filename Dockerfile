@@ -10,6 +10,8 @@ RUN pip install requests
 
 RUN pip install BeautifulSoup4
 
+RUN pip install surt
+
 ADD ./docker /docker
 
 RUN /docker/build && rm -rf docker

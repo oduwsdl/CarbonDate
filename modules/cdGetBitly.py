@@ -15,14 +15,19 @@ def GetBitlyJson(URL):
 
 	ACCESS_TOKENs = []
 	try:
-		fileConfig = open(os.path.dirname(__file__)+"/../config", "r")
-		config = fileConfig.read()
-		fileConfig.close()
+		access_token_env=os.getenv('CD_Bitly_token')
+		if access_token_env is not None:
+			print 'cdGetBitly: Access token is found in environment variable, overwite local config values.'
+			ACCESS_TOKENs=ACCESS_TOKENs[access_token_env]
+		else:
+			fileConfig = open(os.path.dirname(__file__)+"/../config", "r")
+			config = fileConfig.read()
+			fileConfig.close()
 
-		ACCESS_TOKENs = json.loads(config)
-		ACCESS_TOKENs = ACCESS_TOKENs['AccessToken']
+			ACCESS_TOKENs = json.loads(config)
+			ACCESS_TOKENs = ACCESS_TOKENs['AccessToken']
 	except:
-		print sys.exc_info()
+		print 'cdGetBitly: ', sys.exc_info()
 		return ''
 
 	if( len(ACCESS_TOKENs) == 0 ):
@@ -103,7 +108,7 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False):
 		return str(creation_date)
 	
 	except:
-		print sys.exc_info()
+		print 'cdGetBitly: ', sys.exc_info()
 		outputArray[indexOfOutputArray] = ""
 		print "Done Bitly"
 		return ""

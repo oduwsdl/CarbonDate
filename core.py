@@ -27,7 +27,7 @@ class ModuleManager():
 			#just look for files, do not dig into sub folders
 			break
 
-	def loadModule(self,sysconfig):
+	def loadModule(self,sysconfig,args):
 		utilityLst=sysconfig['SystemUtility']
 		fromlist=[]
 		excludeList=args.e
@@ -55,6 +55,8 @@ class ModuleManager():
 			self.entryPoints[modName]={}
 			currentMod=getattr(api,mod)
 			try:
+				if hasattr(currentMod, "entry"):
+					funcName=getattr(currentMod,'entry')
 				self.entryPoints[modName]["getFunc"]=getattr(currentMod,funcName)
 			except Exception, e:
 				print "ModuleManager: ",e
@@ -153,7 +155,7 @@ if __name__ == '__main__':
 
 	resultArray =[]
 	mod=ModuleManager()
-	mod.loadModule(cfg)
+	mod.loadModule(cfg,args)
 	mod.run(args=args,resultArray=resultArray)
 	os._exit(0)
 	#print resultArray

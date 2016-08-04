@@ -12,6 +12,9 @@ import calendar
 import time
 import urllib
 
+moduleTag="Backlinks"
+entry="getBacklinksFirstAppearanceDates"
+
 reload(sys)  
 sys.setdefaultencoding('utf8')
 
@@ -42,7 +45,7 @@ def getBacklinks(url):
 			inlinks.append(url)
 			loc = fin
 	except:
-		print sys.exc_info()
+		print 'cdGetBacklinks :',sys.exc_info()
 
 	return inlinks
 
@@ -62,7 +65,7 @@ def getBacklinksCreationDates(url):
 			backlinks.append(lowest)
 
 	except:
-		print sys.exc_info()
+		print 'cdGetBacklinks :', sys.exc_info()
 	return backlinks
 
 def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=False):
@@ -86,7 +89,7 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=
 			if(epoch<lowest_epoch):
 				lowest_epoch = epoch
 	except:
-		print sys.exc_info()
+		print  'cdGetBacklinks :', sys.exc_info()
 
 	if(lowest_epoch == 99999999999):
 		outputArray[outputArrayIndex] = ""

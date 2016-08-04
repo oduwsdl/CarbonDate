@@ -1,130 +1,63 @@
 from checkForModules import checkForModules
 import json
-import re
-import urlparse
+import time
 import os,sys, traceback
-from ordereddict import OrderedDict
-from pprint import pprint
-from threading import Thread
 import datetime
 
-from cdGetBitly import getBitlyCreationDate
-from cdGetArchives import getArchivesCreationDate
-from cdGetGoogle import getGoogleCreationDate
-from cdGetTwitter import getTwitterCreationDate
-from cdGetBacklinks import *
-from cdGetLowest import getLowest
-from cdGetLastModified import getLastModifiedDate
 from cdHtmlMessages import *
 
-import moduleLoader
+import core
+import argparse
 
-def cd(url, backlinksFlag = False):
-
-    #print 'Getting Creation dates for: ' + url
-    #scheme missing?
-    parsedUrl = urlparse.urlparse(url)
-    if( len(parsedUrl.scheme)<1 ):
-        url = 'http://'+url
-    
-    
-    threads = []
-    outputArray =['','','','','','','']
-    now0 = datetime.datetime.now()
-    
+def cd(modLoader,args):
+    result=[]
+    #read system config
+    fileConfig = open("config", "r")
+    config = fileConfig.read()
+    fileConfig.close()
+    cfg = json.loads(config)
    
-    lastmodifiedThread = Thread(target=getLastModifiedDate, args=(url, outputArray, 0))
-    bitlyThread = Thread(target=getBitlyCreationDate, args=(url, outputArray, 1))
-    googleThread = Thread(target=getGoogleCreationDate, args=(url, outputArray, 2))
-    archivesThread = Thread(target=getArchivesCreationDate, args=(url, outputArray, 3))
-    twitterThread = Thread(target=getTwitterCreationDate, args=(url, outputArray, 5))
     
-    if( backlinksFlag ):
-        backlinkThread = Thread(target=getBacklinksFirstAppearanceDates, args=(url, outputArray, 4))
+    modLoader.loadModule(cfg,args)
 
-    # Add threads to thread list
-    threads.append(lastmodifiedThread)
-    threads.append(bitlyThread)
-    threads.append(googleThread)	
-    threads.append(archivesThread)
-    threads.append(twitterThread)
-
-    if( backlinksFlag ):
-        threads.append(backlinkThread)
-    
-    # Start new Threads
-    lastmodifiedThread.start()
-    bitlyThread.start()
-    googleThread.start()
-    archivesThread.start()
-    twitterThread.start()
-
-    if( backlinksFlag ):
-        backlinkThread.start()
-    
-    # Wait for all threads to complete
-    for t in threads:
-        t.join()
-        
-    # For threads
-    lastmodified = outputArray[0]
-    bitly = outputArray[1] 
-    google = outputArray[2] 
-    archives = outputArray[3] 
-    twitter=outputArray[5]
-    
-    if( backlinksFlag ):
-        backlink = outputArray[4]
+    if args.lm:
+        print 'Available Modules (include system utilities)'
+        print '===================================='
+        for m in modLoader.getAvailableModules():
+            print m
+        print '===================================='
+        print
     else:
-        backlink = ''
-    
-    #note that archives["Earliest"] = archives[0][1]
-    try:
-        lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink, twitter]) #for thread
-    except:
-       print sys.exc_type, sys.exc_value , sys.exc_traceback
+        modLoader.run(args=args,resultArray=result)
+        os._exit(0)
 
-    result = []
-    
-    result.append(("URI", url))
-    result.append(("Estimated Creation Date", lowest))
-    result.append(("Last Modified", lastmodified))
-    result.append(("Bitly.com", bitly))
-    result.append(("Backlinks", backlink))
-    result.append(("Google.com", google))
-    result.append(("Archives", archives))
-    result.append(("Twitter.com", twitter))
-    values = OrderedDict(result)
-    r = json.dumps(values, sort_keys=False, indent=2, separators=(',', ': '))
-    
-    now1 = datetime.datetime.now() - now0
 
-    
-    #print "runtime in seconds: " 
-    #print now1.seconds
-    #print r
-    print 'runtime in seconds:  ' +  str(now1.seconds) + '\n' + r + '\n'
-
-    return r
     
 
 ##### script entry ######
+if __name__ == '__main__':
 
-if len(sys.argv) == 1:
-    print "Usage: ", sys.argv[0] + " url backlinksOnOffFlag ( e.g: " + sys.argv[0] + " http://www.cs.odu.edu  [--compute-backlinks] )"
-elif len(sys.argv) == 2:
-    #fix for none-thread safe strptime
-    #If time.strptime is used before starting the threads, then no exception is raised (the issue may thus come from strptime.py not being imported in a thread safe manner). -- http://bugs.python.org/issue7980
-    time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')
-    cd(sys.argv[1])
-elif len(sys.argv) == 3:
-    time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')
+    #init argparse
+    parser=argparse.ArgumentParser(description='Local version of Carbon Date Tool')
+    modOpGroup=parser.add_mutually_exclusive_group()
+    modOpGroup.add_argument('-a', '--all', action="store_true", help='Load all modules (default)',dest='all')
+    modOpGroup.add_argument('-m',  help='Specify mode, only load given modules ', nargs='+')
+    modOpGroup.add_argument('-e', help="Exclusive mode, load all modules except the given modules", nargs='+')
+
+    sysModeGrp=parser.add_mutually_exclusive_group(required=True)
+    sysModeGrp.add_argument('-lm',action="store_true" , help="List all the module available in the system")
+    sysModeGrp.add_argument('-url', help='The url to look up')
+
+    parser.add_argument('-t','--timeout' , type=int, help='Set timeout for all modules',default=300)
+    parser.add_argument('-v','--verbose' , action='store_true', help='Enable verbose output')
+
     
-    if(sys.argv[2] == '--compute-backlinks'):
-        cd(sys.argv[1], True)
-    else:
-        cd(sys.argv[1])
-  
+
+    args=parser.parse_args()
+
+    mod=core.ModuleManager()
+    time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')
+    cd(mod,args)
   
   
   
