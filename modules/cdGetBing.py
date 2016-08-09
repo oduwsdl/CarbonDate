@@ -4,6 +4,7 @@ import urlparse
 import json
 import os
 from surt import surt
+from requests.utils import quote
 
 moduleTag='Bing.com'
 
@@ -44,19 +45,47 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False):
 	if( len(parsedUrl.scheme)<1 ):
 		url = 'http://'+url
 	searchUrl=url[7:]
-	url = base_url + url +'&responseFilter=webpages'
+	converted_url=quote(url,safe='')
+	url = base_url + converted_url +'&count=10'
 	auth = HTTPBasicAuth(api_key,api_key)
 
 	response = requests.get(url, headers=headers)
 	json_result=response.json()
+	#print json_result
 
 	result=''
 	canonical_search_url=surt(searchUrl)
-	for page in json_result['webPages']['value']:
-		result_url=surt(page['displayUrl'])
-		if result_url==canonical_search_url :
-			result = page['dateLastCrawled']
+	for catagry in json_result:
+		if catagry == 'webPages' :
+			for page in json_result[catagry]['value']:
+				result_url=surt(page['displayUrl'])
+				if result_url==canonical_search_url :
+					result = page['dateLastCrawled']
+					break
+
+		elif catagry == 'images' :
+			for page in json_result[catagry]['value']:
+				result_url=surt(page['contentUrl'])
+				if result_url==canonical_search_url :
+					result = page['datePublished']
+					break
+
+		elif catagry == 'news' :
+			for page in json_result[catagry]['value']:
+				result_url=surt(page['url'])
+				if result_url==canonical_search_url :
+					result = page['datePublished']
+					break
+
+		elif catagry == 'videos' :
+			for page in json_result[catagry]['value']:
+				result_url=surt(page['hostPageDisplayUrl'])
+				if result_url==canonical_search_url :
+					result = page['datePublished']
+					break
+		if result != '' :
 			break
+
 	outputArray[indexOfOutputArray]=result
 	print 'Done Bing'
 	return result
