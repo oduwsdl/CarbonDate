@@ -56,7 +56,15 @@ if __name__ == '__main__':
     jsonFile = json.loads(config)
     ServerIP = jsonFile["ServerIP"]
     ServerPort = jsonFile["ServerPort"]
-   
+    
+    ip_env=os.getenv('CD_Server_IP')
+    port_env=os.getenv('CD_Server_port')
+    if ip_env is not None:
+            print 'Server.py: Server IP detected in environment variable, overwite local config values.'
+            ServerIP=int(ip_env)
+    if port_env is not None:
+            print 'Server.py: Server Port number detected in environment variable, overwite local config values.'
+            ServerPort=int(port_env)
 
     app=tornado.web.Application([
         (r"/search",CarbonDateServer)])
