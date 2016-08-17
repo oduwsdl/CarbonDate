@@ -55,30 +55,30 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False):
 
 	result=''
 	canonical_search_url=surt(searchUrl)
-	for catagry in json_result:
-		if catagry == 'webPages' :
-			for page in json_result[catagry]['value']:
+	for category in json_result:
+		if category == 'webPages' :
+			for page in json_result[category]['value']:
 				result_url=surt(page['displayUrl'])
 				if result_url==canonical_search_url :
 					result = page['dateLastCrawled']
 					break
 
-		elif catagry == 'images' :
-			for page in json_result[catagry]['value']:
+		elif category == 'images' :
+			for page in json_result[category]['value']:
 				result_url=surt(page['contentUrl'])
 				if result_url==canonical_search_url :
 					result = page['datePublished']
 					break
 
-		elif catagry == 'news' :
-			for page in json_result[catagry]['value']:
+		elif category == 'news' :
+			for page in json_result[category]['value']:
 				result_url=surt(page['url'])
 				if result_url==canonical_search_url :
 					result = page['datePublished']
 					break
 
-		elif catagry == 'videos' :
-			for page in json_result[catagry]['value']:
+		elif category == 'videos' :
+			for page in json_result[category]['value']:
 				result_url=surt(page['hostPageDisplayUrl'])
 				if result_url==canonical_search_url :
 					result = page['datePublished']

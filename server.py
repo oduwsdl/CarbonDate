@@ -1,116 +1,46 @@
-import cherrypy
+from checkForModules import checkForModules
 import json
-import re
-import urlparse
-import sys, traceback
-from ordereddict import OrderedDict
-from pprint import pprint
-from threading import Thread
+import time
+import os,sys, traceback
 import datetime
 
-from checkForModules import checkForModules
+import tornado.web
+import tornado.ioloop
 
-from cdGetBitly import getBitlyCreationDate
-from cdGetArchives import getArchivesCreationDate
-from cdGetGoogle import getGoogleCreationDate
-from cdGetBacklinks import *
-from cdGetLowest import getLowest
-from cdGetLastModified import getLastModifiedDate
-from cdHtmlMessages import *
-#Topsy service is no longer available
-#from getTopsyScrapper import getTopsyCreationDate
+import core
+import argparse
 
 
-class CarbonDateServer(object):
-    @cherrypy.expose
-    def cd(self, url):
+class CarbonDateServer(tornado.web.RequestHandler):
 
-        if(len(url) < 1):
-            return "Url length less than 1"
-
-        #scheme missing?
-        parsedUrl = urlparse.urlparse(url)
-        if( len(parsedUrl.scheme)<1 ):
-            url = 'http://'+url
-
-        response = cherrypy.response
-        response.headers['Content-Type'] = 'application/json'
-
-        print 'Getting Creation dates for: ' + url
-
-        threads = []
-        outputArray =['','','','','','']
-        now0 = datetime.datetime.now()
-        
-       
-        lastmodifiedThread = Thread(target=getLastModifiedDate, args=(url, outputArray, 0))
-        bitlyThread = Thread(target=getBitlyCreationDate, args=(url, outputArray, 1))
-        googleThread = Thread(target=getGoogleCreationDate, args=(url, outputArray, 2))
-        archivesThread = Thread(target=getArchivesCreationDate, args=(url, outputArray, 3))
-        backlinkThread = Thread(target=getBacklinksFirstAppearanceDates, args=(url, outputArray, 4))
-        #topsyThread = Thread(target=getTopsyCreationDate, args=(url, outputArray, 5))
-        
-
-        # Add threads to thread list
-        threads.append(lastmodifiedThread)
-        threads.append(bitlyThread)
-        threads.append(googleThread)	
-        threads.append(archivesThread)
-        threads.append(backlinkThread)
-        #threads.append(topsyThread)	
-
-        
-        # Start new Threads
-        lastmodifiedThread.start()
-        bitlyThread.start()
-        googleThread.start()
-        archivesThread.start()
-        backlinkThread.start()
-        #topsyThread.start()
-
-        
-        # Wait for all threads to complete
-        for t in threads:
-            t.join()
-            
-        # For threads
-        lastmodified = outputArray[0]
-        bitly = outputArray[1] 
-        google = outputArray[2] 
-        archives = outputArray[3] 
-        backlink = outputArray[4]
-        #topsy = outputArray[5]  
-        
-        #note that archives["Earliest"] = archives[0][1]
+    def get(self):
         try:
-            #lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink, topsy]) #for thread
-            lowest = getLowest([lastmodified, bitly, google, archives[0][1], backlink]) #for thread
-        except:
-           print sys.exc_type, sys.exc_value , sys.exc_traceback
-        
-        
+            url=self.get_argument('url')
+        except Exception, e:
+            self.set_status(400)
+            return
 
-        result = []
-        
-        result.append(("URI", url))
-        result.append(("Estimated Creation Date", lowest))
-        result.append(("Last Modified", lastmodified))
-        result.append(("Bitly.com", bitly))
-        #result.append(("Topsy.com", "Topsy is out of service"))
-        result.append(("Backlinks", backlink))
-        result.append(("Google.com", google))
-        result.append(("Archives", archives))
-        values = OrderedDict(result)
-        r = json.dumps(values, sort_keys=False, indent=2, separators=(',', ': '))
-        
-        now1 = datetime.datetime.now() - now0
+        fileConfig = open("config", "r")
+        config = fileConfig.read()
+        fileConfig.close()
+        cfg = json.loads(config)
+
+        parser=argparse.ArgumentParser(description='server version of Carbon Date Tool')
+        parser.add_argument('-a', '--all', action="store_true")
+        parser.add_argument('-e', metavar='MODULE')
+        parser.add_argument('url', help='The url to look up')
+        parser.add_argument('-t','--timeout' , type=int, help='Set timeout for all modules',default=300)
+        parser.add_argument('-v','--verbose' , action='store_true', help='Enable verbose output')
+
+        args=parser.parse_args(['-a',url])
+
+        result=[]
+        modLoader=core.ModuleManager()
+        modLoader.loadModule(cfg,args)
+        r=modLoader.run(args=args,resultArray=result)
+        self.write(r)
 
         
-        #print "runtime in seconds: " 
-        #print now1.seconds
-        #print r
-        print 'runtime in seconds:  ' +  str(now1.seconds) + '\n' + r + '\n'
-        return r
     
 
 
@@ -126,10 +56,13 @@ if __name__ == '__main__':
     jsonFile = json.loads(config)
     ServerIP = jsonFile["ServerIP"]
     ServerPort = jsonFile["ServerPort"]
+   
 
-    cherrypy.config.update({'server.socket_host': str(ServerIP),
-                          'server.socket_port': int(ServerPort)})
-    cherrypy.quickstart(CarbonDateServer())
+    app=tornado.web.Application([
+        (r"/search",CarbonDateServer)])
+    app.listen(ServerPort)
+    #str(ServerIP),
+    tornado.ioloop.IOLoop.current().start()
   
   
   
