@@ -1,6 +1,7 @@
 {
 	"AccessToken":["YourBitlyAccessTokenHere"],
-	"CasperJSLocation": "/usr/local/bin/casperjs",
+	"BingAPIKey":"YourBingSearchAPIKey",
 	"ServerIP": "0.0.0.0",
-	"ServerPort": 8080
+	"ServerPort": 8888,
+	"SystemUtility":["cdGetLowest", "cdGetFirstAppearanceInArchives"]
 }

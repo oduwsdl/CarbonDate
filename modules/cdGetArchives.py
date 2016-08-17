@@ -11,6 +11,8 @@ import urlparse
 
 from datetime import datetime
 
+moduleTag="Archives"
+
 def getMementos(uri):
 
     uri = uri.replace(' ', '')
@@ -115,7 +117,7 @@ def getRealDate(url, memDate):
     
     return date  
 
-def getArchivesCreationDate(url, outputArray, outputArrayIndex):
+def getArchives(url, outputArray, outputArrayIndex,verbose=False):
     
     try:
         mementos = getMementos(url)
@@ -124,7 +126,7 @@ def getArchivesCreationDate(url, outputArray, outputArrayIndex):
             result = []
             result.append(("Earliest", ""))
             result.append(("By_Archive", dict([])))
-            outputArray[outputArrayIndex] = result
+            outputArray[outputArrayIndex] = result[0][1]
             print "Done Archives 0"
             return dict(result)
 
@@ -172,7 +174,7 @@ def getArchivesCreationDate(url, outputArray, outputArrayIndex):
             result2.append((archives[archive]["link"], str(archives[archive]["time"])))
         result.append(("By_Archive", dict(result2)))
         
-        outputArray[outputArrayIndex] = result
+        outputArray[outputArrayIndex] = result[0][1]
         print "Done Archives 1"
         return dict(result)
 
@@ -182,6 +184,6 @@ def getArchivesCreationDate(url, outputArray, outputArrayIndex):
         result.append(("Earliest", ""))
         result.append(("By_Archive", dict([])))
 
-        outputArray[outputArrayIndex] = result
+        outputArray[outputArrayIndex] = result[0][1]
         print "Done Archives 2"
         return dict(result)

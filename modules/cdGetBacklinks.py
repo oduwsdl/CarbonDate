@@ -2,15 +2,18 @@ import sys
 import os
 
 from cdGetLowest import getLowest
-from cdGetBitly import getBitlyCreationDate
-from cdGetArchives import getArchivesCreationDate
-from cdGetGoogle import getGoogleCreationDate, mimicBrowser
+from cdGetBitly import getBitly
+from cdGetArchives import getArchives
+from cdGetGoogle import getGoogle, mimicBrowser
 from cdGetFirstAppearanceInArchives import getFirstAppearance
 
 import commands
 import calendar
 import time
 import urllib
+
+moduleTag="Backlinks"
+entry="getBacklinksFirstAppearanceDates"
 
 reload(sys)  
 sys.setdefaultencoding('utf8')
@@ -42,7 +45,7 @@ def getBacklinks(url):
 			inlinks.append(url)
 			loc = fin
 	except:
-		print sys.exc_info()
+		print 'cdGetBacklinks :',sys.exc_info()
 
 	return inlinks
 
@@ -52,9 +55,9 @@ def getBacklinksCreationDates(url):
 	outputArrayDummyNotUsed = []
 	try:
 		for link in links:
-			bitly = getBitlyCreationDate(link)
-			archives = getArchivesCreationDate(link)
-			google = getGoogleCreationDate(link)
+			bitly = getBitly(link)
+			archives = getArchives(link)
+			google = getGoogle(link)
 			lowest = getLowest([bitly,google,archives["Earliest"]])
 			
 			if(lowest==""):
@@ -62,10 +65,10 @@ def getBacklinksCreationDates(url):
 			backlinks.append(lowest)
 
 	except:
-		print sys.exc_info()
+		print 'cdGetBacklinks :', sys.exc_info()
 	return backlinks
 
-def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
+def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=False):
 
 	links = getBacklinks(url)
 
@@ -86,7 +89,7 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
 			if(epoch<lowest_epoch):
 				lowest_epoch = epoch
 	except:
-		print sys.exc_info()
+		print  'cdGetBacklinks :', sys.exc_info()
 
 	if(lowest_epoch == 99999999999):
 		outputArray[outputArrayIndex] = ""
