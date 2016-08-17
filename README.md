@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-* Install cherrypy server (to run server.py)
+* Install tornado server (to run server.py)
 * Insert your bitly oauth access token in config file. Visit https://bitly.com/a/oauth_apps to get your access token
 * Insert your Bing search api key in config file. Visit https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api to get your api key
 * (optional) Change server ip/port number in config
@@ -17,7 +17,7 @@ $ python server.py
 ```
 To CarbonDate `http://example.com`:
 
-Open in a Web browser: `http://localhost:8080/cd?url=http://example.com`
+Open in a Web browser: `http://localhost:8888/search?url=http://example.com`
 
 To run it as a local script:
 
@@ -31,6 +31,15 @@ The backlinks calculation is costy to your computers, so it is recommanded to tu
 $ python local.py search URL -e cdGetBacklinks
 ```
 ## How to add your module:
+
+Name your module main script as cdGet<Module name>.py
+
+And ensure the entry function is named get<Module name>(url,outputArray, indexOfOutputArray,verbose=False)
+for example your module name is Service, 
+
+then the script should be named cdGetService, and interface function should be named getService (url,outputArray, indexOfOutputArray,verbose=False)
+
+
 
 Copy your scripts and to folder ./modules, then the system will automaticaly detects and loads it.
 ###If your module have sub-module:
