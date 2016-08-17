@@ -8,6 +8,8 @@ import requests
 from cdGetLowest import getLowest
 from random import randint
 
+moduleTag='Google.com'
+
 reload(sys)  
 sys.setdefaultencoding('utf8')
 
@@ -130,7 +132,7 @@ def genericGetCreationDate(query):
 	#print
 	return getLowestDate(allDatesEpoch)
 
-def getGoogleCreationDate(url, outputArray, indexOfOutputArray):
+def getGoogle(url, outputArray, indexOfOutputArray,verbose=False):
 	
 	#Caution google blocks bots which do not play nice
 	#return ''

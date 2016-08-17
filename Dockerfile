@@ -2,20 +2,18 @@ FROM python:2.7
 
 MAINTAINER Neo <fallenangel0813@gmail.com>
 
-ENV CASPERJS_VERSION=1.1.1
-
 RUN pip install ordereddict
 
 RUN pip install requests
 
 RUN pip install BeautifulSoup4
 
-ADD ./docker /docker
+RUN pip install surt
 
-RUN /docker/build && rm -rf docker
+RUN pip install tornado
 
 ADD . /carbon
 
 WORKDIR /carbon
 
-CMD python local.py wwww.youtube.com
+CMD python local.py search wwww.youtube.com -e cdGetBacklinks
