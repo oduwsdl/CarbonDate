@@ -46,7 +46,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False):
 			print"Done Pubdate"
 			return date_str
 		else:
-			return None
+			return ''
 	
 	html = response.text
 	soup = BeautifulSoup(html,'lxml')
