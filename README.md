@@ -17,7 +17,7 @@ $ python server.py
 ```
 To CarbonDate `http://example.com`:
 
-Open in a Web browser: `http://localhost:8080/cd?url=http://example.com`
+Open in a Web browser: `http://localhost:8888/search?url=http://example.com`
 
 To run it as a local script:
 
@@ -31,6 +31,15 @@ The backlinks calculation is costy to your computers, so it is recommanded to tu
 $ python local.py search URL -e cdGetBacklinks
 ```
 ## How to add your module:
+
+Name your module main script as cdGet<Module name>.py
+
+And ensure the entry function is named get<Module name>(url,outputArray, indexOfOutputArray,verbose=False)
+for example your module name is Service, 
+
+then the script should be named cdGetService, and interface function should be named getService (url,outputArray, indexOfOutputArray,verbose=False)
+
+
 
 Copy your scripts and to folder ./modules, then the system will automaticaly detects and loads it.
 ###If your module have sub-module:
