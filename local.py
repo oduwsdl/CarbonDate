@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from checkForModules import checkForModules
 import json
 import time
@@ -83,8 +85,3 @@ if __name__ == '__main__':
   
   
   
-
-
-
-
-
