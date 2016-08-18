@@ -1,19 +1,5 @@
-FROM python:2.7
+FROM python:2-onbuild
 
-MAINTAINER Neo <fallenangel0813@gmail.com>
+MAINTAINER Sawood Alam <ibnesayeed@gmail.com>
 
-RUN pip install ordereddict
-
-RUN pip install requests
-
-RUN pip install BeautifulSoup4
-
-RUN pip install surt
-
-RUN pip install tornado
-
-ADD . /carbon
-
-WORKDIR /carbon
-
-CMD python local.py search wwww.youtube.com -e cdGetBacklinks
+CMD ["python", "local.py", "search", "www.youtube.com", "-e", "cdGetBacklinks"]
