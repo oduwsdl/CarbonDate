@@ -1,0 +1,7 @@
+ordereddict
+requests
+BeautifulSoup4
+surt
+tornado
+python-dateutil
+lxml
