@@ -1,14 +1,12 @@
 #!/usr/bin/env python
-
-from checkForModules import checkForModules
 import json
 import time
 import os,sys, traceback
 import datetime
+from collections import OrderedDict
 
 import tornado.web
 import tornado.ioloop
-
 import core
 import argparse
 
@@ -39,7 +37,9 @@ class CarbonDateServer(tornado.web.RequestHandler):
         result=[]
         modLoader=core.ModuleManager()
         modLoader.loadModule(cfg,args)
-        r=modLoader.run(args=args,resultArray=result)
+        resultArray=modLoader.run(args=args,resultArray=result)
+        resultArray.insert(0,('self',self.request.protocol + "://" + self.request.host + self.request.uri))
+        r= OrderedDict(resultArray)
         self.write(r)
 
         
@@ -69,7 +69,7 @@ if __name__ == '__main__':
             ServerPort=int(port_env)
 
     app=tornado.web.Application([
-        (r"/search",CarbonDateServer)])
+        (r"/cd",CarbonDateServer)])
     app.listen(ServerPort)
     #str(ServerIP),
     tornado.ioloop.IOLoop.current().start()

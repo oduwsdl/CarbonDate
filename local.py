@@ -6,8 +6,6 @@ import time
 import os,sys, traceback
 import datetime
 
-from cdHtmlMessages import *
-
 import core
 import argparse
 

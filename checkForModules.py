@@ -1,7 +1,5 @@
 import json
-from ordereddict import OrderedDict
 import re
-from cdHtmlMessages import *
 from pprint import pprint
 from threading import Thread
 #import Queue

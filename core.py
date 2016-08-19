@@ -8,7 +8,7 @@ import json
 import urlparse
 from threading import Thread
 from modules.cdGetLowest import getLowest
-from ordereddict import OrderedDict
+from collections import OrderedDict
 
 class ModuleManager():
 	"""docstring for ModuleManager"""
@@ -125,7 +125,7 @@ class ModuleManager():
 
 		print 'runtime in seconds:  ' +  str(now1.seconds) + '\n' + r + '\n'
 
-		return r
+		return resultArray
 		
 
 

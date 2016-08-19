@@ -1,4 +1,3 @@
-ordereddict
 requests
 BeautifulSoup4
 surt

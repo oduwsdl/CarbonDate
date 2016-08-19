@@ -10,7 +10,7 @@ moduleTag="Twitter.com"
 earliest_time=datetime.datetime.strptime("2006-03-01", '%Y-%m-%d')
 
 #pretend we are firefox browser, this ensure we can get right web page
-headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux i686 (x86_64); rv:2.0b4pre) Gecko/20100812 Minefield/4.0b4pre'}
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'}
 #Function: get all tweets in current specific duration
 #parameter:
 #uri: [string] the link you want to query
@@ -26,9 +26,11 @@ def getDates(uri,date_from,date_until,verbose=False):
 		uri = uri, from_date = from_date_str, until_date = until_date_str
 		)
 	if verbose:
+		print search_str
 		print 'getTwitter: Search: from %s to %s'%(date_from,date_until)
 	response = requests.get(search_str,headers=headers)
 	html = response.text
+
 	soup = BeautifulSoup(html,'lxml')
 
 	#get all tweets and their text in result (not necessary here, debug use only)
@@ -46,7 +48,8 @@ def getDates(uri,date_from,date_until,verbose=False):
 		#get  tweets text (no need here)
 		#tweet= tweets[i].get_text().encode('ascii', 'ignore')
 		#get time of the tweet
-		time_stamp = datetime.datetime.strptime(tweet_timestamps[i]['title'], '%I:%M %p - %d %b %Y')
+		time_stamp = datetime.datetime.fromtimestamp(
+			int(tweet_timestamps[i].find('span','js-short-timestamp')['data-time']))
 		timestamps.append(time_stamp)
 	return timestamps
 #get most likely oldest date of tweet that have uri in given time period with bnary search
