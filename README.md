@@ -13,7 +13,7 @@
 To run it as a server:
 
 ```
-$ python server.py
+$ server.py
 ```
 To CarbonDate `http://example.com`:
 
@@ -22,13 +22,13 @@ Open in a Web browser: `http://localhost:8888/search?url=http://example.com`
 To run it as a local script:
 
 ```
-$ python local.py search URL
+$ local.py search URL
 ```
 
 The backlinks calculation is costy to your computers, so it is recommanded to turn it off:
 
 ```
-$ python local.py search URL -e cdGetBacklinks
+$ local.py search URL -e cdGetBacklinks
 ```
 ## How to add your module:
 
