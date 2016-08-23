@@ -55,7 +55,7 @@ def GetBitlyJson(URL):
 			continue
 	return jsonData
 
-def getBitly(url, outputArray, indexOfOutputArray,verbose=False):
+def getBitly(url, outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	try:
 		
 		# Get aggregated url
@@ -68,11 +68,13 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False):
 
 		if(jsonData['status_code']!=200):
 			outputArray[indexOfOutputArray] = "Bitly Key has expired"
+			kwargs['displayArray'][indexOfOutputArray] = ""
 			print "Done Bitly"
 			return "Bitly Key has expired"
 
 		if(jsonData =="" or ('error' in jsonData['data']['link_lookup'][0]  and jsonData['data']['link_lookup'][0]['error']=='NOT_FOUND')):
 			outputArray[indexOfOutputArray] = ""
+			kwargs['displayArray'][indexOfOutputArray] = ""
 			print "Done Bitly"
 			return ""
 		url = jsonData['data']['link_lookup'][0]['aggregate_link']
@@ -83,11 +85,13 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False):
 
 		if(jsonData['status_code']!=200):
 			outputArray[indexOfOutputArray] = "Bitly Key has expired"
+			kwargs['displayArray'][indexOfOutputArray] = ""
 			print "Done Bitly"
 			return "Bitly Key has expired"
 	
 		if(jsonData['data'] == None or 'created_at' not in jsonData['data']['info'][0]):
 			outputArray[indexOfOutputArray] = ""
+			kwargs['displayArray'][indexOfOutputArray] = ""
 			print "Done Bitly"
 			return ""
 		epoch = jsonData['data']['info'][0]['created_at']
@@ -95,6 +99,7 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False):
 		limitEpoch = int(calendar.timegm(time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')))
 		if(epoch<limitEpoch):
 			outputArray[indexOfOutputArray] = ""
+			kwargs['displayArray'][indexOfOutputArray] = ""
 			print "Done Bitly"
 			return ""
 		
@@ -104,12 +109,14 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False):
 
 		
 		outputArray[indexOfOutputArray] = creation_date
+		kwargs['displayArray'][indexOfOutputArray] = creation_date
 		print "Done Bitly"
 		return str(creation_date)
 	
 	except:
 		print 'cdGetBitly: ', sys.exc_info()
 		outputArray[indexOfOutputArray] = ""
+		kwargs['displayArray'][indexOfOutputArray] = ""
 		print "Done Bitly"
 		return ""
 

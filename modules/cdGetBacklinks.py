@@ -68,7 +68,7 @@ def getBacklinksCreationDates(url):
 		print 'cdGetBacklinks :', sys.exc_info()
 	return backlinks
 
-def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=False):
+def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=False, **kwargs):
 
 	links = getBacklinks(url)
 
@@ -98,6 +98,7 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=
 	
 	timeVal = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest_epoch))
 	outputArray[outputArrayIndex] = timeVal
+	kwargs['displayArray'][indexOfOutputArray] = timeVal
 	print "Done Backlinks"
 	return timeVal
 

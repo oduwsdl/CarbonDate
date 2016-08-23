@@ -8,7 +8,7 @@ from requests.utils import quote
 
 moduleTag='Bing.com'
 
-def getBing(url,outputArray, indexOfOutputArray,verbose=False):
+def getBing(url,outputArray, indexOfOutputArray,verbose=False, **kwargs):
 	apiKey = []
 	try:
 		apiKey_env=os.getenv('CD_Bing_key')
@@ -87,6 +87,7 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False):
 			break
 
 	outputArray[indexOfOutputArray]=result
+	kwargs['displayArray'][indexOfOutputArray] = result
 	print 'Done Bing'
 	return result
 

@@ -28,7 +28,7 @@ def _extractFromURL(url):
 
 	return None
 
-def getPubdate(url,outputArray, indexOfOutputArray,verbose=False):
+def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	date=None
 	try:
 		if verbose:
@@ -164,6 +164,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False):
 	if date is not None:
 		date_str=date.strftime('%Y-%m-%dT%H:%M:%S')
 	outputArray[indexOfOutputArray] = date_str
+	kwargs['displayArray'][indexOfOutputArray] = date_str
 	print"Done Pubdate"
 	return date_str
 

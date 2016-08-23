@@ -132,15 +132,16 @@ def genericGetCreationDate(query):
 	#print
 	return getLowestDate(allDatesEpoch)
 
-def getGoogle(url, outputArray, indexOfOutputArray,verbose=False):
+def getGoogle(url, outputArray, indexOfOutputArray,verbose=False, **kwargs):
 	
 	#Caution google blocks bots which do not play nice
 	#return ''
 	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=inurl:'+url+'&oq=inurl:'+url
 	inurl_creation_date = genericGetCreationDate(query)
 
-	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q='+url
-	search_creation_date = genericGetCreationDate(query)
+	#query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q='+url
+	#search_creation_date = genericGetCreationDate(query)
+	search_creation_date = 0
 
 	#print 'inurl_creation_date:', inurl_creation_date
 	#print 'search_creation_date:', search_creation_date
@@ -150,15 +151,18 @@ def getGoogle(url, outputArray, indexOfOutputArray,verbose=False):
 
 		lowerDate = getLowest([search_creation_date, inurl_creation_date])
 		outputArray[indexOfOutputArray] = lowerDate
+		kwargs['displayArray'][indexOfOutputArray] = lowerDate
 
 	elif( inurl_creation_date == 0 and search_creation_date != 0 ):
 
 		lowerDate = getLowest([search_creation_date, search_creation_date])
 		outputArray[indexOfOutputArray] = lowerDate
+		kwargs['displayArray'][indexOfOutputArray] = lowerDate
 
-	else:
-		#this else means: inurl_creation_date != 0 and search_creation_date = 0
+	elif( inurl_creation_date != 0 and search_creation_date == 0 ):
+		
 		lowerDate = getLowest([inurl_creation_date, inurl_creation_date])
 		outputArray[indexOfOutputArray] = lowerDate
+		kwargs['displayArray'][indexOfOutputArray] = lowerDate
 	
 	return lowerDate

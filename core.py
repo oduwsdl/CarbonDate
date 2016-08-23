@@ -76,7 +76,11 @@ class ModuleManager():
 			url=kwargs['url']
 			outputArray=kwargs['outputArray']
 			indexOfOutputArray=kwargs['indexOfOutputArray']
-			self.entryPoints[moduleName]['getFunc'](url,outputArray,indexOfOutputArray,kwargs['verbose'])
+			self.entryPoints[moduleName]['getFunc'](
+				url,outputArray,
+				indexOfOutputArray,
+				kwargs['verbose'], 
+				displayArray = kwargs['displayArray'])
 		else:
 			print('ModuleManager: Error : No such module: %s' % moduleName)
 
@@ -86,6 +90,7 @@ class ModuleManager():
 		threads = []
 		resultArray=kwargs['resultArray']
 		outputArray=['']*len(self.entryPoints)
+		displayArray=['']*len(self.entryPoints)
 		now0 = datetime.datetime.now()
 		
 		parsedUrl = urlparse.urlparse(url)
@@ -98,7 +103,11 @@ class ModuleManager():
 			modNames.append(self.entryPoints[mod]["displayName"])
 			#note that the comma next to mod cannot be left out
 			newThread = Thread(target=self.call,  args=(mod,)  ,
-				kwargs={'url' : url,'outputArray' : outputArray, 'indexOfOutputArray' : index, 'verbose':args.verbose})
+				kwargs={'url' : url,
+				'outputArray' : outputArray, 
+				'indexOfOutputArray' : index, 
+				'verbose':args.verbose, 
+				'displayArray': displayArray})
 			threads.append(newThread)
 			index+=1
 
@@ -116,7 +125,7 @@ class ModuleManager():
 		resultArray.append(("URI", url))
 		resultArray.append(("Estimated Creation Date", lowest))
 		for i in range(len(modNames)):
-			resultArray.append((modNames[i],outputArray[i]))
+			resultArray.append((modNames[i],displayArray[i]))
 
 		values = OrderedDict(resultArray)
 		r = json.dumps(values, sort_keys=False, indent=2, separators=(',', ': '))

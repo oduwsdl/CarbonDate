@@ -117,7 +117,7 @@ def getRealDate(url, memDate):
     
     return date  
 
-def getArchives(url, outputArray, outputArrayIndex,verbose=False):
+def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
     
     try:
         mementos = getMementos(url)
@@ -175,6 +175,7 @@ def getArchives(url, outputArray, outputArrayIndex,verbose=False):
         result.append(("By_Archive", dict(result2)))
         
         outputArray[outputArrayIndex] = result[0][1]
+        kwargs['displayArray'][outputArrayIndex] = result
         print "Done Archives 1"
         return dict(result)
 
@@ -185,5 +186,6 @@ def getArchives(url, outputArray, outputArrayIndex,verbose=False):
         result.append(("By_Archive", dict([])))
 
         outputArray[outputArrayIndex] = result[0][1]
+        kwargs['displayArray'][outputArrayIndex] = result
         print "Done Archives 2"
         return dict(result)

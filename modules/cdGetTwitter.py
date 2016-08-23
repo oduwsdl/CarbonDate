@@ -74,7 +74,7 @@ def getEarliestDate(uri,from_date,until_date,verbose=False):
 		return getEarliestDate(uri,upperbound,lowerbound,verbose)
 #interface function for module
 #verbose: enable debug output
-def getTwitter(uri,outputArray, indexOfOutputArray,verbose=False):
+def getTwitter(uri,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	if uri.startswith('http://'):
 		uri=uri[7:]
 	#convert characters in % format
@@ -110,6 +110,7 @@ def getTwitter(uri,outputArray, indexOfOutputArray,verbose=False):
 		print "getTwitter: ",url2, date2_str
 
 	outputArray[indexOfOutputArray] = result_str
+	kwargs['displayArray'][indexOfOutputArray] = result_str
 	print "Done Twitter"
 	return result_str
 #################test entry####################

@@ -6,7 +6,7 @@ import commands
 
 moduleTag="Last Modified"
 
-def getLastModified(url, outputArray, indexOfOutputArray,verbose=False):
+def getLastModified(url, outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	creation_date = ""
 	try:
 		header = commands.getoutput('curl --silent -L -I -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"')
@@ -47,6 +47,7 @@ def getLastModified(url, outputArray, indexOfOutputArray,verbose=False):
 		return time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(99999999999))
 	
 	outputArray[indexOfOutputArray] = creation_date
+	kwargs['displayArray'][indexOfOutputArray] = creation_date
 	print "Done Last Modified"
 	return creation_date
 
