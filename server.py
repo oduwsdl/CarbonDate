@@ -40,8 +40,8 @@ class CarbonDateServer(tornado.web.RequestHandler):
         resultArray=modLoader.run(args=args,resultArray=result)
         resultArray.insert(0,('self',self.request.protocol + "://" + self.request.host + self.request.uri))
         r= OrderedDict(resultArray)
-        self.write(r)
-
+        self.write(json.dumps(r, sort_keys=False, indent=2, separators=(',', ': ')))
+        self.set_header("Content-Type", "application/json") 
         
     
 
