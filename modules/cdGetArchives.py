@@ -62,9 +62,6 @@ def getMementos(uri):
                 memento["name"] = name.netloc
                 memento["link"] = mementoURL
 
-                memento["link"] = urllib.quote(memento["link"])
-                memento["link"] = memento["link"].replace("http%3A//", "http://")
-                memento["link"] = memento["link"][memento["link"].find("http://"):]
 
                 #assumption that first memento is youngest - ON - start
                 
