@@ -38,7 +38,7 @@ def getMementos(uri):
             if(line.find("</memento")>0):
                 line = line.replace("</memento", "<http://api.wayback.archive.org/memento")
     
-    
+            start = line.find('h')#find the start location of http or https
             loc = line.find('>;rel="')
 
             #tofind = ';datetime="'
@@ -46,7 +46,7 @@ def getMementos(uri):
 
             loc2 = line.find(tofind)
             if(loc!=-1 and loc2!=-1):
-                mementoURL = line[3:loc]
+                mementoURL = line[start:loc]
                 timestamp = line[loc2+len(tofind):line.find('"',loc2+len(tofind)+3)]
 
                 epoch = int(calendar.timegm(time.strptime(timestamp, '%a, %d %b %Y %H:%M:%S %Z')))
@@ -61,7 +61,6 @@ def getMementos(uri):
 
                 memento["name"] = name.netloc
                 memento["link"] = mementoURL
-
 
                 #assumption that first memento is youngest - ON - start
                 
