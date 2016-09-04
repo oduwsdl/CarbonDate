@@ -8,6 +8,7 @@ import commands
 import calendar
 import json
 import os.path
+import logging
 
 moduleTag="Bitly.com"
 
@@ -17,7 +18,7 @@ def GetBitlyJson(URL):
 	try:
 		access_token_env=os.getenv('CD_Bitly_token')
 		if access_token_env is not None:
-			print 'cdGetBitly: Access token is found in environment variable, overwite local config values.'
+			logging.warning ( 'cdGetBitly: Access token is found in environment variable, overwite local config values.' )
 			ACCESS_TOKENs=ACCESS_TOKENs[access_token_env]
 		else:
 			fileConfig = open(os.path.dirname(__file__)+"/../config", "r")
@@ -27,14 +28,14 @@ def GetBitlyJson(URL):
 			ACCESS_TOKENs = json.loads(config)
 			ACCESS_TOKENs = ACCESS_TOKENs['AccessToken']
 	except:
-		print 'cdGetBitly: ', sys.exc_info()
+		logging.debug ( 'cdGetBitly: ', sys.exc_info() )
 		return ''
 
 	if( len(ACCESS_TOKENs) == 0 ):
-		print 'cdGetBitly.py::GetBitlyJson(), ACCESS_TOKENs empty'
+		logging.warning ( 'cdGetBitly.py::GetBitlyJson(), ACCESS_TOKENs empty' )
 		return ''
 	elif( ACCESS_TOKENs[0] == 'YourBitlyAccessTokenHere' ):
-		print 'cdGetBitly.py::GetBitlyJson(), please set bitly access token in config'
+		logging.warning ( 'cdGetBitly.py::GetBitlyJson(), please set bitly access token in config' )
 		return ''
 	
 	jsonData = ""
@@ -69,13 +70,13 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False,**kwargs):
 		if(jsonData['status_code']!=200):
 			outputArray[indexOfOutputArray] = "Bitly Key has expired"
 			kwargs['displayArray'][indexOfOutputArray] = ""
-			print "Done Bitly"
+			logging.debug ( "Done Bitly" )
 			return "Bitly Key has expired"
 
 		if(jsonData =="" or ('error' in jsonData['data']['link_lookup'][0]  and jsonData['data']['link_lookup'][0]['error']=='NOT_FOUND')):
 			outputArray[indexOfOutputArray] = ""
 			kwargs['displayArray'][indexOfOutputArray] = ""
-			print "Done Bitly"
+			logging.debug ( "Done Bitly" )
 			return ""
 		url = jsonData['data']['link_lookup'][0]['aggregate_link']
 
@@ -86,13 +87,13 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False,**kwargs):
 		if(jsonData['status_code']!=200):
 			outputArray[indexOfOutputArray] = "Bitly Key has expired"
 			kwargs['displayArray'][indexOfOutputArray] = ""
-			print "Done Bitly"
+			logging.debug ( "Done Bitly" )
 			return "Bitly Key has expired"
 	
 		if(jsonData['data'] == None or 'created_at' not in jsonData['data']['info'][0]):
 			outputArray[indexOfOutputArray] = ""
 			kwargs['displayArray'][indexOfOutputArray] = ""
-			print "Done Bitly"
+			logging.debug ( "Done Bitly" )
 			return ""
 		epoch = jsonData['data']['info'][0]['created_at']
 
@@ -100,7 +101,7 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False,**kwargs):
 		if(epoch<limitEpoch):
 			outputArray[indexOfOutputArray] = ""
 			kwargs['displayArray'][indexOfOutputArray] = ""
-			print "Done Bitly"
+			logging.debug ( "Done Bitly" )
 			return ""
 		
 	
@@ -110,7 +111,7 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False,**kwargs):
 		
 		outputArray[indexOfOutputArray] = creation_date
 		kwargs['displayArray'][indexOfOutputArray] = creation_date
-		print "Done Bitly"
+		logging.debug ( "Done Bitly" )
 		return str(creation_date)
 	
 	except:

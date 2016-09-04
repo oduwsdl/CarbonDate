@@ -3,6 +3,7 @@ import os
 import calendar
 import time
 import commands
+import logging
 
 moduleTag="Last Modified"
 
@@ -43,12 +44,12 @@ def getLastModified(url, outputArray, indexOfOutputArray,verbose=False,**kwargs)
 		#print traceback.print_exception(sys.exc_type, sys.exc_value, sys.exc_traceback,limit=2,file=sys.stdout)
 		#print sys.exc_info()
 		outputArray[indexOfOutputArray] = ""
-		print "Done Last Modified"
+		logging.debug ( "Done Last Modified" )
 		return time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(99999999999))
 	
 	outputArray[indexOfOutputArray] = creation_date
 	kwargs['displayArray'][indexOfOutputArray] = creation_date
-	print "Done Last Modified"
+	logging.debug ( "Done Last Modified" )
 	return creation_date
 
 def getLastModified_old(url, outputArray, indexOfOutputArray):
@@ -79,12 +80,12 @@ def getLastModified_old(url, outputArray, indexOfOutputArray):
 			loc = fin
 	except:
         
-		print traceback.print_exception(sys.exc_type, sys.exc_value, sys.exc_traceback,limit=2,file=sys.stdout)
-		print sys.exc_info()
+		logging.error ( traceback.print_exception(sys.exc_type, sys.exc_value, sys.exc_traceback,limit=2,file=sys.stdout) )
+		logging.error ( sys.exc_info() )
 		outputArray[indexOfOutputArray] = ""
-		print "Done Last Modified"
+		logging.debug ( "Done Last Modified" )
 		return ""
 	
 	outputArray[indexOfOutputArray] = creation_date
-	print "Done Last Modified"
+	logging.debug ( "Done Last Modified" )
 	return creation_date

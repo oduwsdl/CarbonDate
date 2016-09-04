@@ -5,6 +5,7 @@ import requests
 from requests.utils import quote
 import re
 import dateutil.parser
+import logging
 
 #pretend we are firefox browser, this ensure we can get right web page
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux i686 (x86_64); rv:2.0b4pre) Gecko/20100812 Minefield/4.0b4pre'}
@@ -31,19 +32,17 @@ def _extractFromURL(url):
 def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	date=None
 	try:
-		if verbose:
-			print "cdGetPubdate: Try to get time from url"
+		logging.debug ( "cdGetPubdate: Try to get time from url" )
 		date=_extractFromURL(url)
-		if verbose:
-			print "cdGetPubdate: Date extracted from url:", date
-			print "cdGetPubdate: Downloading web page"
+		logging.debug ( "cdGetPubdate: Date extracted from url: %s", date )
+		logging.debug ( "cdGetPubdate: Downloading web page" )
 		response = requests.get(url,headers=headers)
 	except Exception, e:
-		print("cdGetPubdate: Error while downloading web page")
+		logging.debug ("cdGetPubdate: Error while downloading web page")
 		if date is not None:
 			date_str=date.strftime('%Y-%m-%dT%H:%M:%S')
 			outputArray[indexOfOutputArray] = date_str
-			print"Done Pubdate"
+			logging.debug ("Done Pubdate" )
 			return date_str
 		else:
 			return ''
@@ -52,18 +51,16 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	soup = BeautifulSoup(html,'lxml')
 
 	#try get time tag
-	if verbose:
-		print "cdGetPubdate: Try to get time from time tag"
+	logging.debug ( "cdGetPubdate: Try to get time from time tag" )
 	for time in soup.findAll("time"):
 		datetime = time.get('datetime', '')
 		if len(datetime) > 0:
 			date = parseStrDate(datetime)
-		if verbose:
-			print "cdGetPubdate: Date extracted from time tag:", date
+
+		logging.debug ( "cdGetPubdate: Date extracted from time tag:", date )
 	if date is None:
 	#get pubdate in meta tag
-		if verbose:
-			print("cdGetPubdate: Try to get time from meta tag")
+		logging.debug ("cdGetPubdate: Try to get time from meta tag")
 		metaDate = None
 		for meta in soup.findAll("meta"):
 			metaName = meta.get('name', '').lower()
@@ -165,7 +162,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 		date_str=date.strftime('%Y-%m-%dT%H:%M:%S')
 	outputArray[indexOfOutputArray] = date_str
 	kwargs['displayArray'][indexOfOutputArray] = date_str
-	print"Done Pubdate"
+	logging.debug ("Done Pubdate")
 	return date_str
 
 #################test entry####################

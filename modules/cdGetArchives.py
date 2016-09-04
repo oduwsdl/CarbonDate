@@ -10,6 +10,7 @@ import commands
 import urlparse
 
 from datetime import datetime
+import logging
 
 moduleTag="Archives"
 
@@ -123,7 +124,7 @@ def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
             result.append(("Earliest", ""))
             result.append(("By_Archive", dict([])))
             outputArray[outputArrayIndex] = result[0][1]
-            print "Done Archives 0"
+            logging.debug ("Done Archives 0")
             return dict(result)
 
         archives = {}
@@ -172,16 +173,16 @@ def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
         
         outputArray[outputArrayIndex] = result[0][1]
         kwargs['displayArray'][outputArrayIndex] = result
-        print "Done Archives 1"
+        logging.debug ("Done Archives 1")
         return dict(result)
 
     except:
-        print sys.exc_info() 
+        logging.debug (sys.exc_info())
         result = []
         result.append(("Earliest", ""))
         result.append(("By_Archive", dict([])))
 
         outputArray[outputArrayIndex] = result[0][1]
         kwargs['displayArray'][outputArrayIndex] = result
-        print "Done Archives 2"
+        logging.debug ("Done Archives 2")
         return dict(result)

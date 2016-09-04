@@ -60,7 +60,7 @@ class ModuleManager():
 					funcName=getattr(currentMod,'entry')
 				self.entryPoints[modName]["getFunc"]=getattr(currentMod,funcName)
 			except Exception, e:
-				print "ModuleManager: ",e
+				kwargs['logger'].error ( "ModuleManager: ",e )
 				sys.exit(1)
 			if hasattr(currentMod, "moduleTag"):
 				self.entryPoints[modName]["displayName"]=getattr(currentMod,'moduleTag')
@@ -82,7 +82,7 @@ class ModuleManager():
 				kwargs['verbose'], 
 				displayArray = kwargs['displayArray'])
 		else:
-			print('ModuleManager: Error : No such module: %s' % moduleName)
+			kwargs['logger'].error ('ModuleManager: Error : No such module: %s' % moduleName)
 
 	def run(self,args,**kwargs):
 		url=args.url
@@ -120,7 +120,7 @@ class ModuleManager():
 		try:
 			lowest = getLowest(outputArray) 
 		except:
-			print sys.exc_type, sys.exc_value , sys.exc_traceback
+			kwargs['logger'].error ( sys.exc_type, sys.exc_value , sys.exc_traceback )
 
 		resultArray.append(("URI", url))
 		resultArray.append(("Estimated Creation Date", lowest))
@@ -132,7 +132,7 @@ class ModuleManager():
     
 		now1 = datetime.datetime.now() - now0
 
-		print 'runtime in seconds:  ' +  str(now1.seconds) + '\n' + r + '\n'
+		kwargs['logger'].log(35,'runtime in seconds:  ' +  str(now1.seconds) + '\n' + r + '\n') 
 
 		return resultArray
 		

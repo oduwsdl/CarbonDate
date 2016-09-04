@@ -9,6 +9,7 @@ import tornado.web
 import tornado.ioloop
 import core
 import argparse
+import logging
 
 
 class CarbonDateServer(tornado.web.RequestHandler):
@@ -20,6 +21,8 @@ class CarbonDateServer(tornado.web.RequestHandler):
             self.set_status(400)
             return
 
+        logger=logging.getLogger('server')
+        logger.log(45,'Get request from %s'%(self.request.remote_ip))
         fileConfig = open("config", "r")
         config = fileConfig.read()
         fileConfig.close()
@@ -37,12 +40,13 @@ class CarbonDateServer(tornado.web.RequestHandler):
         result=[]
         modLoader=core.ModuleManager()
         modLoader.loadModule(cfg,args)
-        resultArray=modLoader.run(args=args,resultArray=result)
+        resultArray=modLoader.run(args=args,resultArray=result,logger=logger)
         resultArray.insert(0,('self',self.request.protocol + "://" + self.request.host + self.request.uri))
         r= OrderedDict(resultArray)
         self.write(json.dumps(r, sort_keys=False, indent=2, separators=(',', ': ')))
         self.set_header("Content-Type", "application/json") 
-        
+
+        logger.log(45,'Request from %s is done.'%(self.request.remote_ip))
     
 
 
@@ -68,6 +72,11 @@ if __name__ == '__main__':
             print 'Server.py: Server Port number detected in environment variable, overwite local config values.'
             ServerPort=int(port_env)
 
+    #initialize logger
+    logging.basicConfig(level=os.environ.get("LOGLV",logging.ERROR),format='<%(name)s>[%(levelname)s]%(funcName)s : %(message)s')
+    logger=logging.getLogger('server')
+    logging.addLevelName(45, "Server")
+    #initialize server
     app=tornado.web.Application([
         (r"/cd",CarbonDateServer)])
     app.listen(ServerPort)

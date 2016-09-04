@@ -10,6 +10,7 @@ import calendar
 import commands
 import math
 
+import logging
 from datetime import datetime
 from cdGetArchives import getMementos
 from cdGetGoogle import mimicBrowser
@@ -302,7 +303,7 @@ def getFirstAppearance(url, inurl):
 
 	except:
 		#investigate: when run in cherry framework, exception thrown here
-		print sys.exc_info()
+		logging.debug ( sys.exc_info() )
 		#print traceback.print_exception(sys.exc_type, sys.exc_value, sys.exc_traceback,limit=2, file=sys.stdout)
 		return ""
 

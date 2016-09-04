@@ -4,6 +4,7 @@ import datetime
 import requests
 from cdGetLowest import getLowest
 from requests.utils import quote
+import logging
 
 moduleTag="Twitter.com"
 #this is the establishment time of Twttier, which is the ealiest time of a tweet that can be found
@@ -25,9 +26,9 @@ def getDates(uri,date_from,date_until,verbose=False):
 	search_str='https://twitter.com/search?f=tweets&q={uri}%20since%3A{from_date}%20until%3A{until_date}&src=typd'.format(
 		uri = uri, from_date = from_date_str, until_date = until_date_str
 		)
-	if verbose:
-		print search_str
-		print 'getTwitter: Search: from %s to %s'%(date_from,date_until)
+
+	logging.debug ( search_str )
+	logging.debug ( 'getTwitter: Search: from %s to %s'%(date_from,date_until) )
 	response = requests.get(search_str,headers=headers)
 	html = response.text
 
@@ -81,9 +82,9 @@ def getTwitter(uri,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	converted_url=quote(uri,safe='')
 	#search original url
 	#debug output
-	if verbose:
-		print 'getTwitter: Converted Url is: %s' % converted_url
-		print "getTwitter: Trying ", converted_url
+
+	logging.debug ( 'getTwitter: Converted Url is: %s' % converted_url)
+	logging.debug ( "getTwitter: Trying %s", converted_url)
 	date_str=''
 	date=getEarliestDate(converted_url,earliest_time,datetime.datetime.now(),verbose)
 	if date is not None:
@@ -95,9 +96,9 @@ def getTwitter(uri,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	if uri.startswith('www.'):
 		url2=uri[4:]
 		converted_url=quote(url2,safe='')
-		if verbose:
-			print 'getTwitter: Remove www prefix: %s' % converted_url
-			print "getTwitter: Trying ", converted_url
+
+		logging.debug ( 'getTwitter: Remove www prefix: %s' % converted_url )
+		logging.debug ( "getTwitter: Trying %s", converted_url )
 		date2=getEarliestDate(converted_url,earliest_time,datetime.datetime.now(),verbose)
 		if date2 is not None:
 			date2_str=date2.strftime('%Y-%m-%dT%H:%M:%S')
@@ -105,13 +106,12 @@ def getTwitter(uri,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 
 	result_str=getLowest([date_str,date2_str])
 	#debug output
-	if verbose:
-		print "getTwitter: ",uri, date_str
-		print "getTwitter: ",url2, date2_str
+	logging.debug ( "getTwitter: %s\t%s",uri, date_str )
+	logging.debug ( "getTwitter: %s\t%s",url2, date2_str)
 
 	outputArray[indexOfOutputArray] = result_str
 	kwargs['displayArray'][indexOfOutputArray] = result_str
-	print "Done Twitter"
+	logging.debug ( "Done Twitter")
 	return result_str
 #################test entry####################
 if __name__ == '__main__':

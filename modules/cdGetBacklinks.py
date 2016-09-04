@@ -11,6 +11,7 @@ import commands
 import calendar
 import time
 import urllib
+import logging
 
 moduleTag="Backlinks"
 entry="getBacklinksFirstAppearanceDates"
@@ -45,7 +46,7 @@ def getBacklinks(url):
 			inlinks.append(url)
 			loc = fin
 	except:
-		print 'cdGetBacklinks :',sys.exc_info()
+		logging.debug ( 'cdGetBacklinks :',sys.exc_info())
 
 	return inlinks
 
@@ -65,7 +66,7 @@ def getBacklinksCreationDates(url):
 			backlinks.append(lowest)
 
 	except:
-		print 'cdGetBacklinks :', sys.exc_info()
+		logging.debug ( 'cdGetBacklinks :', sys.exc_info() )
 	return backlinks
 
 def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=False, **kwargs):
@@ -89,16 +90,16 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=
 			if(epoch<lowest_epoch):
 				lowest_epoch = epoch
 	except:
-		print  'cdGetBacklinks :', sys.exc_info()
+		logging.debug ( 'cdGetBacklinks :', sys.exc_info() )
 
 	if(lowest_epoch == 99999999999):
 		outputArray[outputArrayIndex] = ""
-		print "Done Backlinks*"
+		logging.debug ( "Done Backlinks*" )
 		return ""
 	
 	timeVal = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest_epoch))
 	outputArray[outputArrayIndex] = timeVal
 	kwargs['displayArray'][indexOfOutputArray] = timeVal
-	print "Done Backlinks"
+	logging.debug ( "Done Backlinks" )
 	return timeVal
 

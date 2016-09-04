@@ -5,6 +5,7 @@ import json
 import os
 from surt import surt
 from requests.utils import quote
+import logging
 
 moduleTag='Bing.com'
 
@@ -13,7 +14,7 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False, **kwargs):
 	try:
 		apiKey_env=os.getenv('CD_Bing_key')
 		if apiKey_env is not None:
-			print 'cdGetBing: Bing api key detected in environment variable, overwite local config values.'
+			logging.debug ( 'cdGetBing: Bing api key detected in environment variable, overwite local config values.')
 			apiKey=apiKey[apiKey_env]
 		else:
 			fileConfig = open(os.path.dirname(__file__)+"/../config", "r")
@@ -23,14 +24,14 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False, **kwargs):
 			apiKey = json.loads(config)
 			apiKey = apiKey['BingAPIKey']
 	except:
-		print 'cdGetBing: ', sys.exc_info()
+		logging.debug ( 'cdGetBing: ', sys.exc_info() )
 		return ''
 
 	if( len(apiKey) == 0 ):
-		print 'cdGetBing: apiKey empty'
+		logging.info ( 'cdGetBing: apiKey empty' )
 		return ''
 	elif( apiKey == 'YourBingSearchAPIKey' ):
-		print 'cdGetBing.py: please set Bing search api key in config'
+		logging.info ( 'cdGetBing.py: please set Bing search api key in config' )
 		return ''
 
 
@@ -88,7 +89,7 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False, **kwargs):
 
 	outputArray[indexOfOutputArray]=result
 	kwargs['displayArray'][indexOfOutputArray] = result
-	print 'Done Bing'
+	logging.debug ( 'Done Bing' )
 	return result
 
 if __name__ == '__main__':

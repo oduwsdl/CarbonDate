@@ -8,6 +8,7 @@ import datetime
 
 import core
 import argparse
+import logging
 
 def cd(modLoader,args):
     result=[]
@@ -16,6 +17,9 @@ def cd(modLoader,args):
     config = fileConfig.read()
     fileConfig.close()
     cfg = json.loads(config)
+    loglevel=logging.WARNING
+    if args.verbose:
+        loglevel=logging.DEBUG
    
     
     modLoader.loadModule(cfg,args)
@@ -42,7 +46,9 @@ def cd(modLoader,args):
             if args.lk:
                 print json.dumps(cfg, sort_keys=True, indent=4, separators=(',', ': '))
     elif args.mode=='search':
-        modLoader.run(args=args,resultArray=result)
+        logging.basicConfig(level=loglevel,format='%(message)s')
+        logger=logging.getLogger('local')
+        modLoader.run(args=args,resultArray=result,logger=logger)
         os._exit(0)
 
 

@@ -7,6 +7,7 @@ import commands
 import requests
 from cdGetLowest import getLowest
 from random import randint
+import logging
 
 moduleTag='Google.com'
 
@@ -15,7 +16,7 @@ sys.setdefaultencoding('utf8')
 
 def randSleep():
 	sleepSeconds = randint(2, 7)
-	print 'cdGetGoogle::randSleep(), sleep:', sleepSeconds
+	logging.debug ( 'cdGetGoogle::randSleep(), sleep: %s', sleepSeconds )
 	time.sleep(sleepSeconds)
 
 def getLowestDate(allDatesEpoch):
@@ -79,8 +80,8 @@ def mimicBrowser(query):
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
 		errorMessage = fname + ', ' + str(exc_tb.tb_lineno)  + ', ' + str(sys.exc_info())
-		print '\tERROR:', errorMessage
-		print '\tquery is: ', query
+		logging.error ( '\tERROR:', errorMessage )
+		logging.error ( '\tquery is: ', query )
 		return ''
 
 def genericGetCreationDate(query):
@@ -124,7 +125,7 @@ def genericGetCreationDate(query):
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
 		errorMessage = fname + ', ' + str(exc_tb.tb_lineno)  + ', ' + str(sys.exc_info())
-		print '\tERROR:', errorMessage
+		logging.error ( '\tERROR:', errorMessage)
 
 	#print query
 	#for date in allDatesEpoch:
