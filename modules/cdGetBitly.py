@@ -1,10 +1,10 @@
 import os
 import sys
 import datetime
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import json
 import time
-import commands
+import subprocess
 import calendar
 import json
 import os.path
@@ -28,7 +28,7 @@ def GetBitlyJson(URL):
 			ACCESS_TOKENs = json.loads(config)
 			ACCESS_TOKENs = ACCESS_TOKENs['AccessToken']
 	except:
-		logging.debug ( 'cdGetBitly: ', sys.exc_info() )
+		logging.exception ( 'cdGetBitly: %s', sys.exc_info() )
 		return ''
 
 	if( len(ACCESS_TOKENs) == 0 ):
@@ -44,13 +44,13 @@ def GetBitlyJson(URL):
 		URL = URL.replace("ACCESS_TOKEN", access_token)
 		command = 'curl --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+URL+'"'
 		
-		page = commands.getoutput(command)
+		page = subprocess.getoutput(command)
 		page = page.encode('ascii', 'ignore')
 		
-		if(page.find('"error": "NOT_FOUND"')!=-1):
+		if(page.find(b'"error": "NOT_FOUND"')!=-1):
 			break
 
-		jsonData = json.loads(page)
+		jsonData = json.loads(page.decode())
 
 		if(jsonData['status_code']==403):
 			continue
@@ -115,9 +115,9 @@ def getBitly(url, outputArray, indexOfOutputArray,verbose=False,**kwargs):
 		return str(creation_date)
 	
 	except:
-		print 'cdGetBitly: ', sys.exc_info()
+		logging.exception('cdGetBitly: %s', sys.exc_info())
 		outputArray[indexOfOutputArray] = ""
 		kwargs['displayArray'][indexOfOutputArray] = ""
-		print "Done Bitly"
+		logging.debug("Done Bitly")
 		return ""
 

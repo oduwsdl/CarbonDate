@@ -1,27 +1,25 @@
 import sys
 import os
 
-from cdGetLowest import getLowest
-from cdGetBitly import getBitly
-from cdGetArchives import getArchives
-from cdGetGoogle import getGoogle, mimicBrowser
-from cdGetFirstAppearanceInArchives import getFirstAppearance
+from .cdGetLowest import getLowest
+from .cdGetBitly import getBitly
+from .cdGetArchives import getArchives
+from .cdGetGoogle import getGoogle, mimicBrowser
+from .cdGetFirstAppearanceInArchives import getFirstAppearance
 
-import commands
+import subprocess
 import calendar
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import logging
 
 moduleTag="Backlinks"
 entry="getBacklinksFirstAppearanceDates"
 
-reload(sys)  
-sys.setdefaultencoding('utf8')
 
 def getBacklinks(url):
 	inlinks = []
-	url = urllib.quote(url, '')
+	url = urllib.parse.quote(url, '')
 	try:	
 		query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=link:'+url+'&oq=link:'+url
 		
@@ -46,7 +44,7 @@ def getBacklinks(url):
 			inlinks.append(url)
 			loc = fin
 	except:
-		logging.debug ( 'cdGetBacklinks :',sys.exc_info())
+		logging.exception ( 'cdGetBacklinks :',sys.exc_info())
 
 	return inlinks
 
@@ -66,7 +64,7 @@ def getBacklinksCreationDates(url):
 			backlinks.append(lowest)
 
 	except:
-		logging.debug ( 'cdGetBacklinks :', sys.exc_info() )
+		logging.exception ( 'cdGetBacklinks :', sys.exc_info() )
 	return backlinks
 
 def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=False, **kwargs):
@@ -90,7 +88,7 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=
 			if(epoch<lowest_epoch):
 				lowest_epoch = epoch
 	except:
-		logging.debug ( 'cdGetBacklinks :', sys.exc_info() )
+		logging.exception ( 'cdGetBacklinks :', sys.exc_info() )
 
 	if(lowest_epoch == 99999999999):
 		outputArray[outputArrayIndex] = ""

@@ -1,6 +1,6 @@
 import requests
 from requests.auth import HTTPBasicAuth
-import urlparse
+import urllib.parse
 import json
 import os
 from surt import surt
@@ -42,7 +42,7 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False, **kwargs):
 		'Ocp-Apim-Subscription-Key':api_key
 		}
 	base_url = 'https://api.cognitive.microsoft.com/bing/v5.0/search?q='
-	parsedUrl = urlparse.urlparse(url)
+	parsedUrl = urllib.parse.urlparse(url)
 	if( len(parsedUrl.scheme)<1 ):
 		url = 'http://'+url
 	searchUrl=url[7:]
@@ -95,7 +95,7 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False, **kwargs):
 if __name__ == '__main__':
 	import sys
 	if len(sys.argv)<2:
-		print "Usage: %s URL"%sys.argv[0]
+		print("Usage: %s URL"%sys.argv[0])
 		sys.exit(1)
 	dummyArray=['']
-	print(getBing(sys.argv[1],dummyArray,0,True))
+	print((getBing(sys.argv[1],dummyArray,0,True)))

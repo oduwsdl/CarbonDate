@@ -2,7 +2,7 @@ import sys, traceback
 import os
 import calendar
 import time
-import commands
+import subprocess
 import logging
 
 moduleTag="Last Modified"
@@ -10,7 +10,7 @@ moduleTag="Last Modified"
 def getLastModified(url, outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	creation_date = ""
 	try:
-		header = commands.getoutput('curl --silent -L -I -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"')
+		header = subprocess.getoutput('curl --silent -L -I -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"')
 		header = header.lower()
 
 		lowest_date = 99999999999
@@ -40,7 +40,7 @@ def getLastModified(url, outputArray, indexOfOutputArray,verbose=False,**kwargs)
 			creation_date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest_date))
 			loc = fin
 	except:
-		print "Date format does not match predefined format, resetting to default value"
+		logging.warning("Date format does not match predefined format, resetting to default value")
 		#print traceback.print_exception(sys.exc_type, sys.exc_value, sys.exc_traceback,limit=2,file=sys.stdout)
 		#print sys.exc_info()
 		outputArray[indexOfOutputArray] = ""
@@ -55,7 +55,7 @@ def getLastModified(url, outputArray, indexOfOutputArray,verbose=False,**kwargs)
 def getLastModified_old(url, outputArray, indexOfOutputArray):
 	creation_date = ""
 	try:
-		header = commands.getoutput('curl --silent -L -I -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"')
+		header = subprocess.getoutput('curl --silent -L -I -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"')
 		header = header.lower()
 		#print "header", header
 		lowest_date = 99999999999
@@ -80,7 +80,7 @@ def getLastModified_old(url, outputArray, indexOfOutputArray):
 			loc = fin
 	except:
         
-		logging.error ( traceback.print_exception(sys.exc_type, sys.exc_value, sys.exc_traceback,limit=2,file=sys.stdout) )
+		logging.error ( traceback.print_exception(sys.exc_info()[0], sys.exc_info()[1], sys.exc_info()[2],limit=2,file=sys.stdout) )
 		logging.error ( sys.exc_info() )
 		outputArray[indexOfOutputArray] = ""
 		logging.debug ( "Done Last Modified" )

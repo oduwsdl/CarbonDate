@@ -5,7 +5,7 @@ import os
 import sys
 import datetime
 import json
-import urlparse
+import urllib.parse
 from threading import Thread
 from modules.cdGetLowest import getLowest
 from collections import OrderedDict
@@ -59,7 +59,7 @@ class ModuleManager():
 				if hasattr(currentMod, "entry"):
 					funcName=getattr(currentMod,'entry')
 				self.entryPoints[modName]["getFunc"]=getattr(currentMod,funcName)
-			except Exception, e:
+			except Exception as e:
 				kwargs['logger'].error ( "ModuleManager: ",e )
 				sys.exit(1)
 			if hasattr(currentMod, "moduleTag"):
@@ -93,7 +93,7 @@ class ModuleManager():
 		displayArray=['']*len(self.entryPoints)
 		now0 = datetime.datetime.now()
 		
-		parsedUrl = urlparse.urlparse(url)
+		parsedUrl = urllib.parse.urlparse(url)
 		if( len(parsedUrl.scheme)<1 ):
 			url = 'http://'+url
 
@@ -120,7 +120,7 @@ class ModuleManager():
 		try:
 			lowest = getLowest(outputArray) 
 		except:
-			kwargs['logger'].error ( sys.exc_type, sys.exc_value , sys.exc_traceback )
+			kwargs['logger'].error ( sys.exc_info()[0], sys.exc_info()[1] , sys.exc_info()[2] )
 
 		resultArray.append(("URI", url))
 		resultArray.append(("Estimated Creation Date", lowest))

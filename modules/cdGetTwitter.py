@@ -2,7 +2,7 @@ import sys
 from bs4 import BeautifulSoup
 import datetime
 import requests
-from cdGetLowest import getLowest
+from .cdGetLowest import getLowest
 from requests.utils import quote
 import logging
 
@@ -116,7 +116,7 @@ def getTwitter(uri,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 #################test entry####################
 if __name__ == '__main__':
 	if len(sys.argv)<2:
-		print("Unit testing usage: ", sys.argv[0] + " url  e.g: " + sys.argv[0] + " http://www.cs.odu.edu ")
+		print(("Unit testing usage: ", sys.argv[0] + " url  e.g: " + sys.argv[0] + " http://www.cs.odu.edu "))
 	else:
 		testarry=['']
-		print(getTwitterCreationDate(sys.argv[1],testarry,0,verbose=True))
+		print((getTwitterCreationDate(sys.argv[1],testarry,0,verbose=True)))

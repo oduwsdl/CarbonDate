@@ -1,7 +1,7 @@
 # CarbonDate
 
 ## Prerequisites
-
+* Python 3 only
 * Install tornado server (to run server.py)
 * Insert your bitly oauth access token in config file. Visit https://bitly.com/a/oauth_apps to get your access token
 * Insert your Bing search api key in config file. Visit https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api to get your api key

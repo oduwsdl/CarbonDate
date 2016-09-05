@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import json
 import time
 import os,sys, traceback
@@ -17,7 +17,7 @@ class CarbonDateServer(tornado.web.RequestHandler):
     def get(self):
         try:
             url=self.get_argument('url')
-        except Exception, e:
+        except Exception as e:
             self.set_status(400)
             return
 
@@ -66,14 +66,14 @@ if __name__ == '__main__':
     ip_env=os.getenv('CD_Server_IP')
     port_env=os.getenv('CD_Server_port')
     if ip_env is not None:
-            print 'Server.py: Server IP detected in environment variable, overwite local config values.'
+            print('Server.py: Server IP detected in environment variable, overwite local config values.')
             ServerIP=int(ip_env)
     if port_env is not None:
-            print 'Server.py: Server Port number detected in environment variable, overwite local config values.'
+            print('Server.py: Server Port number detected in environment variable, overwite local config values.')
             ServerPort=int(port_env)
 
     #initialize logger
-    logging.basicConfig(level=os.environ.get("LOGLV",logging.ERROR),format='<%(name)s>[%(levelname)s]%(funcName)s : %(message)s')
+    logging.basicConfig(level=int(os.environ.get("LOGLV",logging.ERROR)),format='<%(name)s>[%(levelname)s]%(funcName)s : %(message)s')
     logger=logging.getLogger('server')
     logging.addLevelName(45, "Server")
     #initialize server

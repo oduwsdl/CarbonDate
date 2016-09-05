@@ -3,16 +3,13 @@ import os
 import traceback
 import calendar
 import time
-import commands
+import subprocess
 import requests
-from cdGetLowest import getLowest
+from .cdGetLowest import getLowest
 from random import randint
 import logging
 
 moduleTag='Google.com'
-
-reload(sys)  
-sys.setdefaultencoding('utf8')
 
 def randSleep():
 	sleepSeconds = randint(2, 7)

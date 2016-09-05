@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from checkForModules import checkForModules
 import json
@@ -26,25 +26,25 @@ def cd(modLoader,args):
 
     if args.mode=='dev' :
         if args.lm:
-            print 'Available Modules (include system utilities)'
-            print '===================================='
+            print('Available Modules (include system utilities)')
+            print('====================================')
             for m in modLoader.getAvailableModules():
-                print m
-            print '===================================='
-            print
+                print(m)
+            print('====================================')
+            print()
         else:
             if args.ak is not None:
                 cfg[args.ak[0]]=args.ak[1]
-                print "\"%s\" is now set to \"%s\"" %(args.ak[0], cfg[args.ak[0]])
+                print("\"%s\" is now set to \"%s\"" %(args.ak[0], cfg[args.ak[0]]))
                 json.dump(cfg, file('config','w'), sort_keys=True, indent=4, separators=(',', ': '))
             if args.rk is not None:
                 try:
                     cfg.pop(args.rk)
                     json.dump(cfg, file('config','w'), sort_keys=True, indent=4, separators=(',', ': '))
-                except Exception, e:
-                    print 'local.py: No such key: %s'%e
+                except Exception as e:
+                    print('local.py: No such key: %s'%e)
             if args.lk:
-                print json.dumps(cfg, sort_keys=True, indent=4, separators=(',', ': '))
+                print(json.dumps(cfg, sort_keys=True, indent=4, separators=(',', ': ')))
     elif args.mode=='search':
         logging.basicConfig(level=loglevel,format='%(message)s')
         logger=logging.getLogger('local')

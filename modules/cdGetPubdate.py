@@ -37,7 +37,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 		logging.debug ( "cdGetPubdate: Date extracted from url: %s", date )
 		logging.debug ( "cdGetPubdate: Downloading web page" )
 		response = requests.get(url,headers=headers)
-	except Exception, e:
+	except Exception as e:
 		logging.debug ("cdGetPubdate: Error while downloading web page")
 		if date is not None:
 			date_str=date.strftime('%Y-%m-%dT%H:%M:%S')
@@ -85,7 +85,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 
 			#<meta name="DC.date.issued" content="2015-11-26">
 			if 'dc.date.issued' == metaName:
-			 	metaDate = meta['content'].strip()
+				metaDate = meta['content'].strip()
 				break
 
 			#<meta property="article:published_time"  content="2015-11-25" />
@@ -99,7 +99,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 
 			#<meta property="bt:pubDate" content="2015-11-26T00:10:33+00:00">
 			if 'bt:pubdate' == metaProperty or 'og:pubdate' == metaProperty :
-			 	metaDate = meta['content'].strip()
+				metaDate = meta['content'].strip()
 				break
 			#<meta name="sailthru.date" content="2015-11-25T19:56:04+0000" />
 			if 'sailthru.date' == metaName:
@@ -113,7 +113,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 
 			#<meta name="published-date" content="2015-11-26T11:53:00.000Z" />
 			if 'published-date' == metaName:
-			 	metaDate = meta['content'].strip()
+				metaDate = meta['content'].strip()
 				break
 
 			#<meta name="article.created" content="2015-11-26T11:53:00.000Z" />
@@ -129,7 +129,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 			#<meta name="cXenseParse:recs:publishtime" content="2015-11-26T14:42Z"/>
 			if 'cxenseparse:recs:publishtime' == metaName:
 				metaDate = meta['content'].strip()
-			 	break
+				break
 
 			#<meta name="DATE_PUBLISHED" content="11/24/2015 01:05AM" />
 			if 'date_published' == metaName:
@@ -139,7 +139,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 
 			#<meta itemprop="datePublished" content="2015-11-26T11:53:00.000Z" />
 			if 'datepublished' == itemProp:
-			 	metaDate = meta['content'].strip()
+				metaDate = meta['content'].strip()
 				break
 
 
@@ -151,7 +151,7 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 
 			#<meta http-equiv="data" content="10:27:15 AM Thursday, November 26, 2015">
 			if 'date' == httpEquiv:
-			 	metaDate = meta['content'].strip()
+				metaDate = meta['content'].strip()
 				break
 		
 		if metaDate is not None:
@@ -173,7 +173,7 @@ if __name__ == '__main__':
 	parser.add_argument("url",help="The url to inspect")
 	args=parser.parse_args()
 	if len(sys.argv)<2:
-		print("Unit testing usage: ", sys.argv[0] + " url  e.g: " + sys.argv[0] + " http://www.cs.odu.edu ")
+		print(("Unit testing usage: ", sys.argv[0] + " url  e.g: " + sys.argv[0] + " http://www.cs.odu.edu "))
 	else:
 		testarry=['']
-		print(getPubdate(sys.argv[1],testarry,0,verbose=args.v))
+		print((getPubdate(sys.argv[1],testarry,0,verbose=args.v)))

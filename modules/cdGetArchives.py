@@ -1,18 +1,20 @@
 import re
 import time
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import os
 import sys
 import datetime
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import calendar
-import commands
-import urlparse
+import requests
+import urllib.parse
 
 from datetime import datetime
 import logging
 
 moduleTag="Archives"
+
+headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0'}
 
 def getMementos(uri):
 
@@ -28,8 +30,8 @@ def getMementos(uri):
     memento_list = []
 
     try:
-        search_results = urllib.urlopen(baseURI+uri)
-        the_page = search_results.read()
+        search_results = urllib.request.urlopen(baseURI+uri)
+        the_page = search_results.read().decode('ascii','ignore')
 
         timemapList = the_page.split('\n')
         mementoNames = []
@@ -58,7 +60,7 @@ def getMementos(uri):
                 
                 memento["time"] = day_string
 
-                name = urlparse.urlparse(mementoURL.strip())
+                name = urllib.parse.urlparse(mementoURL.strip())
 
                 memento["name"] = name.netloc
                 memento["link"] = mementoURL
@@ -75,15 +77,16 @@ def getMementos(uri):
                 #memento_list.append(memento)
                 #assumption that first memento is NOT youngest - ON - end
 
-    except urllib2.URLError:
+    except urllib.error.URLError:
         pass
 
 
     return memento_list
   
 def getRealDate(url, memDate):   
-    co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"'
-    page = commands.getoutput(co)
+    #co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"'
+    response = requests.get(url,headers=headers)
+    page = response.text
     date = ""
 
     #to_find = "X-Archive-Orig-Last-modified: "
@@ -177,7 +180,7 @@ def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
         return dict(result)
 
     except:
-        logging.debug (sys.exc_info())
+        logging.exception (sys.exc_info())
         result = []
         result.append(("Earliest", ""))
         result.append(("By_Archive", dict([])))

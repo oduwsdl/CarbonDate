@@ -1,22 +1,19 @@
 import re
 import time
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import os
 import sys, traceback
 import datetime
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import json
 import calendar
-import commands
+import subprocess
 import math
 
 import logging
 from datetime import datetime
-from cdGetArchives import getMementos
-from cdGetGoogle import mimicBrowser
-
-reload(sys)  
-sys.setdefaultencoding('utf8')
+from .cdGetArchives import getMementos
+from .cdGetGoogle import mimicBrowser
 
 '''
 #ongoing refactoring
@@ -181,7 +178,7 @@ def isInPage(url,page):
 
 	page = mimicBrowser(page)
 
-	url = url.decode().encode('utf-8')
+	#url = url.decode().encode('utf-8')
 	loc = page.find(url)
 	
 	date = ""
@@ -223,11 +220,11 @@ def isInPage(url,page):
 		return False, ""
 
 def getFirstAppearance_inprogress(url, inurl):
-	print 'remove from cdGetArchives import getMementos after implementation'
+	print('remove from cdGetArchives import getMementos after implementation')
 	payloadJson = ''
 	try:
 		co = 'curl --silent http://memgator.cs.odu.edu:1208/timemap/json/' + '"' + inurl + '"'
-		jsonPage = commands.getoutput(co)
+		jsonPage = subprocess.getoutput(co)
 		payloadJson = json.loads( [str(jsonPage)] )
 
 		if( 'memento' in payloadJson[0] ):
@@ -239,9 +236,9 @@ def getFirstAppearance_inprogress(url, inurl):
 						return date
 
 		return ''
-	except Exception,e:
-		print str(e)
-		print sys.exc_type, sys.exc_value , sys.exc_traceback
+	except Exception as e:
+		print(str(e))
+		print(sys.exc_info()[0], sys.exc_info()[1] , sys.exc_info()[2])
 		return ''
 
 def getFirstAppearance(url, inurl):
