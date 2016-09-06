@@ -173,7 +173,7 @@ if __name__ == '__main__':
 	parser.add_argument("url",help="The url to inspect")
 	args=parser.parse_args()
 	if len(sys.argv)<2:
-		print(("Unit testing usage: ", sys.argv[0] + " url  e.g: " + sys.argv[0] + " http://www.cs.odu.edu "))
+		print("Unit testing usage: ", sys.argv[0] + " url  e.g: " + sys.argv[0] + " http://www.cs.odu.edu ")
 	else:
 		testarry=['']
-		print((getPubdate(sys.argv[1],testarry,0,verbose=args.v)))
+		print(getPubdate(sys.argv[1],testarry,0,verbose=args.v))
