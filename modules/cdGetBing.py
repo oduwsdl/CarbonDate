@@ -98,4 +98,4 @@ if __name__ == '__main__':
 		print("Usage: %s URL"%sys.argv[0])
 		sys.exit(1)
 	dummyArray=['']
-	print((getBing(sys.argv[1],dummyArray,0,True)))
+	print(getBing(sys.argv[1],dummyArray,0,True))
