@@ -50,14 +50,6 @@ def getPubdate(url,outputArray, indexOfOutputArray,verbose=False,**kwargs):
 	html = response.text
 	soup = BeautifulSoup(html,'lxml')
 
-	#try get time tag
-	logging.debug ( "cdGetPubdate: Try to get time from time tag" )
-	for time in soup.findAll("time"):
-		datetime = time.get('datetime', '')
-		if len(datetime) > 0:
-			date = parseStrDate(datetime)
-
-		logging.debug ( "cdGetPubdate: Date extracted from time tag:", date )
 	if date is None:
 	#get pubdate in meta tag
 		logging.debug ("cdGetPubdate: Try to get time from meta tag")

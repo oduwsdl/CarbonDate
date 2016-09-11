@@ -1,13 +1,9 @@
 import sys
 import os
 
-from .cdGetLowest import getLowest
-from .cdGetBitly import getBitly
-from .cdGetArchives import getArchives
-from .cdGetGoogle import getGoogle, mimicBrowser
+from .cdGetGoogle import mimicBrowser
 from .cdGetFirstAppearanceInArchives import getFirstAppearance
 
-import subprocess
 import calendar
 import time
 import urllib.request, urllib.parse, urllib.error
@@ -23,8 +19,6 @@ def getBacklinks(url):
 	try:	
 		query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=link:'+url+'&oq=link:'+url
 		
-		#com = 'curl --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+query+'"'
-		#page = commands.getoutput(com)
 		page = mimicBrowser(query)
 
 		loc = 0	
@@ -48,24 +42,6 @@ def getBacklinks(url):
 
 	return inlinks
 
-def getBacklinksCreationDates(url):
-	links = getBacklinks(url)
-	backlinks = []
-	outputArrayDummyNotUsed = []
-	try:
-		for link in links:
-			bitly = getBitly(link)
-			archives = getArchives(link)
-			google = getGoogle(link)
-			lowest = getLowest([bitly,google,archives["Earliest"]])
-			
-			if(lowest==""):
-				continue
-			backlinks.append(lowest)
-
-	except:
-		logging.exception ( 'cdGetBacklinks :', sys.exc_info() )
-	return backlinks
 
 def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=False, **kwargs):
 
@@ -97,7 +73,7 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=
 	
 	timeVal = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest_epoch))
 	outputArray[outputArrayIndex] = timeVal
-	kwargs['displayArray'][indexOfOutputArray] = timeVal
+	kwargs['displayArray'][outputArrayIndex] = timeVal
 	logging.debug ( "Done Backlinks" )
 	return timeVal
 

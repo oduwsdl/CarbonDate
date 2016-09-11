@@ -4,10 +4,8 @@ import urllib.request, urllib.error, urllib.parse
 import os
 import sys
 import datetime
-import urllib.request, urllib.parse, urllib.error
 import calendar
 import requests
-import urllib.parse
 
 from datetime import datetime
 import logging
@@ -84,30 +82,14 @@ def getMementos(uri):
     return memento_list
   
 def getRealDate(url, memDate):   
-    #co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"'
     response = requests.get(url,headers=headers)
-    page = response.text
+    page = response.headers
     date = ""
 
-    #to_find = "X-Archive-Orig-Last-modified: "
-    to_find = "X-Archive-Orig-last-modified: "
-    loc = page.find(to_find)
-
-    
-
-    if(loc !=-1):
-        end = page.find("\r", loc)
-        date = page[loc+len(to_find):end]
-        date = date.strip()
-
-    if(date ==""):        
-        #to_find = "X-Archive-Orig-Date: "
-        to_find = "X-Archive-Orig-date: "
-        loc = page.find(to_find)
-        if(loc !=-1):
-            end = page.find("\r", loc)
-            date = page[loc+len(to_find):end]
-            date = date.strip()
+    if "X-Archive-Orig-last-modified" in page.headers:
+        date=page.headers["X-Archive-Orig-last-modified"]
+    elif 'X-Archive-Orig-date' in page.headers:
+        date=page.headers['X-Archive-Orig-date']
 
     if(date ==""):
         date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(memDate))    

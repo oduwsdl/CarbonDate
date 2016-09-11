@@ -3,7 +3,6 @@ import os
 import traceback
 import calendar
 import time
-import subprocess
 import requests
 from .cdGetLowest import getLowest
 from random import randint
