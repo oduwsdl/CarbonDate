@@ -10,10 +10,12 @@ import tornado.ioloop
 import core
 import argparse
 import logging
+from multiprocessing.pool import ThreadPool
 
+_workers = ThreadPool(10)
 
 class CarbonDateServer(tornado.web.RequestHandler):
-
+    @tornado.web.asynchronous
     def get(self):
         try:
             url=self.get_argument('url')
@@ -40,13 +42,26 @@ class CarbonDateServer(tornado.web.RequestHandler):
         result=[]
         modLoader=core.ModuleManager()
         modLoader.loadModule(cfg,args)
-        resultArray=modLoader.run(args=args,resultArray=result,logger=logger)
+        self.run_background(modLoader.run,self.on_complete,args=args,resultArray=result,logger=logger)
+        
+
+    def on_complete(self, res):
+        #resultArray=modLoader.run(args=args,resultArray=result,logger=logger)
+        resultArray=res
         resultArray.insert(0,('self',self.request.protocol + "://" + self.request.host + self.request.uri))
         r= OrderedDict(resultArray)
         self.write(json.dumps(r, sort_keys=False, indent=2, separators=(',', ': ')))
         self.set_header("Content-Type", "application/json") 
 
         logger.log(45,'Request from %s is done.'%(self.request.remote_ip))
+        self.finish()
+
+    def run_background(self, func, callback, *args, **kwargs):
+        self.ioloop = tornado.ioloop.IOLoop.instance()
+
+        def _callback(result):
+            self.ioloop.add_callback(lambda: callback(result))
+        _workers.apply_async(func, args, kwargs, _callback)
     
 
 
@@ -73,7 +88,7 @@ if __name__ == '__main__':
             ServerPort=int(port_env)
 
     #initialize logger
-    logging.basicConfig(level=int(os.environ.get("LOGLV",logging.ERROR)),format='<%(name)s>[%(levelname)s]%(funcName)s : %(message)s')
+    logging.basicConfig(level=int(os.environ.get("LOGLV",logging.ERROR)),format='<%(name)s><<%(asctime)s>>[%(levelname)s]%(funcName)s : %(message)s')
     logger=logging.getLogger('server')
     logging.addLevelName(45, "Server")
     #initialize server
