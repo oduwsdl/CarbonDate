@@ -86,10 +86,10 @@ def getRealDate(url, memDate):
     page = response.headers
     date = ""
 
-    if "X-Archive-Orig-last-modified" in page.headers:
-        date=page.headers["X-Archive-Orig-last-modified"]
-    elif 'X-Archive-Orig-date' in page.headers:
-        date=page.headers['X-Archive-Orig-date']
+    if "X-Archive-Orig-last-modified" in page:
+        date=page["X-Archive-Orig-last-modified"]
+    elif 'X-Archive-Orig-date' in page:
+        date=page['X-Archive-Orig-date']
 
     if(date ==""):
         date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(memDate))    
