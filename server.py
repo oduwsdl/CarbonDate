@@ -51,7 +51,8 @@ class CarbonDateServer(tornado.web.RequestHandler):
         resultArray.insert(0,('self',self.request.protocol + "://" + self.request.host + self.request.uri))
         r= OrderedDict(resultArray)
         self.write(json.dumps(r, sort_keys=False, indent=2, separators=(',', ': ')))
-        self.set_header("Content-Type", "application/json") 
+        self.set_header("Content-Type", "application/json")
+        self.set_header("Access-Control-Allow-Origin", "*")
 
         logger.log(45,'Request from %s is done.'%(self.request.remote_ip))
         self.finish()
@@ -93,7 +94,9 @@ if __name__ == '__main__':
     logging.addLevelName(45, "Server")
     #initialize server
     app=tornado.web.Application([
-        (r"/cd",CarbonDateServer)])
+            (r"/cd",CarbonDateServer),
+            (r'/(.*)', tornado.web.StaticFileHandler, {'path': 'docs', "default_filename": "index.html"})
+        ])
     app.listen(ServerPort)
     #str(ServerIP),
     tornado.ioloop.IOLoop.current().start()
