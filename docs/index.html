@@ -64,8 +64,8 @@
   </div>
   <script>
   $("#submit").click(function() {
-    uri = 'http://cd.cs.odu.edu/cd?url=' + $('#input').val();
-    history.pushState({url: ''}, 'http://www.cd.cs.odu.edu/', '/cd?url=' + $('#input').val());
+    uri = '/cd?url=' + $('#input').val();
+    history.pushState({url: ''}, 'http://wsdl-docker.cs.odu.edu:8080/', '/cd?url=' + $('#input').val());
     $('#res').html('Loading please wait...');
     $.getJSON(uri, function(data) {
       $('#res').html('<pre>' + JSON.stringify(data, null, '  ') + '</pre>');

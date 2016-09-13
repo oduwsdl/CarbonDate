@@ -93,7 +93,9 @@ if __name__ == '__main__':
     logging.addLevelName(45, "Server")
     #initialize server
     app=tornado.web.Application([
-        (r"/cd",CarbonDateServer)])
+            (r"/cd",CarbonDateServer),
+            (r'/(.*)', tornado.web.StaticFileHandler, {'path': 'docs', "default_filename": "index.html"})
+        ])
     app.listen(ServerPort)
     #str(ServerIP),
     tornado.ioloop.IOLoop.current().start()
