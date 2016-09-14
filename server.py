@@ -97,7 +97,7 @@ if __name__ == '__main__':
             (r"/cd",CarbonDateServer),
             (r'/(.*)', tornado.web.StaticFileHandler, {'path': 'docs', "default_filename": "index.html"})
         ])
-    app.listen(ServerPort)
+    app.listen(int(os.environ.get("PORT",ServerPort)))
     #str(ServerIP),
     tornado.ioloop.IOLoop.current().start()
   
