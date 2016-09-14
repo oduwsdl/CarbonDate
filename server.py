@@ -91,7 +91,7 @@ if __name__ == '__main__':
     #initialize logger
     logging.basicConfig(level=int(os.environ.get("LOGLV",logging.ERROR)),
         format='%(asctime)s [%(levelname)s]%(funcName)s : %(message)s',
-        handlers=[logging.FileHandler("carbonServer.log"),
+        handlers=[logging.FileHandler("logs/carbonServer.log"),
                               logging.StreamHandler()])
     logger=logging.getLogger('server')
     logging.addLevelName(45, "Server")
