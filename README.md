@@ -1,11 +1,12 @@
 # CarbonDate
 
 ## Prerequisites
-* Python 3 only
-* Install tornado server (to run server.py)
-* Insert your bitly oauth access token in config file. Visit https://bitly.com/a/oauth_apps to get your access token
-* Insert your Bing search api key in config file. Visit https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api to get your api key
-* (optional) Change server ip/port number in config
+* Python 3 only.
+* Running in docker container is strongly recommanded.
+* Install tornado server (to run server).
+* Insert your bitly oauth access token in config file. Visit https://bitly.com/a/oauth_apps to get your access token.
+* Insert your Bing search api key in config file. Visit https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api to get your api key.
+* (optional) Change server ip/port number in config.
 * All other packages that generate error "No module named" does exist, must be installed.
 
 ## Instructions
@@ -13,28 +14,29 @@
 To run it as a server:
 
 ```
-$ server.py
+$ ./main.py -s
 ```
 To CarbonDate `http://example.com`:
 
-Open in a Web browser: `http://localhost:8888/search?url=http://example.com`
+Open in a Web browser: `http://localhost:8888/cd?url=http://example.com`
 
 To run it as a local script:
 
 ```
-$ local.py search URL
+$ ./main.py -l search URL
 ```
 
 The backlinks calculation is costy to your computers, so it is recommanded to turn it off:
 
 ```
-$ local.py search URL -e cdGetBacklinks
+$ ./main.py -l search URL -e cdGetBacklinks
 ```
 ## How to add your module:
 
-Name your module main script as cdGet<Module name>.py
+Name your module main script as cdGet\<Module name\>.py
 
-And ensure the entry function is named get<Module name>(url,outputArray, indexOfOutputArray,verbose=False)
+And ensure the entry function is named get\<Module name\>(url,outputArray, indexOfOutputArray,verbose=False)  
+or customize your own entry function name by assign string value to 'entry' varable in the beginning of your script  
 for example your module name is Service, 
 
 then the script should be named cdGetService, and interface function should be named getService (url,outputArray, indexOfOutputArray,verbose=False)
