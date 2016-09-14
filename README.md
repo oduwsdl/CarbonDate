@@ -35,15 +35,22 @@ $ ./main.py -l search URL -e cdGetBacklinks
 
 Name your module main script as cdGet\<Module name\>.py
 
-And ensure the entry function is named get\<Module name\>(url,outputArray, indexOfOutputArray,verbose=False)  
+And ensure the entry function is named get\<Module name\>(url,outputArray, indexOfOutputArray,verbose=False,\*\*kwargs)  
 or customize your own entry function name by assign string value to 'entry' varable in the beginning of your script  
 for example your module name is Service, 
 
-then the script should be named cdGetService, and interface function should be named getService (url,outputArray, indexOfOutputArray,verbose=False)
+then the script should be named cdGetService, and interface function should be named getService (url,outputArray, indexOfOutputArray,verbose=False,\*\*kwargs)  
+
+Copy your scripts and to folder ./modules, then the system will automaticaly detects and loads it.  
+###Data returned from your module:  
+The data returned from your module should be a string of dates, in the format like '1995-01-01T12:00:00'  
+Put your result date in to outputArray\[indexOfOutputArray\] for result comparasion, and put the result and other data you want to show in the "displayArray" like:  
+```
+kwargs['displayArray'][outputArrayIndex] = time
+```
+Where the varable outputArray,indexOfOutputArray and displayArray are past in by the system.  
 
 
-
-Copy your scripts and to folder ./modules, then the system will automaticaly detects and loads it.
 ###If your module have sub-module:
 
 * If the sub-script is in a subfolder,bring folder with your script, carbon tool will ignore subfolders while loading
