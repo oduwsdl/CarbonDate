@@ -93,9 +93,9 @@ def genericGetCreationDate(query):
 
 		page = mimicBrowser(query)
 		
-		debugOutfile = open('output.html', 'w')
-		debugOutfile.write(str(page))
-		debugOutfile.close()
+		# debugOutfile = open('output.html', 'w')
+		# debugOutfile.write(str(page))
+		# debugOutfile.close()
 
 		signatureString = ' - </span>'
 		locationOfSignature = 0
