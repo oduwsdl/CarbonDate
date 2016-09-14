@@ -19,7 +19,7 @@ def GetBitlyJson(URL):
 		access_token_env=os.getenv('CD_Bitly_token')
 		if access_token_env is not None:
 			logging.warning ( 'cdGetBitly: Access token is found in environment variable, overwite local config values.' )
-			ACCESS_TOKENs=ACCESS_TOKENs[access_token_env]
+			ACCESS_TOKENs=[access_token_env]
 		else:
 			fileConfig = open(os.path.dirname(__file__)+"/../config", "r")
 			config = fileConfig.read()

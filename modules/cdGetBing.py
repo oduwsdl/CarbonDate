@@ -3,6 +3,7 @@ from requests.auth import HTTPBasicAuth
 import urllib.parse
 import json
 import os
+import sys
 from surt import surt
 from requests.utils import quote
 import logging
@@ -15,7 +16,7 @@ def getBing(url,outputArray, indexOfOutputArray,verbose=False, **kwargs):
 		apiKey_env=os.getenv('CD_Bing_key')
 		if apiKey_env is not None:
 			logging.debug ( 'cdGetBing: Bing api key detected in environment variable, overwite local config values.')
-			apiKey=apiKey[apiKey_env]
+			apiKey=apiKey_env
 		else:
 			fileConfig = open(os.path.dirname(__file__)+"/../config", "r")
 			config = fileConfig.read()
