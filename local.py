@@ -18,8 +18,6 @@ def cd(modLoader,args):
     fileConfig.close()
     cfg = json.loads(config)
     loglevel=logging.WARNING
-    if args.verbose:
-        loglevel=logging.DEBUG
    
     
     modLoader.loadModule(cfg,args)
@@ -46,6 +44,8 @@ def cd(modLoader,args):
             if args.lk:
                 print(json.dumps(cfg, sort_keys=True, indent=4, separators=(',', ': ')))
     elif args.mode=='search':
+        if args.verbose:
+            loglevel=logging.DEBUG
         logging.basicConfig(level=loglevel,format='%(message)s')
         logger=logging.getLogger('local')
         modLoader.run(args=args,resultArray=result,logger=logger)
