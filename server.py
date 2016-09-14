@@ -98,7 +98,7 @@ if __name__ == '__main__':
             (r'/(.*)', tornado.web.StaticFileHandler, {'path': 'docs', "default_filename": "index.html"})
         ])
     app.listen(int(os.environ.get("PORT",ServerPort)))
-    #str(ServerIP),
+    print('Server started.')
     tornado.ioloop.IOLoop.current().start()
   
   
