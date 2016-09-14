@@ -34,11 +34,11 @@ def cd(modLoader,args):
             if args.ak is not None:
                 cfg[args.ak[0]]=args.ak[1]
                 print("\"%s\" is now set to \"%s\"" %(args.ak[0], cfg[args.ak[0]]))
-                json.dump(cfg, file('config','w'), sort_keys=True, indent=4, separators=(',', ': '))
+                json.dump(cfg, open('config','w'), sort_keys=True, indent=4, separators=(',', ': '))
             if args.rk is not None:
                 try:
                     cfg.pop(args.rk)
-                    json.dump(cfg, file('config','w'), sort_keys=True, indent=4, separators=(',', ': '))
+                    json.dump(cfg, open('config','w'), sort_keys=True, indent=4, separators=(',', ': '))
                 except Exception as e:
                     print('local.py: No such key: %s'%e)
             if args.lk:
