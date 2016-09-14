@@ -12,7 +12,7 @@ import argparse
 import logging
 from multiprocessing.pool import ThreadPool
 
-_workers = ThreadPool(10)
+_workers = ThreadPool(50)
 
 class CarbonDateServer(tornado.web.RequestHandler):
     @tornado.web.asynchronous
