@@ -82,14 +82,17 @@ if __name__ == '__main__':
     ip_env=os.getenv('CD_Server_IP')
     port_env=os.getenv('CD_Server_port')
     if ip_env is not None:
-            print('Server.py: Server IP detected in environment variable, overwite local config values.')
+            logging.warning('Server.py: Server IP detected in environment variable, overwite local config values.')
             ServerIP=int(ip_env)
     if port_env is not None:
-            print('Server.py: Server Port number detected in environment variable, overwite local config values.')
+            logging.warning('Server.py: Server Port number detected in environment variable, overwite local config values.')
             ServerPort=int(port_env)
 
     #initialize logger
-    logging.basicConfig(level=int(os.environ.get("LOGLV",logging.ERROR)),format='<%(name)s><<%(asctime)s>>[%(levelname)s]%(funcName)s : %(message)s')
+    logging.basicConfig(level=int(os.environ.get("LOGLV",logging.ERROR)),
+        format='%(asctime)s [%(levelname)s]%(funcName)s : %(message)s',
+        handlers=[logging.FileHandler("carbonServer.log"),
+                              logging.StreamHandler()])
     logger=logging.getLogger('server')
     logging.addLevelName(45, "Server")
     #initialize server
@@ -98,10 +101,5 @@ if __name__ == '__main__':
             (r'/(.*)', tornado.web.StaticFileHandler, {'path': 'docs', "default_filename": "index.html"})
         ])
     app.listen(int(os.environ.get("PORT",ServerPort)))
-    print('Server started.')
+    logger.log(45,'Server started.')
     tornado.ioloop.IOLoop.current().start()
-  
-  
-  
-  
-  
