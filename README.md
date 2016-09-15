@@ -37,14 +37,14 @@ Name your module main script as cdGet\<Module name\>.py
 
 And ensure the entry function is named  
 ```
-get\<Module name\>(url,outputArray, indexOfOutputArray,verbose=False,\*\*kwargs)  
+get<Module name>(url,outputArray, indexOfOutputArray,verbose=False,**kwargs)  
 ```
 or customize your own entry function name by assign string value to 'entry' varable in the beginning of your script  
 for example your module name is Service, 
 
 then the script should be named cdGetService, and interface function should be named  
 ```
-getService (url,outputArray, indexOfOutputArray,verbose=False,\*\*kwargs)  
+getService (url,outputArray, indexOfOutputArray,verbose=False,**kwargs)  
 ```
 
 Copy your scripts and to folder ./modules, then the system will automaticaly detects and loads it.  
