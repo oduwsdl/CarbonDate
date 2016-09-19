@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Carbon Dating The Web</title>
+  <style type="text/css">
+  body {
+    font-family: sans-serif;
+  }
+  #content {
+    border: 5px solid #eee;
+    width: 600px;
+    margin: 40px auto 10px;
+    padding: 0;
+    text-align: center;
+  }
+  .footer {
+    margin-top: 50px;
+    font-size: 9px;
+    border-top: 1px dotted #ccc;
+  }
+  input {
+    width: 500px;
+    height: 30px;
+    padding: 5px;
+    line-height: 25px;
+    font-size: 22px;
+  }
+  #res {
+    padding: 5px;
+    text-align: left;
+    margin: 30px 42px;
+    border: 1px dotted #ccc;
+    overflow: auto;
+  }
+  button {
+    height: 30px;
+    margin: 5px;
+    padding: 3px 20px;
+  }
+  </style>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+  <div id="content">
+    <h1 class="heading">Carbon Dating The Web</h1>
+    <p class="subheading">Predict the Birthday of a Webpage!</p>
+    <form target="http://cd.cs.odu.edu/cd" method="GET">
+      <input type="text" id="input" name="url" value="http://www.cs.odu.edu/" /><br />
+      <button id="submit">Carbon Date!</button>
+    </form>
+    <div id="res">GET http://cd.cs.odu.edu/cd?url=http://www.cs.odu.edu/</div>
+    <p class="subheading">
+      <a href="http://ws-dl.blogspot.com/2014/11/2014-11-14-carbon-dating-web-version-20.html">Carbon dating</a>
+      is computationally expensive. </br>Please try again later if the process takes too long; we'll save your request.
+    </br></br>
+    If you plan to carbon date a large number of web pages, as a courtesy to other users, kindly 
+    <a href="https://github.com/oduwsdl/CarbonDate">install 
+      the application locally</a>
+    </p>
+    <div class="footer">
+      <a href="http://ws-dl.blogspot.com/">Web Science and Digital Libraries - Department of Computer Science, Old Dominion University, Norfolk VA - 23529</a>
+    </div>
+  </div>
+  <script>
+  $("#submit").click(function() {
+    uri = '/cd?url=' + $('#input').val();
+    history.pushState({url: ''}, 'http://wsdl-docker.cs.odu.edu:8080/', '/cd?url=' + $('#input').val());
+    $('#res').html('Loading please wait...');
+    $.getJSON(uri, function(data) {
+      $('#res').html('<pre>' + JSON.stringify(data, null, '  ') + '</pre>');
+    });
+    return false;
+  });
+  </script>
+</body>
+</html>

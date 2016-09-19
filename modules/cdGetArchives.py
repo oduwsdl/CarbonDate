@@ -1,15 +1,18 @@
 import re
 import time
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import os
 import sys
 import datetime
-import urllib
 import calendar
-import commands
-import urlparse
+import requests
 
 from datetime import datetime
+import logging
+
+moduleTag="Archives"
+
+headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0'}
 
 def getMementos(uri):
 
@@ -25,8 +28,8 @@ def getMementos(uri):
     memento_list = []
 
     try:
-        search_results = urllib.urlopen(baseURI+uri)
-        the_page = search_results.read()
+        search_results = urllib.request.urlopen(baseURI+uri)
+        the_page = search_results.read().decode('ascii','ignore')
 
         timemapList = the_page.split('\n')
         mementoNames = []
@@ -36,7 +39,7 @@ def getMementos(uri):
             if(line.find("</memento")>0):
                 line = line.replace("</memento", "<http://api.wayback.archive.org/memento")
     
-    
+            start = line.find('h')#find the start location of http or https
             loc = line.find('>;rel="')
 
             #tofind = ';datetime="'
@@ -44,7 +47,7 @@ def getMementos(uri):
 
             loc2 = line.find(tofind)
             if(loc!=-1 and loc2!=-1):
-                mementoURL = line[3:loc]
+                mementoURL = line[start:loc]
                 timestamp = line[loc2+len(tofind):line.find('"',loc2+len(tofind)+3)]
 
                 epoch = int(calendar.timegm(time.strptime(timestamp, '%a, %d %b %Y %H:%M:%S %Z')))
@@ -55,14 +58,10 @@ def getMementos(uri):
                 
                 memento["time"] = day_string
 
-                name = urlparse.urlparse(mementoURL.strip())
+                name = urllib.parse.urlparse(mementoURL.strip())
 
                 memento["name"] = name.netloc
                 memento["link"] = mementoURL
-
-                memento["link"] = urllib.quote(memento["link"])
-                memento["link"] = memento["link"].replace("http%3A//", "http://")
-                memento["link"] = memento["link"][memento["link"].find("http://"):]
 
                 #assumption that first memento is youngest - ON - start
                 
@@ -76,36 +75,21 @@ def getMementos(uri):
                 #memento_list.append(memento)
                 #assumption that first memento is NOT youngest - ON - end
 
-    except urllib2.URLError:
+    except urllib.error.URLError:
         pass
 
 
     return memento_list
   
 def getRealDate(url, memDate):   
-    co = 'curl -i --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+url+'"'
-    page = commands.getoutput(co)
+    response = requests.get(url,headers=headers)
+    page = response.headers
     date = ""
 
-    #to_find = "X-Archive-Orig-Last-modified: "
-    to_find = "X-Archive-Orig-last-modified: "
-    loc = page.find(to_find)
-
-    
-
-    if(loc !=-1):
-        end = page.find("\r", loc)
-        date = page[loc+len(to_find):end]
-        date = date.strip()
-
-    if(date ==""):        
-        #to_find = "X-Archive-Orig-Date: "
-        to_find = "X-Archive-Orig-date: "
-        loc = page.find(to_find)
-        if(loc !=-1):
-            end = page.find("\r", loc)
-            date = page[loc+len(to_find):end]
-            date = date.strip()
+    if "X-Archive-Orig-last-modified" in page:
+        date=page["X-Archive-Orig-last-modified"]
+    elif 'X-Archive-Orig-date' in page:
+        date=page['X-Archive-Orig-date']
 
     if(date ==""):
         date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(memDate))    
@@ -115,7 +99,7 @@ def getRealDate(url, memDate):
     
     return date  
 
-def getArchivesCreationDate(url, outputArray, outputArrayIndex):
+def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
     
     try:
         mementos = getMementos(url)
@@ -124,8 +108,8 @@ def getArchivesCreationDate(url, outputArray, outputArrayIndex):
             result = []
             result.append(("Earliest", ""))
             result.append(("By_Archive", dict([])))
-            outputArray[outputArrayIndex] = result
-            print "Done Archives 0"
+            outputArray[outputArrayIndex] = result[0][1]
+            logging.debug ("Done Archives 0")
             return dict(result)
 
         archives = {}
@@ -172,16 +156,18 @@ def getArchivesCreationDate(url, outputArray, outputArrayIndex):
             result2.append((archives[archive]["link"], str(archives[archive]["time"])))
         result.append(("By_Archive", dict(result2)))
         
-        outputArray[outputArrayIndex] = result
-        print "Done Archives 1"
+        outputArray[outputArrayIndex] = result[0][1]
+        kwargs['displayArray'][outputArrayIndex] = result
+        logging.debug ("Done Archives 1")
         return dict(result)
 
     except:
-        print sys.exc_info() 
+        logging.exception (sys.exc_info())
         result = []
         result.append(("Earliest", ""))
         result.append(("By_Archive", dict([])))
 
-        outputArray[outputArrayIndex] = result
-        print "Done Archives 2"
+        outputArray[outputArrayIndex] = result[0][1]
+        kwargs['displayArray'][outputArrayIndex] = result
+        logging.debug ("Done Archives 2")
         return dict(result)

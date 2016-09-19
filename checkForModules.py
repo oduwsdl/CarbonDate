@@ -1,7 +1,5 @@
 import json
-from ordereddict import OrderedDict
 import re
-from cdHtmlMessages import *
 from pprint import pprint
 from threading import Thread
 #import Queue
@@ -9,12 +7,12 @@ import datetime
 import os
 import sys
 import traceback
-import urllib
-import urlparse
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 import time
-import commands
+import subprocess
 import calendar
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import math
 import logging
 #import simplejson

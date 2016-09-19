@@ -5,7 +5,7 @@ import time
 def getLowest(dates):
 	lowest_epoch = 99999999999
 	for date in dates:
-		if(date== "" or date=="Topsy Key has expired" or date=="Bitly Key has expired"):
+		if(date== ""  or date=="Bitly Key has expired"):
 			continue
 		epoch = int(calendar.timegm(time.strptime(date, '%Y-%m-%dT%H:%M:%S')))
 

@@ -1,28 +1,24 @@
 import sys
 import os
 
-from cdGetLowest import getLowest
-from cdGetBitly import getBitlyCreationDate
-from cdGetArchives import getArchivesCreationDate
-from cdGetGoogle import getGoogleCreationDate, mimicBrowser
-from cdGetFirstAppearanceInArchives import getFirstAppearance
+from .cdGetGoogle import mimicBrowser
+from .cdGetFirstAppearanceInArchives import getFirstAppearance
 
-import commands
 import calendar
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
+import logging
 
-reload(sys)  
-sys.setdefaultencoding('utf8')
+moduleTag="Backlinks"
+entry="getBacklinksFirstAppearanceDates"
+
 
 def getBacklinks(url):
 	inlinks = []
-	url = urllib.quote(url, '')
+	url = urllib.parse.quote(url, '')
 	try:	
 		query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=link:'+url+'&oq=link:'+url
 		
-		#com = 'curl --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" "'+query+'"'
-		#page = commands.getoutput(com)
 		page = mimicBrowser(query)
 
 		loc = 0	
@@ -42,30 +38,12 @@ def getBacklinks(url):
 			inlinks.append(url)
 			loc = fin
 	except:
-		print sys.exc_info()
+		logging.exception ( 'cdGetBacklinks :',sys.exc_info())
 
 	return inlinks
 
-def getBacklinksCreationDates(url):
-	links = getBacklinks(url)
-	backlinks = []
-	outputArrayDummyNotUsed = []
-	try:
-		for link in links:
-			bitly = getBitlyCreationDate(link)
-			archives = getArchivesCreationDate(link)
-			google = getGoogleCreationDate(link)
-			lowest = getLowest([bitly,google,archives["Earliest"]])
-			
-			if(lowest==""):
-				continue
-			backlinks.append(lowest)
 
-	except:
-		print sys.exc_info()
-	return backlinks
-
-def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
+def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,verbose=False, **kwargs):
 
 	links = getBacklinks(url)
 
@@ -86,15 +64,16 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex):
 			if(epoch<lowest_epoch):
 				lowest_epoch = epoch
 	except:
-		print sys.exc_info()
+		logging.exception ( 'cdGetBacklinks :', sys.exc_info() )
 
 	if(lowest_epoch == 99999999999):
 		outputArray[outputArrayIndex] = ""
-		print "Done Backlinks*"
+		logging.debug ( "Done Backlinks*" )
 		return ""
 	
 	timeVal = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest_epoch))
 	outputArray[outputArrayIndex] = timeVal
-	print "Done Backlinks"
+	kwargs['displayArray'][outputArrayIndex] = timeVal
+	logging.debug ( "Done Backlinks" )
 	return timeVal
 

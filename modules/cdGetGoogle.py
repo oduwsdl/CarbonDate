@@ -3,17 +3,16 @@ import os
 import traceback
 import calendar
 import time
-import commands
 import requests
-from cdGetLowest import getLowest
+from .cdGetLowest import getLowest
 from random import randint
+import logging
 
-reload(sys)  
-sys.setdefaultencoding('utf8')
+moduleTag='Google.com'
 
 def randSleep():
 	sleepSeconds = randint(2, 7)
-	print 'cdGetGoogle::randSleep(), sleep:', sleepSeconds
+	logging.debug ( 'cdGetGoogle::randSleep(), sleep: %s', sleepSeconds )
 	time.sleep(sleepSeconds)
 
 def getLowestDate(allDatesEpoch):
@@ -77,8 +76,8 @@ def mimicBrowser(query):
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
 		errorMessage = fname + ', ' + str(exc_tb.tb_lineno)  + ', ' + str(sys.exc_info())
-		print '\tERROR:', errorMessage
-		print '\tquery is: ', query
+		logging.error ( '\tERROR:', errorMessage )
+		logging.error ( '\tquery is: ', query )
 		return ''
 
 def genericGetCreationDate(query):
@@ -94,9 +93,9 @@ def genericGetCreationDate(query):
 
 		page = mimicBrowser(query)
 		
-		debugOutfile = open('output.html', 'w')
-		debugOutfile.write(str(page))
-		debugOutfile.close()
+		# debugOutfile = open('output.html', 'w')
+		# debugOutfile.write(str(page))
+		# debugOutfile.close()
 
 		signatureString = ' - </span>'
 		locationOfSignature = 0
@@ -122,7 +121,7 @@ def genericGetCreationDate(query):
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
 		errorMessage = fname + ', ' + str(exc_tb.tb_lineno)  + ', ' + str(sys.exc_info())
-		print '\tERROR:', errorMessage
+		logging.error ( '\tERROR:', errorMessage)
 
 	#print query
 	#for date in allDatesEpoch:
@@ -130,15 +129,16 @@ def genericGetCreationDate(query):
 	#print
 	return getLowestDate(allDatesEpoch)
 
-def getGoogleCreationDate(url, outputArray, indexOfOutputArray):
+def getGoogle(url, outputArray, indexOfOutputArray,verbose=False, **kwargs):
 	
 	#Caution google blocks bots which do not play nice
 	#return ''
 	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q=inurl:'+url+'&oq=inurl:'+url
 	inurl_creation_date = genericGetCreationDate(query)
 
-	query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q='+url
-	search_creation_date = genericGetCreationDate(query)
+	#query = 'https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15&q='+url
+	#search_creation_date = genericGetCreationDate(query)
+	search_creation_date = 0
 
 	#print 'inurl_creation_date:', inurl_creation_date
 	#print 'search_creation_date:', search_creation_date
@@ -148,15 +148,18 @@ def getGoogleCreationDate(url, outputArray, indexOfOutputArray):
 
 		lowerDate = getLowest([search_creation_date, inurl_creation_date])
 		outputArray[indexOfOutputArray] = lowerDate
+		kwargs['displayArray'][indexOfOutputArray] = lowerDate
 
 	elif( inurl_creation_date == 0 and search_creation_date != 0 ):
 
 		lowerDate = getLowest([search_creation_date, search_creation_date])
 		outputArray[indexOfOutputArray] = lowerDate
+		kwargs['displayArray'][indexOfOutputArray] = lowerDate
 
-	else:
-		#this else means: inurl_creation_date != 0 and search_creation_date = 0
+	elif( inurl_creation_date != 0 and search_creation_date == 0 ):
+		
 		lowerDate = getLowest([inurl_creation_date, inurl_creation_date])
 		outputArray[indexOfOutputArray] = lowerDate
+		kwargs['displayArray'][indexOfOutputArray] = lowerDate
 	
 	return lowerDate
