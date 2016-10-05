@@ -2,9 +2,9 @@
 
 ## Prerequisites
 * Python 3 only.
-* Running in docker container is strongly recommanded.
+* Running in docker container is strongly recommended.
 * Install tornado server (to run server).
-* Insert your bitly oauth access token in config file. Visit https://bitly.com/a/oauth_apps to get your access token.
+* Insert your bitly OAuth access token in config file. Visit https://bitly.com/a/oauth_apps to get your access token.
 * Insert your Bing search api key in config file. Visit https://www.microsoft.com/cognitive-services/en-us/bing-web-search-api to get your api key.
 * (optional) Change server ip/port number in config.
 * All other packages that generate error "No module named" does exist, must be installed.
