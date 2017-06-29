@@ -1,13 +1,9 @@
-import re
 import time
 import urllib.request, urllib.error, urllib.parse
-import os
 import sys
-import datetime
 import calendar
 import requests
 
-from datetime import datetime
 import logging
 
 moduleTag="Archives"
@@ -17,14 +13,13 @@ headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko
 def getMementos(uri):
 
     uri = uri.replace(' ', '')
-    orginalExpression = re.compile( r"<http://[A-Za-z0-9.:=/%-_ ]*>; rel=\"original\"," )
-    mementoExpression = re.compile( r"<http://[A-Za-z0-9.:=/&,%-_ \?]*>;rel=\"(memento|first memento|last memento|first memento last memento|first last memento)\";datetime=\"(Sat|Sun|Mon|Tue|Wed|Thu|Fri), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (19|20)\d\d \d\d:\d\d:\d\d GMT\"" )
-    zeroMementoExpression = re.compile(r"Resource: http://[A-Za-z0-9.:=/&,%-_ ]*")
+
 
     #baseURI = 'http://timetravel.mementoweb.org/timemap/link/'
     #baseURI = 'http://mementoweb.org/timemap/link/'
-    #OR
     baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
+    #OR
+    # baseURI = 'http://memgator.cs.odu.edu/link/'
     memento_list = []
 
     try:
@@ -126,7 +121,6 @@ def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
 
 
         lowest = 99999999999
-        link = ""
 
         limitEpoch = int(calendar.timegm(time.strptime("1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')))
 
