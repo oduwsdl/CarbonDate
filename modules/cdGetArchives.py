@@ -3,7 +3,7 @@ import urllib.request, urllib.error, urllib.parse
 import sys
 import calendar
 import requests
-
+import json
 import logging
 
 moduleTag="Archives"
@@ -14,85 +14,69 @@ def getMementos(uri):
 
     uri = uri.replace(' ', '')
 
-
     #baseURI = 'http://timetravel.mementoweb.org/timemap/link/'
     #baseURI = 'http://mementoweb.org/timemap/link/'
-    baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
+    # baseURI = 'http://mementoproxy.cs.odu.edu/aggr/timemap/link/1/'
     #OR
-    # baseURI = 'http://memgator.cs.odu.edu/link/'
+    baseURI = 'http://memgator.cs.odu.edu/timemap/json/'
     memento_list = []
 
     try:
         search_results = urllib.request.urlopen(baseURI+uri)
         the_page = search_results.read().decode('ascii','ignore')
 
-        timemapList = the_page.split('\n')
+        data = json.loads(the_page)
+
         mementoNames = []
-        for line in timemapList:
+        for item in data["mementos"]["list"]:
+            memento = {}
 
-            #reconsider this
-            if(line.find("</memento")>0):
-                line = line.replace("</memento", "<http://api.wayback.archive.org/memento")
-    
-            start = line.find('h')#find the start location of http or https
-            loc = line.find('>;rel="')
+            timestamp = item["datetime"]
+            mementoURL = item["uri"]
 
-            #tofind = ';datetime="'
-            tofind = '; datetime="'
+            epoch = int(calendar.timegm(time.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ')))
+            day_string = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
 
-            loc2 = line.find(tofind)
-            if(loc!=-1 and loc2!=-1):
-                mementoURL = line[start:loc]
-                timestamp = line[loc2+len(tofind):line.find('"',loc2+len(tofind)+3)]
+            memento["time"] = day_string
 
-                epoch = int(calendar.timegm(time.strptime(timestamp, '%a, %d %b %Y %H:%M:%S %Z')))
-                day_string = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
+            name = urllib.parse.urlparse(mementoURL.strip())
 
+            memento["name"] = name.netloc
+            memento["link"] = mementoURL
 
-                memento = {}
-                
-                memento["time"] = day_string
-
-                name = urllib.parse.urlparse(mementoURL.strip())
-
-                memento["name"] = name.netloc
-                memento["link"] = mementoURL
-
-                #assumption that first memento is youngest - ON - start
-                
-                if( name.netloc not in mementoNames ):
-                    memento_list.append(memento)
-                    mementoNames.append(name.netloc)
-                
-                #assumption that first memento is youngest - ON - end
-
-                #assumption that first memento is NOT youngest - ON - start
-                #memento_list.append(memento)
-                #assumption that first memento is NOT youngest - ON - end
+            # assumption that first memento is youngest - ON - start
+            if( name.netloc not in mementoNames ):
+                memento_list.append(memento)
+                mementoNames.append(name.netloc)
 
     except urllib.error.URLError:
         pass
 
-
     return memento_list
-  
-def getRealDate(url, memDate):   
-    response = requests.get(url,headers=headers)
-    page = response.headers
-    date = ""
 
-    if "X-Archive-Orig-last-modified" in page:
-        date=page["X-Archive-Orig-last-modified"]
-    elif 'X-Archive-Orig-date' in page:
-        date=page['X-Archive-Orig-date']
 
-    if(date ==""):
-        date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(memDate))    
-    else:
-        epoch = int(calendar.timegm(time.strptime(date, '%a, %d %b %Y %H:%M:%S %Z')))
-        date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
-    
-    return date  
+def getRealDate(url, memDate):
+    try:
+        response = requests.get(url,headers=headers)
+        page = response.headers
+        date = ""
+
+        if "X-Archive-Orig-last-modified" in page:
+            date=page["X-Archive-Orig-last-modified"]
+        elif 'X-Archive-Orig-date' in page:
+            date=page['X-Archive-Orig-date']
+
+        if(date ==""):
+            date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(memDate))    
+        else:
+            epoch = int(calendar.timegm(time.strptime(date, '%a, %d %b %Y %H:%M:%S %Z')))
+            date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
+        
+        return date  
+    except Exception:
+        date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(memDate))
+        return date
+
 
 def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
     
