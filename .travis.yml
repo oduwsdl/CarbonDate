@@ -7,4 +7,4 @@ install:
   - pip install -r test-requirements.txt
 # command to run tests
 script: 
-  - pytest -s
+  - py.test -s
