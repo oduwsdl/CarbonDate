@@ -84,12 +84,12 @@ def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
         mementos = getMementos(url)
 
         if(len(mementos) == 0):
-            result = []
-            result.append(("Earliest", ""))
-            result.append(("By_Archive", dict([])))
-            outputArray[outputArrayIndex] = result[0][1]
+            result = {}
+            result["Earliest"] = ""
+            result["By_Archive"] = {}
+            outputArray[outputArrayIndex] = result["Earliest"]
             logging.debug ("Done Archives 0")
-            return dict(result)
+            return result
 
         archives = {}
 
@@ -123,29 +123,29 @@ def getArchives(url, outputArray, outputArrayIndex,verbose=False,**kwargs):
 
         lowest = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest))
 
-        result = []
-        result.append(("Earliest", lowest))
+        result = {}
 
-        result2 = []
+        result["Earliest"] = lowest
+        result2 = {}
         for archive in archives:
             if(archives[archive]["time"]==""):
                 continue
-            #result2.append((archive, str(archives[archive]["time"])))
-            result2.append((archives[archive]["link"], str(archives[archive]["time"])))
-        result.append(("By_Archive", dict(result2)))
-        
-        outputArray[outputArrayIndex] = result[0][1]
+            result2[archives[archive]["link"]] = str(archives[archive]["time"])
+
+        result["By_Archive"] = result2
+
+        outputArray[outputArrayIndex] = result["Earliest"]
         kwargs['displayArray'][outputArrayIndex] = result
         logging.debug ("Done Archives 1")
-        return dict(result)
+        return result
 
     except:
         logging.exception (sys.exc_info())
-        result = []
-        result.append(("Earliest", ""))
-        result.append(("By_Archive", dict([])))
+        result = {}
+        result["Earliest"] = ""
+        result["By_Archive"] = {}
 
-        outputArray[outputArrayIndex] = result[0][1]
+        outputArray[outputArrayIndex] = result["Earliest"]
         kwargs['displayArray'][outputArrayIndex] = result
         logging.debug ("Done Archives 2")
-        return dict(result)
+        return result
