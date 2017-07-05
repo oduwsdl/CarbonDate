@@ -23,3 +23,11 @@ def test_numUniqueMementos(uri,expectedCount):
 def test_getRealDate(uri, memDate):
 	realDate = m.getRealDate(uri, memDate)
 	assert realDate == memDate
+
+
+@pytest.mark.skip(reason='not implemented')
+def testGetArchives(uri, earliestDate):
+	'''
+	Calls getMementos and getRealDate to form a json dictionary.
+	'''
+	pass
