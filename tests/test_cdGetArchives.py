@@ -1,5 +1,4 @@
 import pytest
-import pprint as pp
 import modules.cdGetArchives as m
 
 
@@ -10,8 +9,6 @@ import modules.cdGetArchives as m
 def test_numUniqueMementos(uri,expectedCount):
 	'''Number of unique mementos. Dependent on Memgator API'''
 	memento_list = m.getMementos(uri)
-	pp.pprint(memento_list)
-	print()
 	assert len(memento_list) >= expectedCount
 	for i in memento_list:
 		for key, value in i.items():
@@ -21,6 +18,7 @@ def test_numUniqueMementos(uri,expectedCount):
 
 @pytest.mark.parametrize("uri, memDate", [
 	("http://web.archive.org/web/19970102130137/http://cs.odu.edu:80/", "1996-02-09T21:47:46"),
+	("http://arquivo.pt/wayback/20091223043049/http://www.cs.odu.edu/", "2009-12-23T04:30:50"),
 ])
 def test_getRealDate(uri, memDate):
 	realDate = m.getRealDate(uri, memDate)
