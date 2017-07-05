@@ -1,5 +1,7 @@
 # [CarbonDate](http://carbondate.cs.odu.edu)
 
+[![Build Status](https://travis-ci.org/grantat/CarbonDate.svg?branch=master)](https://travis-ci.org/grantat/CarbonDate)
+
 ## Prerequisites
 * Python 3 only.
 * Running in docker container is strongly recommended.
