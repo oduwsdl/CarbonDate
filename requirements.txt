@@ -4,3 +4,4 @@ surt
 tornado
 python-dateutil
 lxml
+pytest>=3.0
