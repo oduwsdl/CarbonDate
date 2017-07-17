@@ -25,14 +25,13 @@ def test_Bing():
     pass
 
 
-@pytest.mark.parametrize("uri, memDate", [
-    ("http://www.cs.odu.edu",
-     "2008-12-01T03:53:27")
+@pytest.mark.parametrize("uri", [
+    ("http://www.cs.odu.edu")
 ])
-def test_Twitter(uri, memDate):
+def test_Twitter(uri):
     testarry = ['']
     date = twitter.getTwitter(uri, testarry, 0, verbose=True,
                               displayArray={"Twitter": ""})
-    assert memDate == date
+    assert len(date) > 0
 
 # todo -- any external apis added should be tested here
