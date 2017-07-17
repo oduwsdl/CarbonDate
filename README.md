@@ -1,6 +1,7 @@
 # [CarbonDate](http://carbondate.cs.odu.edu)
 
 [![Build Status](https://travis-ci.org/grantat/CarbonDate.svg?branch=master)](https://travis-ci.org/grantat/CarbonDate)
+[![codecov](https://codecov.io/gh/grantat/CarbonDate/branch/master/graph/badge.svg)](https://codecov.io/gh/grantat/CarbonDate)
 
 ## Prerequisites
 * Python 3 only.
