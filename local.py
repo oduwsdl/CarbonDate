@@ -51,6 +51,7 @@ def cd(modLoader, args):
             loglevel = logging.DEBUG
         logging.basicConfig(level=loglevel, format='%(message)s')
         logger = logging.getLogger('local')
+        result.insert(0, ('self', ""))
         modLoader.run(args=args, resultArray=result, logger=logger)
         os._exit(0)
 
