@@ -79,7 +79,7 @@ def getFirstAppearance(url, inurl):
         date = ""
         while (True):
             res, date = isInPage(url, mementos[int(i)]["link"])
-            # special case: only one version of memento bitween other two
+            # special case: only one version of memento between other two
             # versions have this reference (the link might be removed from page
             # later)
             if((res is True and int(math.fabs(previous - i)) == 1 and
