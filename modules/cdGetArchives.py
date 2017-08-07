@@ -7,6 +7,8 @@ import calendar
 import requests
 import json
 import logging
+from .cdGetPubdate import getPubdate
+from .cdGetLowest import getLowest, validateDate
 
 moduleTag = "Archives"
 
@@ -136,15 +138,30 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
         lowest = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest))
 
         result = {}
-
-        result["Earliest"] = lowest
-        result2 = {}
+        dates = []
+        by_arch = []
         for archive in archives:
+            result2 = {}
             if(archives[archive]["time"] == ""):
                 continue
-            result2[archives[archive]["link"]] = str(archives[archive]["time"])
 
-        result["By_Archive"] = result2
+            result2["url"] = archives[archive]["link"]
+            result2["memento_datetime"] = archives[archive]["time"]
+            result2["pubdate"] = getPubdate(archives[archive]["link"], [''], 0,
+                                            verbose=False,
+                                            displayArray={"Pubdate": ""})
+
+            result2["pubdate"] = validateDate(result2["pubdate"])
+            dates.append(result2["memento_datetime"])
+
+            if result2["memento_datetime"] != "":
+                dates.append(result2["memento_datetime"])
+
+            by_arch.append(result2)
+
+        result["Earliest"] = getLowest(dates=dates)
+
+        result["By_Archive"] = by_arch
 
         outputArray[outputArrayIndex] = result["Earliest"]
         kwargs['displayArray'][outputArrayIndex] = result
