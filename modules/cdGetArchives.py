@@ -97,7 +97,7 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
         if(len(mementos) == 0):
             result = {}
             result["Earliest"] = ""
-            result["By_Archive"] = {}
+            result["By_Archive"] = []
             outputArray[outputArrayIndex] = result["Earliest"]
             kwargs['displayArray'][outputArrayIndex] = result
             logging.debug("Done Archives 0")
@@ -172,7 +172,7 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
         logging.exception(sys.exc_info())
         result = {}
         result["Earliest"] = ""
-        result["By_Archive"] = {}
+        result["By_Archive"] = []
 
         outputArray[outputArrayIndex] = result["Earliest"]
         kwargs['displayArray'][outputArrayIndex] = result
