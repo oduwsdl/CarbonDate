@@ -27,7 +27,7 @@ To run as a server use:
 ```
 $ docker run --rm -it -p 8888:8888 oduwsdl/carbondate ./main.py -s
 ```
-Then you may open your browser to `http://localhost:8888/`.
+Then you may open your browser to: `http://localhost:8888/`
 
 To run locally use:
 ```
@@ -41,14 +41,12 @@ To run it as a server:
 ```
 $ ./main.py -s
 ```
-To CarbonDate `http://example.com`:
-
-Open in a Web browser: `http://localhost:8888/`
+Then you may open your browser to: `http://localhost:8888/`
 
 To run it as a local script:
 
 ```
-$ ./main.py -l search URL
+$ ./main.py -l search {URI-R}
 ```
 
 The backlinks calculation is costly to your computers, so it is recommended to turn it off:
@@ -65,15 +63,14 @@ And ensure the entry function is named
 ```
 get<Module name>(url,outputArray, indexOfOutputArray,verbose=False,**kwargs)  
 ```
-or customize your own entry function name by assign string value to 'entry' variable in the beginning of your script  
-for example your module name is Service,
+or customize your own entry function name by assigning a string value to 'entry' variable in the beginning of your script.  
+For example if your module name is Service, then the script should be named cdGetService, and the interface function should be named:
 
-then the script should be named cdGetService, and interface function should be named  
 ```
 getService (url,outputArray, indexOfOutputArray,verbose=False,**kwargs)  
 ```
 
-Copy your scripts and to folder ./modules, then the system will automatically detects and loads it.  
+Copy your scripts to the folder ./modules, then the system will automatically detect and load it.
 
 ### Data returned from your module:
 
@@ -93,7 +90,7 @@ Where the variable outputArray, indexOfOutputArray and displayArray are past in 
 
 ### If your module has a sub-module:
 
-* If the sub-script is in a subfolder, bring folder with your script, carbon tool will ignore subfolders while loading
-* If the sub-script is not in a subfolder, after copying it to ./modules folder, add them into config file, under 'SystemUtility' field
+* If the sub-script is in a subfolder, bring the folder with your script, carbon tool will ignore subfolders while loading
+* If the sub-script is not in a subfolder, after copying it to the ./modules folder, add them into config file, under 'SystemUtility' field
 
 ## For more help please visit the [wiki page](https://github.com/DarkAngelZT/CarbonDate/wiki)
