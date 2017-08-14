@@ -2,6 +2,7 @@ import pytest
 import time
 import calendar
 import modules.cdGetArchives as m
+import json
 
 
 def dateToEpoch(date):
@@ -17,7 +18,7 @@ def dateToEpoch(date):
 def test_numUniqueMementos(uri):
     '''Number of unique mementos. Dependent on Memgator API'''
     memento_list = m.getMementos(uri)
-    assert len(memento_list) >= 1
+    assert len(memento_list) > 0
     for i in memento_list:
         for key, value in i.items():
             # for each dictionary key there should be some value.
@@ -38,15 +39,17 @@ def test_getRealDate(uri, memDate):
 
 @pytest.mark.parametrize("uri", [
     ("http://www.cs.odu.edu"),
+    ("http://www.cnn.com/2012/10/28/world/americas"
+     "/canada-earthquake/index.html"),
 ])
 def testGetArchives(uri):
     '''
     Calls getMementos and getRealDate to form a json dictionary.
     '''
-    json = m.getArchives(uri, [''], 0, verbose=True,
-                         displayArray={"": ""})
+    js = m.getArchives(uri, [''], 0, verbose=True,
+                       displayArray={"": ""})
     # Check for non-nil value from each key
-    assert len(json["Earliest"]) >= 1
-    assert len(json["By_Archive"].keys()) >= 1
-    for i in json["By_Archive"].keys():
-        assert len(json["By_Archive"][i]) >= 1
+    assert len(js["Earliest"]) > 0
+    print(json.dumps(js, sort_keys=True, indent=4))
+    print()
+    assert len(js["By_Archive"]) > 0

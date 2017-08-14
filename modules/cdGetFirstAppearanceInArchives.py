@@ -44,10 +44,17 @@ def isInPage(url, page):
         date = page.headers['X-Archive-Orig-date']
 
     if date != "":
-        epoch = int(calendar.timegm(time.strptime(
-            date, '%a, %d %b %Y %H:%M:%S %Z')))
-        date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
-        return True, date
+        # try these two formats
+        for fmt in ('%a, %d %b %Y %H:%M:%S %Z', '%a, %d-%b-%Y %H:%M:%S %Z'):
+            try:
+                epoch = int(calendar.timegm(time.strptime(
+                    date, fmt)))
+                date = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(epoch))
+                return True, date
+            except ValueError:
+                continue
+
+        return False, ""
     else:
         return False, ""
 
@@ -72,7 +79,7 @@ def getFirstAppearance(url, inurl):
         date = ""
         while (True):
             res, date = isInPage(url, mementos[int(i)]["link"])
-            # special case: only one version of memento bitween other two
+            # special case: only one version of memento between other two
             # versions have this reference (the link might be removed from page
             # later)
             if((res is True and int(math.fabs(previous - i)) == 1 and

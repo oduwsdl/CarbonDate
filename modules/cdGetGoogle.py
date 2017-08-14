@@ -3,7 +3,7 @@ import os
 import calendar
 import time
 import requests
-from .cdGetLowest import getLowest
+from .cdGetLowest import getLowest, validateDate
 from random import randint
 import logging
 
@@ -146,18 +146,21 @@ def getGoogle(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
     if(inurl_creation_date != 0 and search_creation_date != 0):
 
         lowerDate = getLowest([search_creation_date, inurl_creation_date])
+        lowerDate = validateDate(lowerDate)
         outputArray[indexOfOutputArray] = lowerDate
         kwargs['displayArray'][indexOfOutputArray] = lowerDate
 
     elif(inurl_creation_date == 0 and search_creation_date != 0):
 
         lowerDate = getLowest([search_creation_date, search_creation_date])
+        lowerDate = validateDate(lowerDate)
         outputArray[indexOfOutputArray] = lowerDate
         kwargs['displayArray'][indexOfOutputArray] = lowerDate
 
     elif(inurl_creation_date != 0 and search_creation_date == 0):
 
         lowerDate = getLowest([inurl_creation_date, inurl_creation_date])
+        lowerDate = validateDate(lowerDate)
         outputArray[indexOfOutputArray] = lowerDate
         kwargs['displayArray'][indexOfOutputArray] = lowerDate
 
