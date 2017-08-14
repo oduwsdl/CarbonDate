@@ -145,7 +145,7 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
             if(archives[archive]["time"] == ""):
                 continue
 
-            result2["url"] = archives[archive]["link"]
+            result2["URI"] = archives[archive]["link"]
             result2["memento_datetime"] = archives[archive]["time"]
             result2["pubdate"] = getPubdate(archives[archive]["link"], [''], 0,
                                             verbose=False,
