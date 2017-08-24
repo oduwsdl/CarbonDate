@@ -126,8 +126,8 @@ class ModuleManager():
             kwargs['logger'].error(sys.exc_info()[0], sys.exc_info()[
                                    1], sys.exc_info()[2])
 
-        resultArray.append(("URI", url))
-        resultArray.append(("Estimated Creation Date", lowest))
+        resultArray.append(("uri", url))
+        resultArray.append(("estimated-creation-date", lowest))
         for i in range(len(modNames)):
             resultArray.append((modNames[i], displayArray[i]))
 

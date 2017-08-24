@@ -8,7 +8,7 @@ from surt import surt
 from requests.utils import quote
 import logging
 
-moduleTag = 'Bing.com'
+moduleTag = 'bing.com'
 
 
 def getBing(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):

@@ -8,7 +8,7 @@ import logging
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux i686 (x86_64); rv:2.0b4pre) '
     'Gecko/20100812 Minefield/4.0b4pre'}
-moduleTag = "Pubdate tag"
+moduleTag = "pubdate"
 
 
 def parseStrDate(dateString):

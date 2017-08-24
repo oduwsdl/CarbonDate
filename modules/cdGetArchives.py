@@ -10,7 +10,7 @@ import logging
 from .cdGetPubdate import getPubdate
 from .cdGetLowest import getLowest, validateDate
 
-moduleTag = "Archives"
+moduleTag = "archives"
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) \
@@ -96,9 +96,9 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
 
         if(len(mementos) == 0):
             result = {}
-            result["Earliest"] = ""
-            result["By_Archive"] = []
-            outputArray[outputArrayIndex] = result["Earliest"]
+            result["earliest"] = ""
+            result["archive"] = []
+            outputArray[outputArrayIndex] = result["earliest"]
             kwargs['displayArray'][outputArrayIndex] = result
             logging.debug("Done Archives 0")
             return result
@@ -145,25 +145,28 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
             if(archives[archive]["time"] == ""):
                 continue
 
-            result2["URI"] = archives[archive]["link"]
-            result2["memento_datetime"] = archives[archive]["time"]
-            result2["pubdate"] = getPubdate(archives[archive]["link"], [''], 0,
-                                            verbose=False,
-                                            displayArray={"Pubdate": ""})
+            result2["uri-m"] = archives[archive]["link"]
+            result2["memento-datetime"] = archives[archive]["time"]
+            mementoPubdate = getPubdate(archives[archive]["link"],
+                                        [''], 0,
+                                        verbose=False,
+                                        displayArray={"pubdate": ""})
+            result2["memento-pubdate"] = mementoPubdate
 
-            result2["pubdate"] = validateDate(result2["pubdate"])
-            dates.append(result2["memento_datetime"])
+            result2["memento-pubdate"] = validateDate(
+                result2["memento-pubdate"])
+            dates.append(result2["memento-datetime"])
 
-            if result2["memento_datetime"] != "":
-                dates.append(result2["memento_datetime"])
+            if result2["memento-datetime"] != "":
+                dates.append(result2["memento-datetime"])
 
             by_arch.append(result2)
 
-        result["Earliest"] = getLowest(dates=dates)
+        result["earliest"] = getLowest(dates=dates)
 
-        result["By_Archive"] = by_arch
+        result["by-archive"] = by_arch
 
-        outputArray[outputArrayIndex] = result["Earliest"]
+        outputArray[outputArrayIndex] = result["earliest"]
         kwargs['displayArray'][outputArrayIndex] = result
         logging.debug("Done Archives 1")
         return result
@@ -171,8 +174,8 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
     except:
         logging.exception(sys.exc_info())
         result = {}
-        result["Earliest"] = ""
-        result["By_Archive"] = []
+        result["earliest"] = ""
+        result["by-archive"] = []
 
         outputArray[outputArrayIndex] = result["Earliest"]
         kwargs['displayArray'][outputArrayIndex] = result
