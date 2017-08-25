@@ -45,9 +45,9 @@ def test_notAliveWebsite():
     '''Check if a 404 website with an article date still retrieves a date'''
     uri = ("http://notalivenewssite.com/2015/11/15/news.html")
     date = pub.getPubdate(uri, [''], 0, verbose=False,
-                          displayArray={"Pubdate": ""})
+                          displayArray={"pubdate": ""})
     assert len(date) > 0
     uri = ("http://notalivenewssite.com/news.html")
     date = pub.getPubdate(uri, [''], 0, verbose=False,
-                          displayArray={"Pubdate": ""})
+                          displayArray={"pubdate": ""})
     assert len(date) == 0
