@@ -10,7 +10,7 @@ import modules.cdGetPubdate as pub
 def test_pubdate(uri):
     '''Main method of pubdate module. '''
     date = pub.getPubdate(uri, [''], 0, verbose=False,
-                          displayArray={"Pubdate": ""})
+                          displayArray={"pubdate": ""})
     print(date)
     assert len(date) > 0
 

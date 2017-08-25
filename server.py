@@ -42,18 +42,17 @@ class CarbonDateServer(tornado.web.RequestHandler):
 
         args = parser.parse_args(['-a', url])
 
-        result = []
+        result = {}
         modLoader = core.ModuleManager()
         modLoader.loadModule(cfg, args)
         self.run_background(modLoader.run, self.on_complete,
-                            args=args, resultArray=result, logger=logger)
+                            args=args, resultDict=result, logger=logger)
 
     def on_complete(self, res):
-        # resultArray=modLoader.run(args=args,resultArray=result,logger=logger)
-        resultArray = res
-        resultArray.insert(0, ('self', self.request.protocol +
-                               "://" + self.request.host + self.request.uri))
-        r = OrderedDict(resultArray)
+        resultDict = res
+        resultDict["self"] = (self.request.protocol +
+                              "://" + self.request.host + self.request.uri)
+        r = OrderedDict(resultDict)
         self.write(json.dumps(r, sort_keys=False,
                               indent=2, separators=(',', ': ')))
         self.set_header("Content-Type", "application/json")

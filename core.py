@@ -8,7 +8,7 @@ import json
 import urllib.parse
 import logging
 from threading import Thread
-from modules.cdGetLowest import getLowest
+from modules.cdGetLowest import getLowest, getLowestSources
 from collections import OrderedDict
 
 
@@ -91,7 +91,7 @@ class ModuleManager():
         url = args.url
         timeout = args.timeout
         threads = []
-        resultArray = kwargs['resultArray']
+        resultDict = kwargs['resultDict']
         outputArray = [''] * len(self.entryPoints)
         displayArray = [''] * len(self.entryPoints)
         now0 = datetime.datetime.now()
@@ -120,18 +120,20 @@ class ModuleManager():
         for t in threads:
             t.join(timeout)
 
+        # getLowest for out
         try:
             lowest = getLowest(outputArray)
         except:
             kwargs['logger'].error(sys.exc_info()[0], sys.exc_info()[
                                    1], sys.exc_info()[2])
 
-        resultArray.append(("uri", url))
-        resultArray.append(("estimated-creation-date", lowest))
+        resultDict["uri"] = url
+        resultDict["estimated-creation-date"] = lowest
+        resultDict["sources"] = {}
         for i in range(len(modNames)):
-            resultArray.append((modNames[i], displayArray[i]))
+            resultDict["sources"][modNames[i]] = displayArray[i]
 
-        values = OrderedDict(resultArray)
+        values = OrderedDict(resultDict)
         r = json.dumps(values, sort_keys=False,
                        indent=2, separators=(',', ': '))
 
@@ -141,7 +143,7 @@ class ModuleManager():
         # end result
         kwargs['logger'].log(35, r)
 
-        return resultArray
+        return resultDict
 
 
 if __name__ == '__main__':
@@ -174,9 +176,8 @@ if __name__ == '__main__':
     fileConfig.close()
     cfg = json.loads(config)
 
-    resultArray = []
+    resultDict = {}
     mod = ModuleManager()
     mod.loadModule(cfg, args)
-    mod.run(args=args, resultArray=resultArray)
+    mod.run(args=args, resultDict=resultDict)
     os._exit(0)
-    # print resultArray

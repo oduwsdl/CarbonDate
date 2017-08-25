@@ -106,6 +106,7 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
         archives = {}
 
         for memento in mementos:
+            # print(memento["name"])
             epoch = int(calendar.timegm(time.strptime(
                 memento["time"], '%Y-%m-%dT%H:%M:%S')))
             if(memento["name"] not in archives):
