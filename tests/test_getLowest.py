@@ -20,6 +20,7 @@ def test_getLowest():
              "2017-04-07T06:06:05",
              "1994-12-20T12:12:34",
              "2016-09-01T06:07:04",
+             "",
              ]
     earliest = cd.getLowest(dates)
     assert earliest == "2016-09-01T06:07:04"
@@ -42,6 +43,12 @@ def test_getLowestSources():
         },
         "archiving.org": {
             "earliest": "2016-09-01T06:07:04"
+        },
+        "beforetime.org": {
+            "earliest": "1994-12-20T12:12:34"
+        },
+        "empty.org": {
+            "earliest": ""
         },
     }
     earliest_date, earliest_sources = cd.getLowestSources(sources)
