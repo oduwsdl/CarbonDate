@@ -7,7 +7,7 @@ from .cdGetLowest import getLowest, validateDate
 from random import randint
 import logging
 
-moduleTag = 'Google.com'
+moduleTag = 'google.com'
 
 
 def randSleep():

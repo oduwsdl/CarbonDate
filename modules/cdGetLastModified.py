@@ -3,7 +3,7 @@ import time
 import requests
 import logging
 
-moduleTag = "Last Modified"
+moduleTag = "last-modified"
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) '

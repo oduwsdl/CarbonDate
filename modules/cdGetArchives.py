@@ -7,10 +7,10 @@ import calendar
 import requests
 import json
 import logging
-from .cdGetPubdate import getPubdate
-from .cdGetLowest import getLowest, validateDate
+from .cdGetPubdate import findPubdate
+from .cdGetLowest import getLowest, validateDate, getLowestSources
 
-moduleTag = "Archives"
+moduleTag = "archives"
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) \
@@ -95,86 +95,51 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
         mementos = getMementos(url)
 
         if(len(mementos) == 0):
-            result = {}
-            result["Earliest"] = ""
-            result["By_Archive"] = []
-            outputArray[outputArrayIndex] = result["Earliest"]
-            kwargs['displayArray'][outputArrayIndex] = result
+            earliest = ""
+            outputArray[outputArrayIndex] = earliest
+            kwargs['displayArray'][outputArrayIndex] = {}
             logging.debug("Done Archives 0")
-            return result
+            return earliest
 
         archives = {}
-
-        for memento in mementos:
-            epoch = int(calendar.timegm(time.strptime(
-                memento["time"], '%Y-%m-%dT%H:%M:%S')))
-            if(memento["name"] not in archives):
-                archives[memento["name"]] = {
-                    "link": memento["link"], "time": epoch}
-            else:
-                if(epoch < archives[memento["name"]]["time"]):
-                    archives[memento["name"]]["time"] = epoch
-                    archives[memento["name"]]["link"] = memento["link"]
-
-        lowest = 99999999999
-
         limitEpoch = int(calendar.timegm(time.strptime(
             "1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')))
 
-        for archive in archives:
-            date = getRealDate(
-                archives[archive]["link"], archives[archive]["time"])
-            epoch = int(calendar.timegm(
-                time.strptime(date, '%Y-%m-%dT%H:%M:%S')))
+        for memento in mementos:
 
-            if(epoch < limitEpoch):
-                archives[archive]["time"] = ""
-                continue
+            epoch = int(calendar.timegm(time.strptime(
+                memento["time"], '%Y-%m-%dT%H:%M:%S')))
 
-            archives[archive]["time"] = date
-            if(epoch < lowest):
-                lowest = epoch
+            uri = memento["link"]
+            mementoDatetime = getRealDate(uri, epoch)
+            mementoDatetimeEpoch = int(calendar.timegm(
+                time.strptime(mementoDatetime, '%Y-%m-%dT%H:%M:%S')))
 
-        lowest = time.strftime('%Y-%m-%dT%H:%M:%S', time.gmtime(lowest))
+            if(mementoDatetimeEpoch < limitEpoch):
+                mementoDatetime = ""
 
-        result = {}
-        dates = []
-        by_arch = []
-        for archive in archives:
-            result2 = {}
-            if(archives[archive]["time"] == ""):
-                continue
+            # find pubdate and make sure it isn't midnight
+            mementoPubdate = validateDate(findPubdate(uri))
+            # find earliest date between memento datetime and pubdate
+            earliest = getLowest(dates=[mementoDatetime, mementoPubdate])
 
-            result2["URI"] = archives[archive]["link"]
-            result2["memento_datetime"] = archives[archive]["time"]
-            result2["pubdate"] = getPubdate(archives[archive]["link"], [''], 0,
-                                            verbose=False,
-                                            displayArray={"Pubdate": ""})
+            archives[memento["name"]] = {
+                "uri-m": memento["link"],
+                "memento-datetime": mementoDatetime,
+                "memento-pubdate": mementoPubdate,
+                "earliest": earliest}
 
-            result2["pubdate"] = validateDate(result2["pubdate"])
-            dates.append(result2["memento_datetime"])
+        earliest = getLowestSources(archives)[0]
 
-            if result2["memento_datetime"] != "":
-                dates.append(result2["memento_datetime"])
-
-            by_arch.append(result2)
-
-        result["Earliest"] = getLowest(dates=dates)
-
-        result["By_Archive"] = by_arch
-
-        outputArray[outputArrayIndex] = result["Earliest"]
-        kwargs['displayArray'][outputArrayIndex] = result
+        outputArray[outputArrayIndex] = earliest
+        kwargs['displayArray'][outputArrayIndex] = archives
         logging.debug("Done Archives 1")
-        return result
+        return archives
 
     except:
         logging.exception(sys.exc_info())
-        result = {}
-        result["Earliest"] = ""
-        result["By_Archive"] = []
-
-        outputArray[outputArrayIndex] = result["Earliest"]
-        kwargs['displayArray'][outputArrayIndex] = result
+        earliest = ""
+        outputArray[outputArrayIndex] = earliest
+        kwargs['displayArray'][outputArrayIndex] = {}
         logging.debug("Done Archives 2")
-        return result
+        return earliest
