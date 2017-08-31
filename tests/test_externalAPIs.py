@@ -16,7 +16,7 @@ def test_Google():
 def test_Bitly():
     url = "http://www.cs.odu.edu"
     date = bitly.getBitly(url, [''], 0, verbose=False,
-                          displayArray={"Bing": ""})
+                          displayArray={"bitly.com": ""})
     assert len(date) > 0
 
 
@@ -40,7 +40,7 @@ def test_BitlyJSON():
 def test_Bing():
     testarry = ['']
     bing.getBing("", testarry, 0, verbose=False,
-                 displayArray={"Bing": ""})
+                 displayArray={"bing.com": ""})
     pass
 
 
@@ -50,7 +50,7 @@ def test_Bing():
 def test_Twitter(uri):
     testarry = ['']
     date = twitter.getTwitter(uri, testarry, 0, verbose=True,
-                              displayArray={"Twitter": ""})
+                              displayArray={"twitter.com": ""})
     assert len(date) > 0
 
 # todo -- any external apis added should be tested here

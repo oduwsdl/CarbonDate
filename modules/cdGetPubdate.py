@@ -8,7 +8,7 @@ import logging
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux i686 (x86_64); rv:2.0b4pre) '
     'Gecko/20100812 Minefield/4.0b4pre'}
-moduleTag = "Pubdate tag"
+moduleTag = "pubdate"
 
 
 def parseStrDate(dateString):
@@ -33,7 +33,7 @@ def _extractFromURL(url):
     return None
 
 
-def getPubdate(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
+def findPubdate(url):
     date = None
     try:
         logging.debug("cdGetPubdate: Try to get time from url")
@@ -45,9 +45,6 @@ def getPubdate(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
         date = _extractFromURL(url)
         if date is not None:
             date_str = date.strftime('%Y-%m-%dT%H:%M:%S')
-            outputArray[indexOfOutputArray] = date_str
-            kwargs['displayArray'][indexOfOutputArray] = date_str
-            logging.debug("Done Pubdate")
             return date_str
         else:
             return ''
@@ -97,7 +94,14 @@ def getPubdate(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
     date_str = ''
     if date is not None:
         date_str = date.strftime('%Y-%m-%dT%H:%M:%S')
-    outputArray[indexOfOutputArray] = date_str
-    kwargs['displayArray'][indexOfOutputArray] = date_str
-    logging.debug("Done Pubdate")
+
     return date_str
+
+
+def getPubdate(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
+    date = findPubdate(url)
+
+    outputArray[indexOfOutputArray] = date
+    kwargs['displayArray'][indexOfOutputArray] = date
+    logging.debug("Done Pubdate")
+    return date

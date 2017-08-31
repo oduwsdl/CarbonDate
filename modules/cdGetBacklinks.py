@@ -8,7 +8,7 @@ import urllib.parse
 import urllib.error
 import logging
 
-moduleTag = "Backlinks"
+moduleTag = "backlinks"
 entry = "getBacklinksFirstAppearanceDates"
 
 

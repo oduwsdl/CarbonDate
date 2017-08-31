@@ -7,7 +7,7 @@ import calendar
 import os.path
 import logging
 
-moduleTag = "Bitly.com"
+moduleTag = "bitly.com"
 
 
 def GetBitlyJson(URL):

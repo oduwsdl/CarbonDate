@@ -8,7 +8,7 @@ import json
 import urllib.parse
 import logging
 from threading import Thread
-from modules.cdGetLowest import getLowest
+from modules.cdGetLowest import getLowestSources
 from collections import OrderedDict
 
 
@@ -91,7 +91,7 @@ class ModuleManager():
         url = args.url
         timeout = args.timeout
         threads = []
-        resultArray = kwargs['resultArray']
+        resultDict = kwargs['resultDict']
         outputArray = [''] * len(self.entryPoints)
         displayArray = [''] * len(self.entryPoints)
         now0 = datetime.datetime.now()
@@ -120,18 +120,29 @@ class ModuleManager():
         for t in threads:
             t.join(timeout)
 
-        try:
-            lowest = getLowest(outputArray)
-        except:
-            kwargs['logger'].error(sys.exc_info()[0], sys.exc_info()[
-                                   1], sys.exc_info()[2])
+        # json dictionary to print
+        resultDict["uri"] = url
+        resultDict["estimated-creation-date"] = ""
+        resultDict["earliest-sources"] = []
+        resultDict["sources"] = {}
 
-        resultArray.append(("URI", url))
-        resultArray.append(("Estimated Creation Date", lowest))
         for i in range(len(modNames)):
-            resultArray.append((modNames[i], displayArray[i]))
+            '''
+            if a module returns a dictionary with sources update the main
+            dictionary with the sources passed, otherwise assume the module
+            returns a single string for the earliest date
+            '''
+            if type(displayArray[i]) is dict:
+                resultDict["sources"].update(displayArray[i])
+            else:
+                resultDict["sources"][modNames[i]] = {
+                    "earliest": displayArray[i]}
 
-        values = OrderedDict(resultArray)
+        earliest_date, earliest_sources = getLowestSources(
+            resultDict["sources"])
+        resultDict["earliest-sources"] = earliest_sources
+        resultDict["estimated-creation-date"] = earliest_date
+        values = OrderedDict(resultDict)
         r = json.dumps(values, sort_keys=False,
                        indent=2, separators=(',', ': '))
 
@@ -141,7 +152,7 @@ class ModuleManager():
         # end result
         kwargs['logger'].log(35, r)
 
-        return resultArray
+        return resultDict
 
 
 if __name__ == '__main__':
@@ -174,9 +185,8 @@ if __name__ == '__main__':
     fileConfig.close()
     cfg = json.loads(config)
 
-    resultArray = []
+    resultDict = {}
     mod = ModuleManager()
     mod.loadModule(cfg, args)
-    mod.run(args=args, resultArray=resultArray)
+    mod.run(args=args, resultDict=resultDict)
     os._exit(0)
-    # print resultArray

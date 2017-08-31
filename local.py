@@ -9,7 +9,7 @@ import logging
 
 
 def cd(modLoader, args):
-    result = []
+    result = {}
     # read system config
     fileConfig = open("config", "r")
     config = fileConfig.read()
@@ -51,8 +51,8 @@ def cd(modLoader, args):
             loglevel = logging.DEBUG
         logging.basicConfig(level=loglevel, format='%(message)s')
         logger = logging.getLogger('local')
-        result.insert(0, ('self', ""))
-        modLoader.run(args=args, resultArray=result, logger=logger)
+        result['self'] = ""
+        modLoader.run(args=args, resultDict=result, logger=logger)
         os._exit(0)
 
 

@@ -5,7 +5,7 @@ from .cdGetLowest import getLowest
 from requests.utils import quote
 import logging
 
-moduleTag = "Twitter.com"
+moduleTag = "twitter.com"
 
 # this is the establishment time of Twttier, which is the ealiest time of
 # a tweet that can be found
