@@ -74,8 +74,34 @@ Copy your scripts to the folder ./modules, then the system will automatically de
 
 ### Data returned from your module:
 
-The data returned from your module should be a string of date, in the format like '1995-01-01T12:00:00'  
-Put your result date in to outputArray\[indexOfOutputArray\] for result comparasion,  
+The data returned from your module should be a string of date in the following format: '1995-01-01T12:00:00'.
+If your module gathers multiple sources you can also return these sources in a dictionary but each source must have a key
+called `earliest`. For example your method can return a dictionary as follows:
+
+```
+{
+    "web.archive.org": {
+      "uri-m": "http://web.archive.org/web/20170704152832/http://www.cnn.com/2017/07/04/politics/us-officials-meet-north-korea-missile-launch/index.html",
+      "memento-datetime": "2017-07-04T15:28:32",
+      "memento-pubdate": "2017-07-04T15:10:24",
+      "earliest": "2017-07-04T15:10:24"
+    },
+    "wayback.archive-it.org": {
+      "uri-m": "http://wayback.archive-it.org/all/20170704185254/http://www.cnn.com/2017/07/04/politics/us-officials-meet-north-korea-missile-launch/index.html",
+      "memento-datetime": "2017-07-04T18:52:54",
+      "memento-pubdate": "2017-07-04T15:10:24",
+      "earliest": "2017-07-04T15:10:24"
+    },
+    "archive.is": {
+      "uri-m": "http://archive.is/20170704205543/http://www.cnn.com/2017/07/04/politics/us-officials-meet-north-korea-missile-launch/index.html",
+      "memento-datetime": "2017-07-04T20:55:43",
+      "memento-pubdate": "2017-07-04T20:55:43",
+      "earliest": "2017-07-04T20:55:43"
+    }
+}
+```
+
+Put your result date in to outputArray\[indexOfOutputArray\] for result comparison,  
 
 ```
 outputArray[outputArrayIndex] = time
