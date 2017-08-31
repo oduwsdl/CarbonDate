@@ -34,7 +34,7 @@ To run locally use:
 $ docker run --rm -it -p 8888:8888 oduwsdl/carbondate ./main.py -l search {URI-R}
 ```
 
-### Running without Docker:
+### Running without Docker
 
 To run it as a server:
 
@@ -55,9 +55,9 @@ The backlinks calculation is costly to your computers, so it is recommended to t
 $ ./main.py -l search {URI-R} -e cdGetBacklinks
 ```
 
-## How to add your module:
+## How to add your module
 
-Name your module main script as cdGet\<Module name\>.py
+Name your module main script as cdGet\<Module name\>.py. If you module relies on extra code in a different folder it is alright to bring this directory into the modules directory, the carbon tool will ignore subfolders while loading. If the extra code is not in a subfolder, after copying it to the ./modules folder, add the file names into the config file, under 'SystemUtility' field.
 
 And ensure the entry function is named  
 ```
@@ -72,31 +72,29 @@ getService (url,outputArray, indexOfOutputArray,verbose=False,**kwargs)
 
 Copy your scripts to the folder ./modules, then the system will automatically detect and load it.
 
-### Data returned from your module:
+### Data returned from your module
 
-The data returned from your module should be a string of date in the following format: '1995-01-01T12:00:00'.
-If your module gathers multiple sources you can also return these sources in a dictionary but each source must have a key
-called `earliest`. For example your method can return a dictionary as follows:
+The data returned from your module can be a string of date in the following format: `'1995-01-01T12:00:00'` or a dictionary with `earliest` as a mandatory key for a source you define along with any optional keys your module provides.
 
 ```
 {
-    "web.archive.org": {
-      "uri-m": "http://web.archive.org/web/20170704152832/http://www.cnn.com/2017/07/04/politics/us-officials-meet-north-korea-missile-launch/index.html",
-      "memento-datetime": "2017-07-04T15:28:32",
-      "memento-pubdate": "2017-07-04T15:10:24",
+    "foo": {
+      "earliest": "2017-07-04T15:10:24",
+      "optional-fields": "extra stuff"
+    }
+}
+```
+
+If your module gathers multiple sources you can also return these sources in a dictionary but each source must have a key named `earliest`. For example your method can return a dictionary as follows:
+
+```
+{
+    "foo": {
       "earliest": "2017-07-04T15:10:24"
     },
-    "wayback.archive-it.org": {
-      "uri-m": "http://wayback.archive-it.org/all/20170704185254/http://www.cnn.com/2017/07/04/politics/us-officials-meet-north-korea-missile-launch/index.html",
-      "memento-datetime": "2017-07-04T18:52:54",
-      "memento-pubdate": "2017-07-04T15:10:24",
-      "earliest": "2017-07-04T15:10:24"
-    },
-    "archive.is": {
-      "uri-m": "http://archive.is/20170704205543/http://www.cnn.com/2017/07/04/politics/us-officials-meet-north-korea-missile-launch/index.html",
-      "memento-datetime": "2017-07-04T20:55:43",
-      "memento-pubdate": "2017-07-04T20:55:43",
-      "earliest": "2017-07-04T20:55:43"
+    "bar": {
+      "earliest": "2015-02-01T06:05:30",
+      "extra": "stuff"
     }
 }
 ```
@@ -109,14 +107,7 @@ outputArray[outputArrayIndex] = time
 
 and put the result and other data you want to show in the "displayArray" like:  
 ```
-kwargs['displayArray'][outputArrayIndex] = time_and_other_data_in_array_of_tuples
+kwargs['displayArray'][outputArrayIndex] = dictionary_or_datestring_variable
 ```
 
 Where the variable outputArray, indexOfOutputArray and displayArray are past in by the system.  
-
-### If your module has a sub-module:
-
-* If the sub-script is in a subfolder, bring the folder with your script, carbon tool will ignore subfolders while loading
-* If the sub-script is not in a subfolder, after copying it to the ./modules folder, add them into config file, under 'SystemUtility' field
-
-## For more help please visit the [wiki page](https://github.com/DarkAngelZT/CarbonDate/wiki)
