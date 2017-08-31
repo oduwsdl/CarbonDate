@@ -77,7 +77,7 @@ def getLowestSources(sources):
             if(epoch < lowest_epoch):
                 lowest_epoch = epoch
                 earliest_date = date
-                earliest_sources.append(source)
+                earliest_sources = [source]
             elif(epoch == lowest_epoch):
                 earliest_sources.append(source)
         except:

@@ -49,7 +49,8 @@ def testGetArchives(uri):
     js = m.getArchives(uri, [''], 0, verbose=True,
                        displayArray={"": ""})
     # Check for non-nil value from each key
-    assert len(js["earliest"]) > 0
+    assert len(js) > 0
+    # check if each key has an 'earliest' value
+    for key, val in js.items():
+        assert len(val["earliest"]) > 0
     print(json.dumps(js, sort_keys=True, indent=4))
-    print()
-    assert len(js["by-archive"]) > 0

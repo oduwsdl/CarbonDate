@@ -25,6 +25,7 @@ class CarbonDateServer(tornado.web.RequestHandler):
 
         logger = logging.getLogger('server')
         logger.log(45, 'Get request from %s' % (self.request.remote_ip))
+        logger.log(45, 'URI Requested: %s' % (url))
         fileConfig = open("config", "r")
         config = fileConfig.read()
         fileConfig.close()
@@ -49,9 +50,11 @@ class CarbonDateServer(tornado.web.RequestHandler):
                             args=args, resultDict=result, logger=logger)
 
     def on_complete(self, res):
-        resultDict = res
+        resultDict = {}
         resultDict["self"] = (self.request.protocol +
                               "://" + self.request.host + self.request.uri)
+        resultDict.update(res)
+
         r = OrderedDict(resultDict)
         self.write(json.dumps(r, sort_keys=False,
                               indent=2, separators=(',', ': ')))

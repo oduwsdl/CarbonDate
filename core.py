@@ -8,7 +8,7 @@ import json
 import urllib.parse
 import logging
 from threading import Thread
-from modules.cdGetLowest import getLowest, getLowestSources
+from modules.cdGetLowest import getLowestSources
 from collections import OrderedDict
 
 
@@ -120,19 +120,28 @@ class ModuleManager():
         for t in threads:
             t.join(timeout)
 
-        # getLowest for out
-        try:
-            lowest = getLowest(outputArray)
-        except:
-            kwargs['logger'].error(sys.exc_info()[0], sys.exc_info()[
-                                   1], sys.exc_info()[2])
-
+        # json dictionary to print
         resultDict["uri"] = url
-        resultDict["estimated-creation-date"] = lowest
+        resultDict["estimated-creation-date"] = ""
+        resultDict["earliest-sources"] = []
         resultDict["sources"] = {}
-        for i in range(len(modNames)):
-            resultDict["sources"][modNames[i]] = displayArray[i]
 
+        for i in range(len(modNames)):
+            '''
+            if a module returns a dictionary with sources update the main
+            dictionary with the sources passed, otherwise assume the module
+            returns a single string for the earliest date
+            '''
+            if type(displayArray[i]) is dict:
+                resultDict["sources"].update(displayArray[i])
+            else:
+                resultDict["sources"][modNames[i]] = {
+                    "earliest": displayArray[i]}
+
+        earliest_date, earliest_sources = getLowestSources(
+            resultDict["sources"])
+        resultDict["earliest-sources"] = earliest_sources
+        resultDict["estimated-creation-date"] = earliest_date
         values = OrderedDict(resultDict)
         r = json.dumps(values, sort_keys=False,
                        indent=2, separators=(',', ': '))
