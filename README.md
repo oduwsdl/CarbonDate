@@ -57,7 +57,7 @@ $ ./main.py -l search {URI-R} -e cdGetBacklinks
 
 ## How to add your module
 
-Name your module's main script as `cdGet\<Module name\>.py`. If your module relies on extra code in a different folder you may bring this directory into the modules directory, the CarbonDate library will ignore subfolders while loading modules. If the extra code is not in a subfolder, after copying it to the `./modules` folder, add the file names into the config file, under `SystemUtility` field.
+Name your module's main script as `cdGet<ModuleName>.py`. If your module relies on extra code in a different folder you may bring this directory into the modules directory, the CarbonDate library will ignore subfolders while loading modules. If the extra code is not in a subfolder, after copying it to the `./modules` folder, add the file names into the config file under the `SystemUtility` field.
 
 And ensure the entry function is named  
 ```
