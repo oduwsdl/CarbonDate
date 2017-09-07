@@ -26,7 +26,6 @@ class CarbonDateServer(tornado.web.RequestHandler):
         logger = logging.getLogger('server')
 
         realIP = self.request.remote_ip
-        print(self.request.headers)
         if self.request.headers.get("X-Real-IP"):
             realIP = self.request.headers.get("X-Real-IP")
         if self.request.headers.get("X-Forwarded-For"):
