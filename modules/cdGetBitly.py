@@ -54,7 +54,10 @@ def GetBitlyJson(URL):
         if(page.find(b'"error": "NOT_FOUND"') != -1):
             break
 
-        jsonData = json.loads(page.decode())
+        try:
+            jsonData = json.loads(page.decode())
+        except:
+            continue
 
         if(jsonData['status_code'] == 403):
             continue
@@ -128,3 +131,7 @@ def getBitly(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
         kwargs['displayArray'][indexOfOutputArray] = ""
         logging.debug("Done Bitly")
         return ""
+
+
+def checkFailure(jsonData):
+    print()
