@@ -131,7 +131,3 @@ def getBitly(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
         kwargs['displayArray'][indexOfOutputArray] = ""
         logging.debug("Done Bitly")
         return ""
-
-
-def checkFailure(jsonData):
-    print()
