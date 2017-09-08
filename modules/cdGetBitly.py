@@ -57,6 +57,7 @@ def GetBitlyJson(URL):
         try:
             jsonData = json.loads(page.decode())
         except:
+            logging.debug('Failed to load Bitly json')
             continue
 
         if(jsonData['status_code'] == 403):
