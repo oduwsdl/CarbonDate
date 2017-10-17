@@ -8,6 +8,7 @@ import json
 import urllib.parse
 import logging
 from threading import Thread
+from requests.utils import requote_uri
 from modules.cdGetLowest import getLowestSources
 from collections import OrderedDict
 
@@ -89,6 +90,9 @@ class ModuleManager():
 
     def run(self, args, **kwargs):
         url = args.url
+        # handle character accents
+        url = requote_uri(url)
+
         timeout = args.timeout
         threads = []
         resultDict = kwargs['resultDict']
