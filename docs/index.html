@@ -54,8 +54,8 @@
       <a href="http://ws-dl.blogspot.com/2014/11/2014-11-14-carbon-dating-web-version-20.html">Carbon dating</a>
       is computationally expensive. </br>Please try again later if the process takes too long; we'll save your request.
     </br></br>
-    If you plan to carbon date a large number of web pages, as a courtesy to other users, kindly 
-    <a href="https://github.com/oduwsdl/CarbonDate">install 
+    If you plan to carbon date a large number of web pages, as a courtesy to other users, kindly
+    <a href="https://github.com/oduwsdl/CarbonDate">install
       the application locally</a>
     </p>
     <div class="footer">
@@ -64,8 +64,8 @@
   </div>
   <script>
   $("#submit").click(function() {
-    uri = '/cd?url=' + $('#input').val();
-    history.pushState({url: ''}, 'http://wsdl-docker.cs.odu.edu:8080/', '/cd?url=' + $('#input').val());
+    uri = '/cd/' + $('#input').val();
+    history.pushState({url: ''}, 'http://wsdl-docker.cs.odu.edu:8080/', '/cd/' + $('#input').val());
     $('#res').html('Loading please wait...');
     $.getJSON(uri, function(data) {
       $('#res').html('<pre>' + JSON.stringify(data, null, '  ') + '</pre>');

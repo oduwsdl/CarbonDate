@@ -16,9 +16,9 @@ _workers = ThreadPool(50)
 
 class CarbonDateServer(tornado.web.RequestHandler):
     @tornado.web.asynchronous
-    def get(self):
+    def get(self, req):
         try:
-            url = self.get_argument('url')
+            url = self.request.uri[4:]
         except Exception:
             self.set_status(400)
             return
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     logging.addLevelName(45, "Server")
     # initialize server
     app = tornado.web.Application([
-        (r"/cd", CarbonDateServer),
+        (r"/cd/(.*)", CarbonDateServer),
         (r'/(.*)', tornado.web.StaticFileHandler,
          {'path': 'docs', "default_filename": "index.html"})
     ])
