@@ -26,6 +26,9 @@
     line-height: 25px;
     font-size: 22px;
   }
+  #est {
+      margin-top: 20px;
+  }
   #res {
     padding: 5px;
     text-align: left;
@@ -45,31 +48,57 @@
   <div id="content">
     <h1 class="heading">Carbon Dating The Web</h1>
     <p class="subheading">Predict the Birthday of a Webpage!</p>
-    <form target="http://cd.cs.odu.edu/cd" method="GET">
+    <form target="http://cd.cs.odu.edu/cd/" method="GET">
       <input type="text" id="input" name="url" value="http://www.cs.odu.edu/" /><br />
       <button id="submit">Carbon Date!</button>
     </form>
-    <div id="res">GET http://cd.cs.odu.edu/cd?url=http://www.cs.odu.edu/</div>
+    <div id="est"></div>
+    <div id="res">GET http://cd.cs.odu.edu/cd/http://www.cs.odu.edu/</div>
     <p class="subheading">
-      <a href="http://ws-dl.blogspot.com/2014/11/2014-11-14-carbon-dating-web-version-20.html">Carbon dating</a>
-      is computationally expensive. </br>Please try again later if the process takes too long; we'll save your request.
+      <a href="http://ws-dl.blogspot.com/2017/09/2017-09-19-carbon-dating-web-version-40.html">Carbon dating</a>
+      is computationally expensive. </br>Please try again later if the process takes too long.
     </br></br>
-    If you plan to carbon date a large number of web pages, as a courtesy to other users, kindly 
-    <a href="https://github.com/oduwsdl/CarbonDate">install 
+    If you plan to carbon date a large number of web pages, as a courtesy to other users, kindly
+    <a href="https://github.com/oduwsdl/CarbonDate">install
       the application locally</a>
     </p>
     <div class="footer">
-      <a href="http://ws-dl.blogspot.com/">Web Science and Digital Libraries - Department of Computer Science, Old Dominion University, Norfolk VA - 23529</a>
+      <a href="https://ws-dl.cs.odu.edu/">Web Science and Digital Libraries - Department of Computer Science, Old Dominion University, Norfolk VA - 23529</a>
     </div>
   </div>
   <script>
-  $("#submit").click(function() {
-    uri = '/cd?url=' + $('#input').val();
-    history.pushState({url: ''}, 'http://wsdl-docker.cs.odu.edu:8080/', '/cd?url=' + $('#input').val());
+  function cd(uri) {
+    $('#est').html('');
     $('#res').html('Loading please wait...');
-    $.getJSON(uri, function(data) {
-      $('#res').html('<pre>' + JSON.stringify(data, null, '  ') + '</pre>');
-    });
+    if(uri){
+        $.getJSON(uri, function(data) {
+            $('#res').html('<pre>' + JSON.stringify(data, null, '  ') + '</pre>');
+            if(data["estimated-creation-date"]){
+                $('#est').html("Estimated creation date: " + data["estimated-creation-date"]);
+            }else{
+                $('#est').html("Could not estimate creation date!");
+            }
+        }).fail(function() {
+            $('#est').html("REQUEST ERROR: Could not estimate creation date!");
+            $('#res').html('REQUEST ERROR');
+        });
+    }else{
+        $('#res').html('ERROR: Not a proper URI');
+    }
+  }
+  $(document).ready(function() {
+    var pageURI = window.location.href;
+    var hashPos = pageURI.indexOf("/#");
+    if(hashPos > 0){
+      var reqURI = pageURI.substring(hashPos + 2);
+      $('#input').val(reqURI);
+      cd('/cd/' + reqURI);
+    }
+  });
+  $("#submit").click(function() {
+    uri = '/cd/' + $('#input').val();
+    history.pushState({}, '', '/#' + $('#input').val());
+    cd(uri);
     return false;
   });
   </script>
