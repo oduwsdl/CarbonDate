@@ -8,3 +8,4 @@ __pycache__
 .coveragerc
 .coverage.*
 .travis.yml
+Dockerfile
