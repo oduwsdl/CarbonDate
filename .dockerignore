@@ -1,0 +1,10 @@
+.git
+.gitignore
+*.pyc
+__pycache__
+.cache
+.dockerignore
+.coverage
+.coveragerc
+.coverage.*
+.travis.yml
