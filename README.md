@@ -49,10 +49,26 @@ To run it as a local script:
 $ ./main.py -l search {URI-R}
 ```
 
-The backlinks calculation is costly to your computers, so it is recommended to turn it off:
+### Disabling modules
+
+CarbonDate provides the option of preventing searching for specified modules in the local version.
+For example, if a user wants to disable backlinks and google modules the user can add the `-e` argument like so:
 
 ```
-$ ./main.py -l search {URI-R} -e cdGetBacklinks
+./main.py -l search "https://www.cs.odu.edu/" -e cdGetBacklinks cdGetGoogle
+```
+
+A complete list of all the modules a user can disable is as follows:
+
+```
+cdGetPubdate
+cdGetArchives
+cdGetBing
+cdGetBitly
+cdGetTwitter
+cdGetBacklinks
+cdGetGoogle
+cdGetLastModified
 ```
 
 ## How to add your module
