@@ -6,6 +6,7 @@ import requests
 from .cdGetLowest import getLowest, validateDate
 from random import randint
 import logging
+import urllib.parse
 
 moduleTag = 'google.com'
 
@@ -135,6 +136,7 @@ def getGoogle(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
 
     # Caution google blocks bots which do not play nice
     # return ''
+    url = urllib.parse.quote(url, safe='')
     query = ('https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15'
              '&q=inurl:' + url + '&oq=inurl:' + url)
 
