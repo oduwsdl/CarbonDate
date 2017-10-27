@@ -68,7 +68,7 @@ For example, if a user wants to disable backlinks and google modules the user ca
 ./main.py -l search "https://www.cs.odu.edu/" -e cdGetBacklinks cdGetGoogle
 ```
 
-A complete list of all the modules a user can disable is as follows:
+For URIs that contains multiple parameters, for example `http://www.foo.bar/baz?arg1=1&arg2=2`, its advisable to disable `cdGetGoogle` as that module will ignore more than one parameter and treat the previous example as `http://www.foo.bar/baz?arg1=1` leading to incorrect estimated creation dates.
 
 ```
 cdGetPubdate
