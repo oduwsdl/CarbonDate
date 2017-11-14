@@ -19,6 +19,13 @@ def test_getGoogle():
     assert len(earliest) > 0
 
 
+def test_mimicBrowser():
+    page = g.mimicBrowser('')
+    assert len(page) == 0
+    page = g.mimicBrowser('http://www.google.com')
+    assert len(page) > 0
+
+
 def test_findSignatures(page):
     positions = g.findSignatures(page)
     assert len(positions) > 0
@@ -27,3 +34,5 @@ def test_findSignatures(page):
 def test_findCreationDate(page):
     date = g.genericGetCreationDate(page)
     assert len(date) > 0
+    date = g.genericGetCreationDate('')
+    assert date == ''
