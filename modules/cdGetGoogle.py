@@ -1,5 +1,3 @@
-import sys
-import os
 import calendar
 import time
 import requests
@@ -25,12 +23,9 @@ def getTimestampFromSERP(locationOfSignature, page):
     """
     Iterate backwards from position of signature to find timestamp
     """
-    if(len(page) == 0):
-        return '', -1
-
     timestamp = ''
-
     k = locationOfSignature
+
     while k > -1:
         # end marker
         if page[k] != '>':
@@ -41,14 +36,13 @@ def getTimestampFromSERP(locationOfSignature, page):
 
     timestamp = timestamp.strip()
 
-    return timestamp, locationOfSignature
+    return timestamp
 
 
 def mimicBrowser(query):
     """
     Mimic browser request to Google on query
     """
-
     try:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; '
@@ -63,25 +57,19 @@ def mimicBrowser(query):
 
         response = requests.get(query, headers=headers)
         return response.text
-    except:
-
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        errorMessage = fname + ', ' + \
-            str(exc_tb.tb_lineno) + ', ' + str(sys.exc_info())
-        logging.error('\tERROR:', errorMessage)
-        logging.error('\tquery is: ', query)
+    except Exception as e:
+        logging.debug('Failed to complete request. Return with error:', e)
         return ''
 
 
 def findSignatures(page):
     """
-    Regex to find positions of the last position of a date in a rendered page.
+    Regex to the last possible position of a date in a rendered page.
     Searches for dash surrounded by spaces with a span or div element at the
-    end.
+    end of a possible text entry.
     """
     positions = []
-    # date located before location regex
+    # Date located before this regex
     p = re.compile('( [-] )(.*?<\/div>|<\/span>)')
     for m in p.finditer(page):
         positions.append(m.start())
@@ -96,33 +84,20 @@ def genericGetCreationDate(page):
 
     randSleep()
     allDates = []
+    signaturePositions = findSignatures(page)
 
-    try:
-        locationOfSignature = 0
-        signaturePositions = findSignatures(page)
+    for p in signaturePositions:
+        timestamp = getTimestampFromSERP(p, page)
+        # print('timestamp/locationOfSignature:', timestamp)
 
-        for p in signaturePositions:
-            if locationOfSignature == -1:
-                break
-            else:
-                timestamp, locationOfSignature = getTimestampFromSERP(p, page)
-                # print('timestamp/locationOfSignature:', timestamp)
-
-                try:
-                    epoch = calendar.timegm(
-                        time.strptime(timestamp, '%b %d, %Y'))
-                    date = time.strftime('%Y-%m-%dT%H:%M:%S',
-                                         time.gmtime(epoch))
-                    allDates.append(date)
-                except:
-                    pass
-
-    except:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        errorMessage = fname + ', ' + \
-            str(exc_tb.tb_lineno) + ', ' + str(sys.exc_info())
-        logging.error('\tERROR:', errorMessage)
+        try:
+            epoch = calendar.timegm(
+                time.strptime(timestamp, '%b %d, %Y'))
+            date = time.strftime('%Y-%m-%dT%H:%M:%S',
+                                 time.gmtime(epoch))
+            allDates.append(date)
+        except:
+            pass
 
     return getLowest(allDates)
 
