@@ -36,3 +36,5 @@ def test_findCreationDate(page):
     assert len(date) > 0
     date = g.genericGetCreationDate('')
     assert date == ''
+    date = g.genericGetCreationDate(' - 123 </div>')
+    assert date == ''
