@@ -1,5 +1,3 @@
-import sys
-import os
 import calendar
 import time
 import requests
@@ -7,62 +5,44 @@ from .cdGetLowest import getLowest, validateDate
 from random import randint
 import logging
 import urllib.parse
+import re
 
 moduleTag = 'google.com'
 
 
 def randSleep():
+    """
+    Sleep on page load
+    """
     sleepSeconds = randint(2, 7)
     logging.debug('cdGetGoogle::randSleep(), sleep: %s', sleepSeconds)
     time.sleep(sleepSeconds)
 
 
-def getLowestDate(allDatesEpoch):
-
-    if(len(allDatesEpoch) == 0):
-        return 0
-
-    lowest_date = 99999999999
-
-    for epoch in allDatesEpoch:
-        limitEpoch = int(calendar.timegm(time.strptime(
-            "1995-01-01T12:00:00", '%Y-%m-%dT%H:%M:%S')))
-        if(epoch < limitEpoch):
-            continue
-
-        if(epoch < lowest_date):
-            lowest_date = epoch
-
-    inurl_creation_date = time.strftime(
-        '%Y-%m-%dT%H:%M:%S', time.gmtime(lowest_date))
-    return inurl_creation_date
-
-
-def getTimestampFromSERP(signatureString, locationOfSignature, page):
-
-    # retrieve date from preceding " - </span>" signature - start
-    if(len(page) == 0 or len(signatureString) == 0):
-        return '', -1
-
+def getTimestampFromSERP(locationOfSignature, page):
+    """
+    Iterate backwards from position of signature to find timestamp
+    """
     timestamp = ''
-
     k = locationOfSignature
-    while 1 == 1 and k > -1:
+
+    while k > -1:
         # end marker
         if page[k] != '>':
             timestamp = page[k] + timestamp
         else:
             break
         k = k - 1
-    # shift search cursor
-    locationOfSignature = locationOfSignature + len(signatureString)
+
     timestamp = timestamp.strip()
 
-    return timestamp, locationOfSignature
+    return timestamp
 
 
 def mimicBrowser(query):
-
+    """
+    Mimic browser request to Google on query
+    """
     try:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; '
@@ -77,93 +57,65 @@ def mimicBrowser(query):
 
         response = requests.get(query, headers=headers)
         return response.text
-    except:
-
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        errorMessage = fname + ', ' + \
-            str(exc_tb.tb_lineno) + ', ' + str(sys.exc_info())
-        logging.error('\tERROR:', errorMessage)
-        logging.error('\tquery is: ', query)
+    except Exception as e:
+        logging.debug('Failed to complete request. Return with error:', e)
         return ''
 
 
-def genericGetCreationDate(query):
+def findSignatures(page):
+    """
+    Regex to the last possible position of a date in a rendered page.
+    Searches for dash surrounded by spaces with a span or div element at the
+    end of a possible text entry.
+    """
+    positions = []
+    # Date located before this regex
+    p = re.compile('( [-] )(.*?<\/div>|<\/span>)')
+    for m in p.finditer(page):
+        positions.append(m.start())
+
+    return positions
+
+
+def genericGetCreationDate(page):
+    """
+    Go to each date position and attempt to get date
+    """
 
     randSleep()
+    allDates = []
+    signaturePositions = findSignatures(page)
 
-    allDatesEpoch = []
-    page = ''
-    try:
+    for p in signaturePositions:
+        timestamp = getTimestampFromSERP(p, page)
+        # print('timestamp/locationOfSignature:', timestamp)
 
-        page = mimicBrowser(query)
+        try:
+            epoch = calendar.timegm(
+                time.strptime(timestamp, '%b %d, %Y'))
+            date = time.strftime('%Y-%m-%dT%H:%M:%S',
+                                 time.gmtime(epoch))
+            allDates.append(date)
+        except:
+            pass
 
-        signatureString = ' - </span>'
-        locationOfSignature = 0
-
-        while(True):
-
-            # this logic is meant to retrieve date from a string of form:
-            # ">DateIsHere- </span>"
-            locationOfSignature = page.find(
-                signatureString, locationOfSignature)
-            timestamp = ''
-
-            if locationOfSignature == -1:
-                break
-            else:
-                timestamp, locationOfSignature = getTimestampFromSERP(
-                    signatureString, locationOfSignature, page)
-                # print 'timestamp/locationOfSignature:', timestamp
-
-                try:
-                    epoch = int(calendar.timegm(
-                        time.strptime(timestamp, '%b %d, %Y')))
-                    allDatesEpoch.append(epoch)
-                except:
-                    pass
-    except:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        errorMessage = fname + ', ' + \
-            str(exc_tb.tb_lineno) + ', ' + str(sys.exc_info())
-        logging.error('\tERROR:', errorMessage)
-
-    return getLowestDate(allDatesEpoch)
+    return getLowest(allDates)
 
 
 def getGoogle(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
-
+    """
+    Return earliest date found on a page rendered from Google
+    """
     # Caution google blocks bots which do not play nice
-    # return ''
     url = urllib.parse.quote(url, safe='')
     query = ('https://www.google.com/search?hl=en&tbo=d&tbs=qdr:y15'
              '&q=inurl:' + url + '&oq=inurl:' + url)
 
-    inurl_creation_date = genericGetCreationDate(query)
+    page = mimicBrowser(query)
+    inurl_creation_date = genericGetCreationDate(page)
 
-    search_creation_date = 0
-
-    lowerDate = ''
-    if(inurl_creation_date != 0 and search_creation_date != 0):
-
-        lowerDate = getLowest([search_creation_date, inurl_creation_date])
-        lowerDate = validateDate(lowerDate)
-        outputArray[indexOfOutputArray] = lowerDate
-        kwargs['displayArray'][indexOfOutputArray] = lowerDate
-
-    elif(inurl_creation_date == 0 and search_creation_date != 0):
-
-        lowerDate = getLowest([search_creation_date, search_creation_date])
-        lowerDate = validateDate(lowerDate)
-        outputArray[indexOfOutputArray] = lowerDate
-        kwargs['displayArray'][indexOfOutputArray] = lowerDate
-
-    elif(inurl_creation_date != 0 and search_creation_date == 0):
-
-        lowerDate = getLowest([inurl_creation_date, inurl_creation_date])
-        lowerDate = validateDate(lowerDate)
-        outputArray[indexOfOutputArray] = lowerDate
-        kwargs['displayArray'][indexOfOutputArray] = lowerDate
+    lowerDate = validateDate(inurl_creation_date)
+    outputArray[indexOfOutputArray] = lowerDate
+    kwargs['displayArray'][indexOfOutputArray] = lowerDate
 
     return lowerDate
