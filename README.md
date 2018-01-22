@@ -4,6 +4,7 @@
 [![codecov](https://codecov.io/gh/grantat/CarbonDate/branch/master/graph/badge.svg)](https://codecov.io/gh/grantat/CarbonDate)
 
 ## Prerequisites
+
 * Python 3 only.
 * Running in docker container is strongly recommended.
 * Install tornado server (to run server).
@@ -12,38 +13,43 @@
 * (optional) Change server ip/port number in config.
 * All other packages that generate error "No module named" does exist, must be installed.
 
-### Running as a Docker Container
+## Running as a Docker Container
 
 It is recommended to use [Docker](https://www.docker.com/) to install and run this application.
 
-To download the container with docker use:
+To download the Docker image:
+
 ```
-$ docker pull oduwsdl/carbondate
+$ docker image pull oduwsdl/carbondate
 ```
 
-Once you have downloaded the container with docker, you can run it as a server or a local command line program.
+Once you have downloaded the image, run it as a server or a local command line program (in one-off mode).
 
-To run as a server use:
-```
-$ docker run --rm -it -p 8888:8888 oduwsdl/carbondate ./main.py -s
-```
-Then you may open your browser to: `http://localhost:8888/`
+To run it as a server:
 
-To run locally use:
 ```
-$ docker run --rm -it -p 8888:8888 oduwsdl/carbondate ./main.py -l search {URI-R}
+$ docker container run --rm -it -p 8888:8888 oduwsdl/carbondate ./main.py -s
 ```
 
-### Running without Docker
+Then access it at http://localhost:8888/.
+
+To run it in one-off mode:
+
+```
+$ docker container run --rm -it oduwsdl/carbondate ./main.py -l search {URI-R}
+```
+
+## Running without Docker
 
 To run it as a server:
 
 ```
 $ ./main.py -s
 ```
-Then you may open your browser to: `http://localhost:8888/`
 
-To run it as a local script:
+Then access it at http://localhost:8888/.
+
+To run it in one-off mode:
 
 ```
 $ ./main.py -l search {URI-R}
@@ -86,9 +92,11 @@ cdGetLastModified
 Name your module's main script as `cdGet<ModuleName>.py`. If your module relies on extra code in a different folder you may bring this directory into the modules directory, the CarbonDate library will ignore subfolders while loading modules. If the extra code is not in a subfolder, after copying it to the `./modules` folder, add the file names into the config file under the `SystemUtility` field.
 
 And ensure the entry function is named  
+
 ```
 get<Module name>(url,outputArray, indexOfOutputArray,verbose=False,**kwargs)  
 ```
+
 or customize your own entry function name by assigning a string value to 'entry' variable in the beginning of your script.  
 For example if your module name is Service, then the script should be named cdGetService, and the interface function should be named:
 
@@ -132,6 +140,7 @@ outputArray[outputArrayIndex] = time
 ```
 
 and put the result and other data you want to show in the "displayArray" like:  
+
 ```
 kwargs['displayArray'][outputArrayIndex] = dictionary_or_datestring_variable
 ```
