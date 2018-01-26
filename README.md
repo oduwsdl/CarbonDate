@@ -61,11 +61,11 @@ $ docker run -e "CD_Bitly_token=foo" -e "CD_Bing_key=bar" -it --rm oduwsdl/carbo
 
 ### Disabling modules
 
-CarbonDate provides the option of preventing searching for specified modules in the local version.
+CarbonDate provides the option of preventing searching for specified modules.
 For example, if a user wants to disable backlinks and google modules the user can add the `-e` argument after a URI-R is specified like so:
 
 ```
-./main.py -l "https://www.cs.odu.edu/" -e cdGetBacklinks cdGetGoogle
+$ ./main.py -l "https://www.cs.odu.edu/" -e cdGetBacklinks cdGetGoogle
 ```
 
 A complete list of all the modules a user can disable is as follows:
