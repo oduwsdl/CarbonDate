@@ -8,11 +8,7 @@ config~
 .DS_Store
 ._.DS_Store
 *.sh
-autoCarbonDateList.txt
-autoCD.py
-CS851Local.py
-cacheService.py
-surt/
 venv/
 .cache
 .coverage
+.vscode

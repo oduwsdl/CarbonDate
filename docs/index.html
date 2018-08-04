@@ -67,6 +67,11 @@
     </div>
   </div>
   <script>
+  var port = window.location.port ? ":" + window.location.port : "";
+  $('#res').text("GET " + window.location.protocol + "//" +
+                 window.location.hostname + port +
+                 "/cd/http://www.cs.odu.edu/");
+
   function cd(uri) {
     $('#est').html('');
     $('#res').html('Loading please wait...');
@@ -78,9 +83,11 @@
             }else{
                 $('#est').html("Could not estimate creation date!");
             }
+            $('#submit').prop('disabled', false);
         }).fail(function() {
             $('#est').html("REQUEST ERROR: Could not estimate creation date!");
             $('#res').html('REQUEST ERROR');
+            $('#submit').prop('disabled', false);
         });
     }else{
         $('#res').html('ERROR: Not a proper URI');
@@ -96,6 +103,7 @@
     }
   });
   $("#submit").click(function() {
+    $('#submit').prop('disabled', true);
     uri = '/cd/' + $('#input').val();
     history.pushState({}, '', '/#' + $('#input').val());
     cd(uri);
