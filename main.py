@@ -24,6 +24,8 @@ def parserinit():
         description=logo + 'Integrated interface for Carbon Date Tool',
         epilog='For more help, type main.py -h')
     mode_group = parser.add_mutually_exclusive_group(required=True)
+    mode_group.add_argument('--list-mods', action='store_true',
+                            help='List all avaiable modules')
     mode_group.add_argument('-s', '--server', action='store_true',
                             help='Launch server version of Carbon Date Tool')
     mode_group.add_argument('-l', '--local', metavar='{URI}',
@@ -33,8 +35,6 @@ def parserinit():
     parser.add_argument('-t', '--timeout', type=int,
                         help='Set timeout for all modules in seconds',
                         default=300)
-    parser.add_argument('--list-mods', action='store_true',
-                        help='List all avaiable modules')
     parser.add_argument(
         '-v', '--verbose', action='store_true', help='Enable verbose output')
     modOpGroup = parser.add_mutually_exclusive_group()
@@ -69,8 +69,12 @@ if __name__ == '__main__':
     mod.loadModule(cfg, args)
 
     if args.list_mods:
-        mod.getAvailableModules()
-    if args.server:
+        print('Available Modules (include system utilities)')
+        print('====================================')
+        for m in mod.modules:
+            print(m)
+        print('====================================')
+    elif args.server:
         server.start(args, cfg, mod)
     elif args.local_uri:
         local.start(args, mod)

@@ -68,14 +68,6 @@ class ModuleManager():
             else:
                 self.entryPoints[modName]["displayName"] = mod[5:]
 
-    def getAvailableModules(self):
-        print('Available Modules (include system utilities)')
-        print('====================================')
-        for m in self.modules:
-            print(m)
-        print('====================================')
-        print()
-
     def call(self, moduleName, **kwargs):
         if moduleName in self.entryPoints:
             url = kwargs['url']
