@@ -36,7 +36,7 @@ Then access it at http://localhost:8888/.
 To run it in one-off mode:
 
 ```
-$ docker container run --rm -it oduwsdl/carbondate ./main.py -l search {URI-R}
+$ docker container run --rm -it oduwsdl/carbondate ./main.py -l {URI-R}
 ```
 
 ## Running without Docker
