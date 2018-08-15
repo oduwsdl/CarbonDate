@@ -52,7 +52,7 @@ Then access it at http://localhost:8888/.
 To run it in one-off mode:
 
 ```
-$ ./main.py -l search {URI-R}
+$ ./main.py -l {URI-R}
 ```
 
 ### Environment variables
@@ -62,16 +62,16 @@ For Bitly, the environment key is `CD_Bitly_token`. For Bing, the environment ke
 Environment variables can be passed into docker using the `-e` or `--env` arguments before executing the Carbon Date application like so:
 
 ```
-$ docker run -e "CD_Bitly_token=foo" -e "CD_Bing_key=bar" -it --rm oduwsdl/carbondate ./main.py -l search http://www.cs.odu.edu/
+$ docker run -e "CD_Bitly_token=foo" -e "CD_Bing_key=bar" -it --rm oduwsdl/carbondate ./main.py -l http://www.cs.odu.edu/
 ```
 
 ### Disabling modules
 
-CarbonDate provides the option of preventing searching for specified modules in the local version.
+CarbonDate provides the option of preventing searching for specified modules.
 For example, if a user wants to disable backlinks and google modules the user can add the `-e` argument after a URI-R is specified like so:
 
 ```
-./main.py -l search "https://www.cs.odu.edu/" -e cdGetBacklinks cdGetGoogle
+$ ./main.py -l "https://www.cs.odu.edu/" -e cdGetBacklinks cdGetGoogle
 ```
 
 A complete list of all the modules a user can disable is as follows:

@@ -1,6 +1,3 @@
-__author__ = "Neo"
-__copyright__ = "Copyleft 2016, United States"
-
 import os
 import sys
 import datetime
@@ -71,9 +68,6 @@ class ModuleManager():
             else:
                 self.entryPoints[modName]["displayName"] = mod[5:]
 
-    def getAvailableModules(self):
-        return self.modules
-
     def call(self, moduleName, **kwargs):
         if moduleName in self.entryPoints:
             url = kwargs['url']
@@ -89,7 +83,10 @@ class ModuleManager():
                 'ModuleManager: Error : No such module: %s' % moduleName)
 
     def run(self, args, **kwargs):
-        url = args.url
+        if args.local_uri:
+            url = args.local_uri
+        else:
+            url = kwargs['url']
         # handle character accents
         url = requote_uri(url)
 
@@ -157,40 +154,3 @@ class ModuleManager():
         kwargs['logger'].log(35, r)
 
         return resultDict
-
-
-if __name__ == '__main__':
-    import argparse
-
-    # init argparse
-    parser = argparse.ArgumentParser(
-        description='Core module to load services and perform queries')
-    modOpGroup = parser.add_mutually_exclusive_group()
-    modOpGroup.add_argument('-a', '--all', action="store_true",
-                            help='Load all modules (default)', dest='all')
-    modOpGroup.add_argument(
-        '-m', help='Specify mode, only load given modules ', nargs='+')
-    modOpGroup.add_argument(
-        '-e', help="Exclusive mode, load all modules except the given modules",
-        nargs='+')
-
-    parser.add_argument('-t', '--timeout', type=int,
-                        help='Set timeout for all modules', default=300)
-    parser.add_argument('-v', '--verbose', action='store_true',
-                        help='Enable verbose output')
-
-    parser.add_argument('url', help='The url to look up')
-
-    args = parser.parse_args()
-
-    # read system config
-    fileConfig = open("config", "r")
-    config = fileConfig.read()
-    fileConfig.close()
-    cfg = json.loads(config)
-
-    resultDict = {}
-    mod = ModuleManager()
-    mod.loadModule(cfg, args)
-    mod.run(args=args, resultDict=resultDict)
-    os._exit(0)
