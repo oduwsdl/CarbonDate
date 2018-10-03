@@ -27,7 +27,7 @@ def getBing(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
 
             apiKey = json.loads(config)
             apiKey = apiKey['BingAPIKey']
-    except:
+    except Exception:
         logging.debug('cdGetBing: ', sys.exc_info())
         return ''
 

@@ -15,7 +15,7 @@ def parseStrDate(dateString):
     try:
         dateTimeObj = dateutil.parser.parse(dateString)
         return dateTimeObj
-    except:
+    except Exception:
         return None
 
 
