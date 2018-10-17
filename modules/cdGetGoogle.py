@@ -96,7 +96,7 @@ def genericGetCreationDate(page):
             date = time.strftime('%Y-%m-%dT%H:%M:%S',
                                  time.gmtime(epoch))
             allDates.append(date)
-        except:
+        except Exception:
             pass
 
     return getLowest(allDates)

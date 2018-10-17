@@ -27,7 +27,7 @@ def GetBitlyJson(URL):
 
             ACCESS_TOKENs = json.loads(config)
             ACCESS_TOKENs = ACCESS_TOKENs['AccessToken']
-    except:
+    except Exception:
         logging.exception('cdGetBitly: %s', sys.exc_info())
         return ''
 
@@ -56,7 +56,7 @@ def GetBitlyJson(URL):
 
         try:
             jsonData = json.loads(page.decode())
-        except:
+        except Exception:
             logging.debug('Failed to load Bitly json')
             continue
 
@@ -126,7 +126,7 @@ def getBitly(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
         logging.debug("Done Bitly")
         return str(creation_date)
 
-    except:
+    except Exception:
         logging.exception('cdGetBitly: %s', sys.exc_info())
         outputArray[indexOfOutputArray] = ""
         kwargs['displayArray'][indexOfOutputArray] = ""

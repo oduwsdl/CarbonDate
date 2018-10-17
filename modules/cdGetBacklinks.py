@@ -34,7 +34,7 @@ def getBacklinks(url):
             url = page[loc + len(start_str):fin]
             inlinks.append(url)
             loc = fin
-    except:
+    except Exception:
         logging.exception('cdGetBacklinks :', sys.exc_info())
 
     return inlinks
@@ -63,7 +63,7 @@ def getBacklinksFirstAppearanceDates(url, outputArray, outputArrayIndex,
 
             if(epoch < lowest_epoch):
                 lowest_epoch = epoch
-    except:
+    except Exception:
         logging.exception('cdGetBacklinks :', sys.exc_info())
 
     if(lowest_epoch == 99999999999):

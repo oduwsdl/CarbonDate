@@ -136,7 +136,7 @@ def getArchives(url, outputArray, outputArrayIndex, verbose=False, **kwargs):
         logging.debug("Done Archives 1")
         return archives
 
-    except:
+    except Exception:
         logging.exception(sys.exc_info())
         earliest = ""
         outputArray[outputArrayIndex] = earliest

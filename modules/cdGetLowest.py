@@ -42,7 +42,7 @@ def getLowest(dates):
 
             if(epoch < lowest_epoch):
                 lowest_epoch = epoch
-        except:
+        except Exception:
             continue
 
     if(lowest_epoch == 99999999999):
@@ -80,7 +80,7 @@ def getLowestSources(sources):
                 earliest_sources = [source]
             elif(epoch == lowest_epoch):
                 earliest_sources.append(source)
-        except:
+        except Exception:
             continue
 
     return earliest_date, earliest_sources

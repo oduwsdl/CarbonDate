@@ -22,7 +22,7 @@ def getWebpage(url):
     try:
         response = requests.get(url, headers=headers)
         return response
-    except:
+    except Exception:
         return None
 
 
@@ -107,7 +107,7 @@ def getFirstAppearance(url, inurl):
             if end == (start + 1):
                 return date
 
-    except:
+    except Exception:
 
         logging.exception(sys.exc_info())
         return ""
