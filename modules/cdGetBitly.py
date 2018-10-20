@@ -84,8 +84,7 @@ def getBitly(url, outputArray, indexOfOutputArray, verbose=False, **kwargs):
             logging.debug("Done Bitly")
             return "Bitly Key has expired"
 
-        if(jsonData == "" or ('error' in jsonData['data']['link_lookup'][0] and
-           jsonData['data']['link_lookup'][0]['error'] == 'NOT_FOUND')):
+        if jsonData == "" or 'error' in jsonData['data']['link_lookup'][0]:
             outputArray[indexOfOutputArray] = ""
             kwargs['displayArray'][indexOfOutputArray] = ""
             logging.debug("Done Bitly")
