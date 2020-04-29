@@ -30,7 +30,13 @@ pip install -r requirements.txt
 
 ## Possible Errors 
 
+### Missing Aysnchronous attribute 
+
 ![Example Error](https://github.com/njenn001/CarbonDate/blob/master/images/Error.jpg)
+
+For quick installation and running purposes simply comment out the use of the server import in main.py. 
+
+![Example Solution](https://github.com/njenn001/cs480/blob/master/PY_Optimization/solution.JPG)
 
 
 ## Running as a Docker Container
