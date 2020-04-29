@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-import server
+#import server
 import local
 import core
 import json
@@ -23,6 +23,7 @@ def parserinit():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description=logo + 'Integrated interface for Carbon Date Tool',
         epilog='For more help, type main.py -h')
+    
     mode_group = parser.add_mutually_exclusive_group(required=True)
     mode_group.add_argument('--list-mods', action='store_true',
                             help='List all avaiable modules')
@@ -32,11 +33,13 @@ def parserinit():
                             help='Run Carbon Date Tool as a local application.'
                             ' Takes a URI as a parameter',
                             dest="local_uri")
+   
     parser.add_argument('-t', '--timeout', type=int,
                         help='Set timeout for all modules in seconds',
                         default=300)
     parser.add_argument(
         '-v', '--verbose', action='store_true', help='Enable verbose output')
+    
     modOpGroup = parser.add_mutually_exclusive_group()
     modOpGroup.add_argument('-a', '--all', action="store_true",
                             help='Load all modules (default)', dest='all')
@@ -74,7 +77,7 @@ if __name__ == '__main__':
         for m in mod.modules:
             print(m)
         print('====================================')
-    elif args.server:
-        server.start(args, cfg, mod)
+    #elif args.server:
+    #    server.start(args, cfg, mod)
     elif args.local_uri:
         local.start(args, mod)

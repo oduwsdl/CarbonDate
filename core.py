@@ -86,7 +86,7 @@ class ModuleManager():
         if args.local_uri:
             url = args.local_uri
         else:
-            url = kwargs['url']
+            url = 'https://www.cs.odu.edu/'
         # handle character accents
         url = requote_uri(url)
 
