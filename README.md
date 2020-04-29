@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ## Possible Errors 
 
-![Example Error](https://github.com/njenn001/CarbonDate/blob/master/images/Error.JPG)
+![Example Error](https://github.com/njenn001/CarbonDate/blob/master/images/Error.jpg)
 
 
 ## Running as a Docker Container
