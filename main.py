@@ -4,6 +4,7 @@ import argparse
 #import server
 import local
 import core
+import gui
 import json
 import time
 
@@ -25,6 +26,8 @@ def parserinit():
         epilog='For more help, type main.py -h')
     
     mode_group = parser.add_mutually_exclusive_group(required=True)
+    mode_group.add_argument('--gui', help='Activate the tkinter implementation.',
+                            action='store_true')
     mode_group.add_argument('--list-mods', action='store_true',
                             help='List all avaiable modules')
     mode_group.add_argument('-s', '--server', action='store_true',
@@ -71,6 +74,7 @@ if __name__ == '__main__':
     mod = core.ModuleManager()
     mod.loadModule(cfg, args)
 
+    
     if args.list_mods:
         print('Available Modules (include system utilities)')
         print('====================================')
@@ -81,3 +85,6 @@ if __name__ == '__main__':
     #    server.start(args, cfg, mod)
     elif args.local_uri:
         local.start(args, mod)
+    elif args.gui: 
+        gui = gui.Gui()
+        gui.mainloop()

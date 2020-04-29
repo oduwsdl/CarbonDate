@@ -26,9 +26,7 @@ Install python requirements
 
 ```
 pip install -r requirements.txt 
-``` 
-
-## Possible Errors 
+```  
 
 ### Missing Aysnchronous attribute 
 
@@ -37,6 +35,10 @@ pip install -r requirements.txt
 For quick installation and running purposes simply comment out the use of the server import in main.py. 
 
 ![Example Solution](https://github.com/njenn001/CarbonDate/blob/master/images/solution.JPG)
+
+### Missing Modules
+
+
 
 
 ## Running as a Docker Container
