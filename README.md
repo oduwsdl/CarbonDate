@@ -13,6 +13,25 @@
 * (optional) Change server ip/port number in config.
 * All other packages that generate error "No module named" does exist, must be installed.
 
+## Installation and Setup 
+
+Clone the repository and move into the directory 
+
+```
+git clone https://github.com/oduwsdl/CarbonDate
+cd CarbonDate 
+```
+
+Install python requirements 
+
+```
+pip install -r requirements.txt 
+``` 
+
+## Possible Errors 
+
+
+
 ## Running as a Docker Container
 
 It is recommended to use [Docker](https://www.docker.com/) to install and run this application.
