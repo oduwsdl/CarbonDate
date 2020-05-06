@@ -7,6 +7,7 @@ import core
 import gui
 import json
 import time
+import tkinter as tk
 
 logo = ('''
  _____       ___   _____    _____   _____   __   _   _____       ___   _____   _____
@@ -53,6 +54,23 @@ def parserinit():
         '-e', metavar='MODULE', help="Exclusive mode, load all modules except \
         the given modules", nargs='+')
     return parser
+            
+#FORMATTING FUNCTION FOR THE TKINTER ENTRY BOX 
+def on_entry_click(event):
+    """function that gets called whenever entry is clicked"""
+    if nameE.get() == 'https://www.cs.odu.edu':
+        nameE.delete(0, "end") # delete all the text in the entry
+        nameE.insert(0, '') #Insert blank for user input
+        nameE.config(fg = 'black')
+def on_focusout(event):
+    if nameE.get() == '':
+        nameE.insert(0, 'https://www.cs.odu.edu')
+        nameE.config(fg = 'grey')
+
+def passArgs(args, mod, name):
+    args.local_uri = name 
+
+    local.start(args, mod)
 
 
 if __name__ == '__main__':
@@ -86,5 +104,21 @@ if __name__ == '__main__':
     elif args.local_uri:
         local.start(args, mod)
     elif args.gui: 
-        gui = gui.Gui()
-        gui.mainloop()
+        root = tk.Tk()
+        root.title('CarbonDate')
+        nameL = tk.Label (root, text="URL")
+        nameL.grid(column = 0, row = 0, sticky = "W")
+
+        nameE = tk.Entry(root, bd = 5, width = 25)
+        nameE.insert(0, 'https://www.cs.odu.edu/')
+        nameE.config(fg = 'grey')
+        nameE.bind('<FocusIn>', on_entry_click)
+        nameE.bind('<FocusOut>', on_focusout)
+        nameE.grid(column = 1, row = 0, sticky = "W")
+        s = tk.Button(root, text="Start", command = lambda : passArgs(args, mod, str(nameE.get())))
+        s.grid(column = 2, row = 0, pady = 5)
+        root.mainloop()
+
+        
+    #    gui = gui.Gui()
+    #    gui.mainloop()

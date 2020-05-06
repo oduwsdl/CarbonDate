@@ -83,6 +83,19 @@ To run it in one-off mode:
 $ ./main.py -l {URI-R}
 ```
 
+### Running the GUI 
+
+
+* Initialized in terminal 
+```
+$ ./main.py --gui 
+``` 
+* Use the small tkinter window to carbon date URLs
+
+  * ![GUI Figure](https://github.com/njenn001/CarbonDate/blob/master/images/GuiFig.png)
+
+  * Output will lie in the terminal 
+
 ### Environment variables
 
 Carbon Date provides the option of passing in environment variables for both the Bing and Bitly services.
