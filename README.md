@@ -13,6 +13,37 @@
 * (optional) Change server ip/port number in config.
 * All other packages that generate error "No module named" does exist, must be installed.
 
+## Installation and Setup 
+
+Clone the repository and move into the directory 
+
+```
+git clone https://github.com/oduwsdl/CarbonDate
+cd CarbonDate 
+```
+
+Install python requirements 
+
+```
+pip install -r requirements.txt 
+```  
+
+### Missing Aysnchronous attribute 
+
+![Example Error](https://github.com/njenn001/CarbonDate/blob/master/images/Error.jpg)
+
+For quick installation and running purposes simply comment out the use of the server import in main.py. Otherwise, check Tornado import. 
+
+![Example Solution](https://github.com/njenn001/CarbonDate/blob/master/images/solution.JPG)
+
+### Missing/Broken Modules
+
+* Twitter 
+* Bitly 
+* Bing 
+
+
+
 ## Running as a Docker Container
 
 It is recommended to use [Docker](https://www.docker.com/) to install and run this application.
@@ -54,6 +85,19 @@ To run it in one-off mode:
 ```
 $ ./main.py -l {URI-R}
 ```
+
+### Running the GUI 
+
+
+* Initialized in terminal 
+```
+$ ./main.py --gui 
+``` 
+* Use the small tkinter window to carbon date URLs
+
+  * ![GUI Figure](https://github.com/njenn001/CarbonDate/blob/master/images/GuiFig.png)
+
+  * Output will lie in the terminal 
 
 ### Environment variables
 
