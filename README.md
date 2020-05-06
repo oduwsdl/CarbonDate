@@ -36,8 +36,11 @@ For quick installation and running purposes simply comment out the use of the se
 
 ![Example Solution](https://github.com/njenn001/CarbonDate/blob/master/images/solution.JPG)
 
-### Missing Modules
+### Missing/Broken Modules
 
+* Twitter 
+* Bitly 
+* Bing 
 
 
 
