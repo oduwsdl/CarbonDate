@@ -32,7 +32,7 @@ pip install -r requirements.txt
 
 ![Example Error](https://github.com/njenn001/CarbonDate/blob/master/images/Error.jpg)
 
-For quick installation and running purposes simply comment out the use of the server import in main.py. 
+For quick installation and running purposes simply comment out the use of the server import in main.py. Otherwise, check Tornado import. 
 
 ![Example Solution](https://github.com/njenn001/CarbonDate/blob/master/images/solution.JPG)
 
