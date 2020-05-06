@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-#import server
+import server
 import local
 import core
 import gui
@@ -99,8 +99,8 @@ if __name__ == '__main__':
         for m in mod.modules:
             print(m)
         print('====================================')
-    #elif args.server:
-    #    server.start(args, cfg, mod)
+    elif args.server:
+        server.start(args, cfg, mod)
     elif args.local_uri:
         local.start(args, mod)
     elif args.gui: 
