@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  carbondate:
+    image: oduwsdl/carbondate
+    command: python3 /usr/src/app/main.py -s
+    ports:
+      - "8888:8888"
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/src/app
