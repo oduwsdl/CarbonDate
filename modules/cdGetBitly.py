@@ -6,6 +6,7 @@ import subprocess
 import calendar
 import os.path
 import logging
+import requests
 
 moduleTag = "bitly.com"
 
@@ -44,15 +45,16 @@ def GetBitlyJson(URL):
     for access_token in ACCESS_TOKENs:
 
         URL = URL.replace("ACCESS_TOKEN", access_token)
-        command = ('curl --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS '
-                   'X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) '
-                   'Chrome/12.0.742.112 Safari/534.30" "' + URL + '"')
+        # command = ('curl --silent -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS '
+        #            'X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) '
+        #            'Chrome/12.0.742.112 Safari/534.30" "' + URL + '"')
+        # page = subprocess.getoutput(command)
+        # page = page.encode('ascii', 'ignore')
 
-        page = subprocess.getoutput(command)
-        page = page.encode('ascii', 'ignore')
-
-        if(page.find(b'"error": "NOT_FOUND"') != -1):
-            break
+        page = requests.get(URL, headers={
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30'
+        })
+        if (page.find(b'"error": "NOT_FOUND"') != -1): break
 
         try:
             jsonData = json.loads(page.decode())

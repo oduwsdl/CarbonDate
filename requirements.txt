@@ -1,7 +1,7 @@
 requests
-BeautifulSoup4
+beautifulsoup4
 surt
-tornado
+tornado>=5.0,<6.0
 python-dateutil
 lxml
 pytest>=3.0
