@@ -1,7 +1,7 @@
 requests
 beautifulsoup4
 surt
-tornado>=5.0,<6.0
+tornado>=5.0.0,<6.0.0
 python-dateutil
 lxml
 pytest>=3.0
