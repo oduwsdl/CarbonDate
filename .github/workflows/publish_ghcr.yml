@@ -1,11 +1,9 @@
-name: docker-build-workflow
+name: carbondate-docker-build
 
 on:
   push:
     branches:
       - 'main'
-
-  workflow_dispatch:
 
 jobs:
   build_and_publish:
@@ -31,4 +29,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: oduwsdl/carbondate:latest
+          tags: ghcr.io/oduwsdl/carbondate:latest
