@@ -1,6 +1,7 @@
 FROM python:3.9
 
 LABEL maintainer="Grant Atkins <gatki001@odu.edu>"
+LABEL org.opencontainers.image.source=https://github.com/oduwsdl/carbondate
 
 RUN apt install python3
 COPY requirements.txt /usr/src/app/
