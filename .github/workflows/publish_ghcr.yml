@@ -1,0 +1,34 @@
+name: docker-build-workflow
+
+on:
+  push:
+    branches:
+      - 'main'
+
+  workflow_dispatch:
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: GHCR Login
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.WSDL_GHCR_API_TOKEN }}
+
+      - name: Build docker image
+        run: |
+          docker build . -t ghcr.io/oduwsdl/carbondate:latest
+          docker push ghcr.io/oduwsdl/carbondate:latest
+      - name: Apply container metadata
+        uses: docker/metadata-action@v5.4.0
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: oduwsdl/carbondate:latest
