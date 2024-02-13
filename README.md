@@ -5,7 +5,7 @@
 
 ## Prerequisites
 
-* Python 3 only.
+* Python 3
 * Running in docker container is strongly recommended.
 * Install tornado server (to run server).
 * Insert your Bitly OAuth access token in config file. Visit https://bitly.com/a/oauth_apps to get your access token.
