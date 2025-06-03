@@ -3,6 +3,17 @@
 [![Build Status](https://travis-ci.org/grantat/CarbonDate.svg?branch=master)](https://travis-ci.org/grantat/CarbonDate)
 [![codecov](https://codecov.io/gh/grantat/CarbonDate/branch/master/graph/badge.svg)](https://codecov.io/gh/grantat/CarbonDate)
 
+*June 2025:* The demo service is currently offline. Until it's back online, <http://carbondate.cs.odu.edu/> will redirect to this GitHub repo.
+
+CarbonDate uses web archives and other resources to estimate the creation date for a given webpage. For more information, see the tech report in the [Citing Project](#citing-project) section as well as the following blog posts and articles:
+
+* Hany SalahEldeen, [Carbon Dating the Web](https://ws-dl.blogspot.com/2013/04/2013-04-19-carbon-dating-web.html), WS-DL Blog, April 2013.
+* [How to Carbon-Date a Web Page](https://www.technologyreview.com/2013/04/22/253296/how-to-carbon-date-a-web-page/), *MIT Technology Review*, April 2013.
+* Alexander Nwala, [Carbon Dating the Web, version 2.0](https://ws-dl.blogspot.com/2014/11/2014-11-14-carbon-dating-web-version-20.html), WS-DL Blog, November 2014.
+* Zetan Li, [Carbon Dating the Web, version 3.0](https://ws-dl.blogspot.com/2016/09/2016-09-20-carbon-dating-web-version-30.html), WS-DL Blog, September 2016.
+
+Please cite this project as indicated in the [Citing Project](#citing-project) section.
+
 ## Prerequisites
 
 * Python 3
@@ -146,3 +157,20 @@ kwargs['displayArray'][outputArrayIndex] = dictionary_or_datestring_variable
 ```
 
 Where the variable outputArray, indexOfOutputArray and displayArray are past in by the system.  
+
+## Citing Project
+
+A tech report related to this project is available in arXiv.org (<https://arxiv.org/abs/1304.5213>). Please cite it as below:
+
+> Hany M. SalahEldeen and Michael L. Nelson. __Carbon Dating The Web: Estimating the Age of Web Resources__. Technical report arXiv:1304.5213. April 2013.
+
+```bib
+@techreport{carbondate-2013,
+  author    = {Hany M. SalahEldeen and Michael L. Nelson},
+  title     = {Carbon Dating The Web: Estimating the Age of Web Resources},
+  year      = {2013},
+  month     = apr,
+  number =  {arXiv:1304.5213},
+  url       = {https://arxiv.org/abs/1304.5213}
+}
+```
