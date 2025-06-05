@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/grantat/CarbonDate.svg?branch=master)](https://travis-ci.org/grantat/CarbonDate)
 [![codecov](https://codecov.io/gh/grantat/CarbonDate/branch/master/graph/badge.svg)](https://codecov.io/gh/grantat/CarbonDate)
 
-*June 2025:* The demo service is currently offline. Until it's back online, <http://carbondate.cs.odu.edu/> will redirect to this GitHub repo.
-
 CarbonDate uses web archives and other resources to estimate the creation date for a given webpage. For more information, see the tech report in the [Citing Project](#citing-project) section as well as the following blog posts and articles:
 
 * Hany SalahEldeen, [Carbon Dating the Web](https://ws-dl.blogspot.com/2013/04/2013-04-19-carbon-dating-web.html), WS-DL Blog, April 2013.
